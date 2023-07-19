@@ -28,6 +28,7 @@ export const Wrapper = styled.div`
   padding: 50px;
   gap: 30px;
   width: 600px;
+  border-radius: 10px;
   background-color: #440a70;
   @media (max-width: 600px) {
     width: 100%;
@@ -42,13 +43,14 @@ export const InputDiv = styled(LoginInputWrapper)`
 
 export const Input = styled(LoginIput)`
   outline: none;
-  border: 1px solid #440a70;
+  border: 2px solid #440a70;
   padding: 20px 10px;
   width: 350px;
   font-size: 20px;
+  border-radius: 10px;
   cursor: pointer;
   &:focus {
-    border: 2px solid #b787db;
+    border: 2px solid green;
   }
   @media (max-width: 600px) {
     width: 100%;
