@@ -12,7 +12,7 @@ import {
   getHomePages,
   updateHomePages,
 } from "../../../services/other-services/homepage-services";
-import Spinner from "../../helper/Spinner";
+import Spinner from "../../helper/global-helpers/Spinner";
 
 interface HomePageData {
   home_page_data: {
@@ -31,7 +31,7 @@ const HomePage: React.FunctionComponent = () => {
   const [homePageData, setHomePageData] = React.useState<HomePageData>();
   const [isLoading, setIsLoading] = React.useState(false);
   const [isEditing, setIsEditing] = React.useState(false);
-  // const [error, setError] = React.useState("");
+  const [error, setError] = React.useState("");
 
   const getHomePageData = async () => {
     try {
@@ -45,8 +45,8 @@ const HomePage: React.FunctionComponent = () => {
       });
     } catch (error) {
       console.log(error);
-      
-      // setError("Something went wrong. Try again.");
+
+      setError("Something went wrong. Try again.");
     } finally {
       setIsLoading(false);
     }
@@ -76,21 +76,17 @@ const HomePage: React.FunctionComponent = () => {
 
   //updating data
   const payloadData = { home_yashi_page: payload };
-  console.log(payloadData);
-
   const handleSave = async () => {
     try {
       setIsLoading(true);
-      console.log("id:", id);
-      console.log("payloadData:", payloadData);
-  
       const res = await updateHomePages(payloadData, id);
-      console.log("Response:", res);
-  
-      // Process the response as needed
+      console.log(res);
+      if(res){
+        await getHomePageData();
+      }
     } catch (error) {
       console.log("Error:", error);
-      // setError("Something went wrong. Try again.");
+      setError("Something went wrong. Try again.");
     } finally {
       setIsEditing(false);
       setIsLoading(false);

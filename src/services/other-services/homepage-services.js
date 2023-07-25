@@ -24,13 +24,12 @@ export const getHomePages = async () => {
 export const updateHomePages = async (payloadData, dataId) => {
   const headers = authHeader();
   try {
-   axios.put(
+   const res = await axios.put(
       process.env.REACT_APP_BASE_API_URL + `api/v1/home_yashi_pages/${dataId}`,
       payloadData,
       { headers }
-    ).then((res) => console.log(res))
-    
-    // return data;
+    )
+    return res;
   } catch (error) {
     console.log(error);
     return { error: "An error occured during updating data" };

@@ -1,8 +1,8 @@
 import { createGlobalStyle } from "styled-components";
 import styled from "styled-components";
-import SubmitButton from "../components/helper/SubmitButton";
-import Response from "../components/helper/Response";
-import CompanyLogo from "../components/helper/CompanyLogo";
+import SubmitButton from "../components/helper/global-helpers/SubmitButton";
+import Response from "../components/helper/global-helpers/Response";
+import CompanyLogo from "../components/helper/global-helpers/CompanyLogo";
 
 export default createGlobalStyle`
    *{
