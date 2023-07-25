@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import Login from "./components/login";
 import Global from "./styles/global";
 import { Routes, Route } from "react-router-dom";
@@ -12,12 +12,15 @@ const App: React.FC = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  React.useEffect(() => {
+  const getUser = useCallback(() => {
     setCurrentUser(getCurrentUser());
     if (currentUser) {
       setIsAuthenticated(true);
     }
   }, [currentUser]);
+  React.useEffect(() => {
+    getUser();
+  }, [getUser]);
 
   //growable textarea
   // const tx = document.getElementsByTagName("textarea");
@@ -56,7 +59,6 @@ const App: React.FC = () => {
         />
         <Route path="*" Component={Custom404Page} />
       </Routes>
-      
     </>
   );
 };

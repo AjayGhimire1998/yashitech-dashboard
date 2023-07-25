@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button, Container, Logo, Message } from "../../../styles/global";
 import {
   AttributeKey,
@@ -30,12 +30,12 @@ export interface HomePageGetResponse {
 }
 
 const HomePage: React.FunctionComponent = () => {
-  const [homePageData, setHomePageData] = React.useState<HomePageGetResponse>();
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [isEditing, setIsEditing] = React.useState(false);
-  const [message, setMessage] = React.useState("");
+  const [homePageData, setHomePageData] = useState<HomePageGetResponse>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [message, setMessage] = useState("");
 
-  const getHomePageData = async () => {
+  const getHomePageData = useCallback(async () => {
     try {
       setIsLoading(true);
       const allData = await getHomePages();
@@ -54,17 +54,17 @@ const HomePage: React.FunctionComponent = () => {
     } finally {
       setIsLoading(false);
     }
-  };
-  React.useEffect(() => {
-    getHomePageData();
-    console.log(homePageData);
   }, []);
+
+  useEffect(() => {
+    getHomePageData();
+  }, [getHomePageData]);
 
   const { id } = homePageData?.home_page_data.data || { id: 0 };
   const { who_are_we, what_we_do, why_us } =
     homePageData?.home_page_data.data.attributes || {};
 
-  const [payload, setPayload] = React.useState({
+  const [payload, setPayload] = useState({
     who_are_we: "",
     what_we_do: "",
     why_us: "",

@@ -37,3 +37,10 @@ export const getCurrentUser = () => {
   }
   return null;
 };
+export const getUserDetails = () => {
+  const user = localStorage.getItem("user");
+  if (user) {
+    return JSON.parse(user);
+  }
+  return null;
+};
