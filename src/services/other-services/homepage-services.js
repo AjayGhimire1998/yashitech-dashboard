@@ -1,5 +1,4 @@
 import { authHeader } from "../auth-services/auth-header";
-import { getCurrentUser } from "../auth-services/auth-service";
 import axios from "axios";
 
 export const getHomePages = async () => {
@@ -24,7 +23,6 @@ export const getHomePages = async () => {
 
 export const updateHomePages = async (payloadData, dataId) => {
   const headers = authHeader();
-
   try {
    axios.put(
       process.env.REACT_APP_BASE_API_URL + `api/v1/home_yashi_pages/${dataId}`,

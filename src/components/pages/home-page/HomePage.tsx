@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button, Container, Logo, Wrapper } from "../../../styles/global";
+import { Button, Container, Logo } from "../../../styles/global";
 import {
   AttributeKey,
   ContentWrap,
@@ -31,7 +31,7 @@ const HomePage: React.FunctionComponent = () => {
   const [homePageData, setHomePageData] = React.useState<HomePageData>();
   const [isLoading, setIsLoading] = React.useState(false);
   const [isEditing, setIsEditing] = React.useState(false);
-  const [error, setError] = React.useState("");
+  // const [error, setError] = React.useState("");
 
   const getHomePageData = async () => {
     try {
@@ -44,7 +44,9 @@ const HomePage: React.FunctionComponent = () => {
         why_us: allData?.home_page_data.data.attributes.why_us || "",
       });
     } catch (error) {
-      setError("Something went wrong. Try again.");
+      console.log(error);
+      
+      // setError("Something went wrong. Try again.");
     } finally {
       setIsLoading(false);
     }
@@ -88,7 +90,7 @@ const HomePage: React.FunctionComponent = () => {
       // Process the response as needed
     } catch (error) {
       console.log("Error:", error);
-      setError("Something went wrong. Try again.");
+      // setError("Something went wrong. Try again.");
     } finally {
       setIsEditing(false);
       setIsLoading(false);

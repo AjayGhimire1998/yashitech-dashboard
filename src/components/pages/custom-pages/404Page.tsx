@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Container, Logo, Wrapper } from "../../../styles/global";
+import { Container, Logo } from "../../../styles/global";
 
 interface Props {}
 
