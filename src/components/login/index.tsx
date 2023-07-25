@@ -77,7 +77,16 @@ const Login: React.FC<LoginData> = ({ setIsAuthenticated }) => {
         </InputDiv>
 
         <InputDiv className="login-submit-wrapper">
-          {error ? <Message txtColor="red">{error}</Message> : null}
+          {error ? (
+            <Message
+              txtColor="red"
+              bgColor="white"
+              xBgColor="white"
+              onClick={() => setError("")}
+            >
+              {error}
+            </Message>
+          ) : null}
           {isLoading ? (
             <Spinner color="white" height="40" width="40" />
           ) : (

@@ -17,7 +17,7 @@ const App: React.FC = () => {
     if (currentUser) {
       setIsAuthenticated(true);
     }
-  }, [currentUser]);
+  }, []);
 
   //growable textarea
   // const tx = document.getElementsByTagName("textarea");
@@ -56,6 +56,7 @@ const App: React.FC = () => {
         />
         <Route path="*" Component={Custom404Page} />
       </Routes>
+      
     </>
   );
 };

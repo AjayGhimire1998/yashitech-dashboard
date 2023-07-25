@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button, Container, Logo } from "../../../styles/global";
+import { Button, Container, Logo, Message } from "../../../styles/global";
 import {
   AttributeKey,
   ContentWrap,
@@ -14,10 +14,12 @@ import {
 } from "../../../services/other-services/homepage-services";
 import Spinner from "../../helper/global-helpers/Spinner";
 
-interface HomePageData {
+export interface HomePageGetResponse {
+  message?: string;
+  error?: string;
   home_page_data: {
     data: {
-      id: any;
+      id: number;
       attributes: {
         who_are_we: string;
         what_we_do: string;
@@ -28,15 +30,17 @@ interface HomePageData {
 }
 
 const HomePage: React.FunctionComponent = () => {
-  const [homePageData, setHomePageData] = React.useState<HomePageData>();
+  const [homePageData, setHomePageData] = React.useState<HomePageGetResponse>();
   const [isLoading, setIsLoading] = React.useState(false);
   const [isEditing, setIsEditing] = React.useState(false);
-  const [error, setError] = React.useState("");
+  const [message, setMessage] = React.useState("");
 
   const getHomePageData = async () => {
     try {
       setIsLoading(true);
       const allData = await getHomePages();
+      console.log(allData);
+
       setHomePageData(allData);
       setPayload({
         what_we_do: allData?.home_page_data.data.attributes.what_we_do || "",
@@ -46,13 +50,14 @@ const HomePage: React.FunctionComponent = () => {
     } catch (error) {
       console.log(error);
 
-      setError("Something went wrong. Try again.");
+      setMessage("Something went wrong. Try again.");
     } finally {
       setIsLoading(false);
     }
   };
   React.useEffect(() => {
     getHomePageData();
+    console.log(homePageData);
   }, []);
 
   const { id } = homePageData?.home_page_data.data || { id: 0 };
@@ -81,14 +86,18 @@ const HomePage: React.FunctionComponent = () => {
       setIsLoading(true);
       const res = await updateHomePages(payloadData, id);
       console.log(res);
-      if(res){
+      if (res.status === 200) {
+        setMessage(res.data.message);
         await getHomePageData();
+        setIsEditing(false);
+        setIsLoading(false);
+      } else {
+        setMessage(res.data.error);
+        setIsLoading(false);
       }
     } catch (error) {
       console.log("Error:", error);
-      setError("Something went wrong. Try again.");
-    } finally {
-      setIsEditing(false);
+      setMessage("Something went wrong. Try again.");
       setIsLoading(false);
     }
   };
@@ -103,6 +112,15 @@ const HomePage: React.FunctionComponent = () => {
         <Spinner color="#440a70" height="50" width="50" />
       ) : (
         <>
+          {message ? (
+            <Message
+              bgColor="#440a70"
+              txtColor="white"
+              onClick={() => setMessage("")}
+            >
+              {message}
+            </Message>
+          ) : null}
           <br />
           <br />
           <ContentWrap>

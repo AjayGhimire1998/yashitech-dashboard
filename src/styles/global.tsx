@@ -66,11 +66,24 @@ export const Button = styled(SubmitButton)`
 `;
 
 export const Message = styled(Response)`
-background-color: ${(props) => (props.bgColor? props.bgColor : "white")};
+  background-color: ${(props) => (props.bgColor ? props.bgColor : "white")};
   color: ${(props) => (props.txtColor ? props.txtColor : "white")};
   padding: 10px;
-  /* width: 350px;
-  @media (max-width: 600px) {
-    width: 100%;
-  } */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 50px;
+  font-size: 15px;
+
+  small{
+    border: 1px solid white;
+    padding: 3px;
+    background-color: ${(props) => (props.xBgColor ? props.xBgColor : "red")};
+    cursor: pointer;
+    &:hover{
+      border: 1px solid white;
+      background-color: ${(props) => (props.xBgColor ? props.xBgColor : "white")};
+      color: red;
+    }
+  }
 `;

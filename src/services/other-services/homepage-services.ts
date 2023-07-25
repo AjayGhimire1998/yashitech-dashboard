@@ -1,5 +1,6 @@
 import { authHeader } from "../auth-services/auth-header";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
+// import { HomePageUpdateResponse } from "../../components/pages/home-page/HomePage";
 
 export const getHomePages = async () => {
   try {
@@ -21,17 +22,15 @@ export const getHomePages = async () => {
   }
 };
 
-export const updateHomePages = async (payloadData, dataId) => {
+export const updateHomePages = async (
+  payloadData: any,
+  dataId: number
+): Promise<AxiosResponse> => {
   const headers = authHeader();
-  try {
-   const res = await axios.put(
-      process.env.REACT_APP_BASE_API_URL + `api/v1/home_yashi_pages/${dataId}`,
-      payloadData,
-      { headers }
-    )
-    return res;
-  } catch (error) {
-    console.log(error);
-    return { error: "An error occured during updating data" };
-  }
+  const res = await axios.put(
+    process.env.REACT_APP_BASE_API_URL + `api/v1/home_yashi_pages/${dataId}`,
+    payloadData,
+    { headers }
+  );
+  return res;
 };
