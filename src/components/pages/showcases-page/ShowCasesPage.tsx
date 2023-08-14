@@ -9,14 +9,14 @@ interface ShowCasesResponse {
     showcases: {
         data: [{
             attributes: {
-                
+
             }
         }]
     }
 }
 
 const ShowCasesPage: React.FunctionComponent = (props) => {
-    const [showcasesData, setShowcasesData] = React.useState([]);
+    const [showcasesData, setShowcasesData] = React.useState<any>();
     const [isLoading, setIsLoading] = React.useState(false);
     const [message, setMessage] = React.useState("");
     const getShowCasesData = React.useCallback(async () => {
@@ -26,15 +26,14 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
             console.log(showcases);
 
             if (showcases.status === 200) {
-                console.log("status 200");
-                setShowcasesData(showcases.data);
-                setMessage(showcases.data.message|| showcases.data.error || "");
+                // console.log("status 200");
+                setShowcasesData(showcases?.data)
+                // setMessage(showcases.data.message || showcases.data.error || "");
 
                 console.log(showcasesData);
-
-            } else {
-                // setMessage(showcases.response.data.message)
+                
             }
+            showcasesData && setIsLoading(false);
         } catch (err) {
             console.log(err);
         }
@@ -47,9 +46,13 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
     return <Container>
         <StaticContent />
         <br />
-        {showcasesData?.map((dat) => {
-            return <p key={1}>{dat.title}</p>
-        })}
+        {isLoading ? (
+            <p>Loading...</p>
+        ) : (
+            showcasesData?.showcases.data.map((show: any) => (
+                <p key={show.id}>{show.attributes.title}</p>
+            ))
+        )}
     </Container>
 };
 
