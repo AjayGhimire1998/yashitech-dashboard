@@ -1,20 +1,19 @@
 import { useCallback, useEffect, useState } from "react";
-import { Button, Container, Logo, Message } from "../../../styles/global";
+import { Button, Container, Message } from "../../../styles/global";
 import {
   AttributeKey,
   ContentWrap,
   DataValue,
   FormTextArea,
-  Pagination,
-  PaginationWrapper,
 } from "../styles";
 import {
   getHomePages,
   updateHomePages,
 } from "../../../services/other-services/homepage-services";
 import Spinner from "../../helper/global-helpers/Spinner";
+import StaticContent from "../../helper/pages-helpers/StaticContent";
 
-export interface HomePageGetResponse {
+interface HomePageGetResponse {
   message?: string;
   error?: string;
   home_page_data: {
@@ -39,7 +38,7 @@ const HomePage: React.FunctionComponent = () => {
     try {
       setIsLoading(true);
       const allData = await getHomePages();
-      console.log(allData);
+      // console.log(allData);
 
       setHomePageData(allData);
       setPayload({
@@ -49,7 +48,6 @@ const HomePage: React.FunctionComponent = () => {
       });
     } catch (error) {
       console.log(error);
-
       setMessage("Something went wrong. Try again.");
     } finally {
       setIsLoading(false);
@@ -104,10 +102,7 @@ const HomePage: React.FunctionComponent = () => {
 
   return (
     <Container>
-      <Logo />
-      <PaginationWrapper>
-        <Pagination href="/"> {"<- Back"}</Pagination>
-      </PaginationWrapper>
+      <StaticContent />
       {isLoading ? (
         <Spinner color="#440a70" height="50" width="50" />
       ) : (

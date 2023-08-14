@@ -7,6 +7,7 @@ import { getCurrentUser } from "./services/auth-services/auth-service";
 import HomePage from "./components/pages/home-page/HomePage";
 import Custom404Page from "./components/pages/custom-pages/404Page";
 import Custom401Page from "./components/pages/custom-pages/401Page";
+import ShowCasesPage from "./components/pages/showcases-page/ShowCasesPage";
 
 const App: React.FC = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -18,6 +19,7 @@ const App: React.FC = () => {
       setIsAuthenticated(true);
     }
   }, [currentUser]);
+
   React.useEffect(() => {
     getUser();
   }, [getUser]);
@@ -55,6 +57,13 @@ const App: React.FC = () => {
           path="/homepage"
           element={
             isAuthenticated || currentUser ? <HomePage /> : <Custom401Page />
+          }
+        />
+
+        <Route
+          path="/showcases"
+          element={
+            isAuthenticated || currentUser ? <ShowCasesPage /> : <Custom401Page />
           }
         />
         <Route path="*" Component={Custom404Page} />

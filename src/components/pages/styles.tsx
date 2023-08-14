@@ -18,6 +18,7 @@ export const PaginationWrapper = styled.div`
   align-self: flex-start;
   padding-left: 32px;
   padding-right: 32px;
+  
 `;
 export const Pagination = styled.a`
   text-decoration: none;

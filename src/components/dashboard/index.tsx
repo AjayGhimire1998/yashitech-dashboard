@@ -10,12 +10,12 @@ const Dashboard: React.FunctionComponent = () => {
   return (
     <Container>
       <Logo />
-      <h4>Welcome {getUserDetails().attributes.first_name}</h4>
+      <h4 style={{ color: "#440a70" }}>Welcome {getUserDetails().attributes.first_name}</h4>
       <br />
       <br />
       <LinkWrapper>
         <Link linkTo="/homepage">Home Page Data</Link>
-        <Link linkTo="/homepage">Home Page Data</Link>
+        <Link linkTo="/showcases">Showcase Data</Link>
         <Link linkTo="/homepage">Home Page Data</Link>
         <Link linkTo="/homepage">Home Page Data</Link>
         <Link linkTo="/homepage">Home Page Data</Link>
