@@ -3,6 +3,7 @@ import styled from "styled-components";
 import SubmitButton from "../components/helper/global-helpers/SubmitButton";
 import Response from "../components/helper/global-helpers/Response";
 import CompanyLogo from "../components/helper/global-helpers/CompanyLogo";
+import Spinner from "../components/helper/global-helpers/Spinner";
 
 export default createGlobalStyle`
    *{
@@ -23,6 +24,7 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
   @media (max-width: 600px) {
     padding-left: 32px;
     padding-right: 32px;
@@ -87,3 +89,9 @@ export const Message = styled(Response)`
     }
   }
 `;
+
+export const LoadingSpinner = styled(Spinner)`
+  color: ${(props) => (props.color ? props.color : "#440a70")};
+  width:  ${(props) => (props.height ? props.height : "30px")};
+  height:  ${(props) => (props.width ? props.width : "30px")};
+`

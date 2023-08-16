@@ -2,10 +2,10 @@ import { authHeader } from "../auth-services/auth-header";
 import axios, { AxiosResponse } from "axios";
 
 export const getShowcases = async (): Promise<AxiosResponse> => {
-  const headers = authHeader();
+  // const headers = authHeader();
   const res = await axios.get(
     process.env.REACT_APP_BASE_API_URL + "api/v1/showcases",
-    {headers}
+    // {headers}
   );
   return res;
 };

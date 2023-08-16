@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Button, Container, Message } from "../../../styles/global";
+import { Button, Container, LoadingSpinner, Message } from "../../../styles/global";
 import {
   AttributeKey,
   ContentWrap,
@@ -10,7 +10,6 @@ import {
   getHomePages,
   updateHomePages,
 } from "../../../services/other-services/homepage-services";
-import Spinner from "../../helper/global-helpers/Spinner";
 import StaticContent from "../../helper/pages-helpers/StaticContent";
 
 interface HomePageGetResponse {
@@ -38,25 +37,32 @@ const HomePage: React.FunctionComponent = () => {
     try {
       setIsLoading(true);
       const allData = await getHomePages();
-      // console.log(allData);
-
       setHomePageData(allData);
-      setPayload({
-        what_we_do: allData?.home_page_data.data.attributes.what_we_do || "",
-        who_are_we: allData?.home_page_data.data.attributes.who_are_we || "",
-        why_us: allData?.home_page_data.data.attributes.why_us || "",
-      });
+
     } catch (error) {
       console.log(error);
       setMessage("Something went wrong. Try again.");
-    } finally {
-      setIsLoading(false);
     }
   }, []);
 
   useEffect(() => {
     getHomePageData();
   }, [getHomePageData]);
+
+  useEffect(() => {
+    if (homePageData) {
+      setMessage(homePageData.message || homePageData.error || "Internal Server Error")
+      setPayload({
+        what_we_do: homePageData?.home_page_data.data.attributes.what_we_do || "",
+        who_are_we: homePageData?.home_page_data.data.attributes.who_are_we || "",
+        why_us: homePageData?.home_page_data.data.attributes.why_us || "",
+      });
+      setIsLoading(false);
+    }
+    setInterval(()=> {
+      setMessage("")
+  }, 3000);
+  }, [homePageData])
 
   const { id } = homePageData?.home_page_data.data || { id: 0 };
   const { who_are_we, what_we_do, why_us } =
@@ -103,8 +109,12 @@ const HomePage: React.FunctionComponent = () => {
   return (
     <Container>
       <StaticContent />
+      <br />
+      <h2>Homepage Data</h2>
+      <br />
+      <br />
       {isLoading ? (
-        <Spinner color="#440a70" height="50" width="50" />
+        <LoadingSpinner color="#440a70" height="50px" width="50px" />
       ) : (
         <>
           {message ? (
