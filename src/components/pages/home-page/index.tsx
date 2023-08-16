@@ -5,12 +5,12 @@ import {
   ContentWrap,
   DataValue,
   FormTextArea,
-} from "../styles";
+} from "../pages-styles";
 import {
   getHomePages,
   updateHomePages,
 } from "../../../services/other-services/homepage-services";
-import StaticContent from "../../helper/pages-helpers/StaticContent";
+import StaticContent from "../../helper/pages-helpers/homepage-helpers/StaticContent";
 
 interface HomePageGetResponse {
   message?: string;
@@ -38,7 +38,6 @@ const HomePage: React.FunctionComponent = () => {
       setIsLoading(true);
       const allData = await getHomePages();
       setHomePageData(allData);
-
     } catch (error) {
       console.log(error);
       setMessage("Something went wrong. Try again.");
@@ -59,9 +58,6 @@ const HomePage: React.FunctionComponent = () => {
       });
       setIsLoading(false);
     }
-    setInterval(()=> {
-      setMessage("")
-  }, 3000);
   }, [homePageData])
 
   const { id } = homePageData?.home_page_data.data || { id: 0 };
@@ -108,7 +104,7 @@ const HomePage: React.FunctionComponent = () => {
 
   return (
     <Container>
-      <StaticContent />
+      <StaticContent history="" />
       <br />
       <h2>Homepage Data</h2>
       <br />

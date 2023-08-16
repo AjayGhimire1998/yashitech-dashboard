@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import NavLink from "../helper/dashboard-helpers/NavLink";
-import NavLinksWrapper from "../helper/dashboard-helpers/LinksWrapper";
+import NavLink from "../../helper/dashboard-helpers/NavLink";
+import NavLinksWrapper from "../../helper/dashboard-helpers/LinksWrapper"
 
 export const Link = styled(NavLink)`
   text-decoration: none;

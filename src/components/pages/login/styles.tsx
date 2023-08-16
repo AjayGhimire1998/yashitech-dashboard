@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import LoginInput from "../helper/login-helpers/LoginInput";
-import LoginInputWrapper from "../helper/login-helpers/LoginInputWrapper";
+import LoginInput from "../../helper/login-helpers/LoginInput";
+import LoginInputWrapper from "../../helper/login-helpers/LoginInputWrapper";
 
 
 

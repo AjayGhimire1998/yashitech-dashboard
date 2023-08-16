@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Container, Logo } from "../../../styles/global";
-import { Pagination, PaginationWrapper } from "../styles";
+import { Pagination, PaginationWrapper } from "../pages-styles";
 
 interface Props {}
 

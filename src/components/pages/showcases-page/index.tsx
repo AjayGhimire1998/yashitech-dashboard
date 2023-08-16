@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Container, LoadingSpinner, Message } from '../../../styles/global';
-import StaticContent from '../../helper/pages-helpers/StaticContent';
+import StaticContent from '../../helper/pages-helpers/homepage-helpers/StaticContent';
 import { getShowcases } from '../../../services/other-services/showcases-services';
-import { DataValue } from '../styles';
+import { DataValue } from '../pages-styles';
 
 
 interface ShowCasesResponse {
@@ -45,21 +45,20 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
             setIsLoading(false);
         }
 
-        setInterval(() => {
-            setMessage("");
-        }, 3000);
-
-        setInterval(() => {
+        const loaderInterval = setInterval(() => {
             if (!showcasesData) {
                 setIsLoading(false)
             }
         }, 5000)
+
+        return () => clearInterval(loaderInterval);
+
     }, [showcasesData]);
 
     return <Container>
-        <StaticContent />
+        <StaticContent history="" />
         <br />
-        <h2>ShowCase Data</h2>
+        <h2>ShowCases Data</h2>
         <br />
         <br />
         {isLoading ? (

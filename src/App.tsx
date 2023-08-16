@@ -1,13 +1,13 @@
 import React, { useCallback, useState } from "react";
-import Login from "./components/login";
+import Login from "./components/pages/login";
 import Global from "./styles/global";
 import { Routes, Route } from "react-router-dom";
-import Dashboard from "./components/dashboard";
+import Dashboard from "./components/pages/dashboard";
 import { getCurrentUser } from "./services/auth-services/auth-service";
-import HomePage from "./components/pages/home-page/HomePage";
+import HomePage from "./components/pages/home-page";
 import Custom404Page from "./components/pages/custom-pages/404Page";
 import Custom401Page from "./components/pages/custom-pages/401Page";
-import ShowCasesPage from "./components/pages/showcases-page/ShowCasesPage";
+import ShowCasesPage from "./components/pages/showcases-page";
 
 const App: React.FC = () => {
   const [currentUser, setCurrentUser] = useState(undefined);

@@ -1,6 +1,6 @@
 import * as React from "react";
-import LoginInputWrapper from "../login-helpers/LoginInputWrapper";
-import { AttributeKey, FormTextArea } from "../../pages/styles";
+import LoginInputWrapper from "../../login-helpers/LoginInputWrapper";
+import { AttributeKey, FormTextArea } from "../../../pages/pages-styles";
 
 interface Props {
   children?: React.ReactNode;

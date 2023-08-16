@@ -1,10 +1,10 @@
 import * as React from "react";
-import { Button, Container, Logo } from "../../styles/global";
+import { Button, Container, Logo } from "../../../styles/global";
 import { Link, LinkWrapper } from "./styles";
 import {
   getUserDetails,
   logOut,
-} from "../../services/auth-services/auth-service";
+} from "../../../services/auth-services/auth-service";
 
 const Dashboard: React.FunctionComponent = () => {
   return (

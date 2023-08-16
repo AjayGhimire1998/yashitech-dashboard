@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
-import ContentWrapper from "../helper/pages-helpers/ContentWrapper";
-import Attribute from "./home-page/Attribute";
-import Data from "./home-page/Data";
-import TextArea from "../helper/pages-helpers/TextArea";
+import ContentWrapper from "../helper/pages-helpers/homepage-helpers/ContentWrapper";
+import Attribute from "../helper/pages-helpers/homepage-helpers/Attribute";
+import Data from "../helper/pages-helpers/homepage-helpers/Data";
+import TextArea from "../helper/pages-helpers/homepage-helpers/TextArea";
 
 export const ContentWrap = styled(ContentWrapper)`
   display: flex;

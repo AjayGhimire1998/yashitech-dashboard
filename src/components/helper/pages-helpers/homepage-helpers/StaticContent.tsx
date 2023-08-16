@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Logo } from '../../../styles/global';
-import { Pagination, PaginationWrapper } from '../../pages/styles';
+import { Logo } from '../../../../styles/global';
+import { Pagination, PaginationWrapper } from '../../../pages/pages-styles';
 
 interface Props {
     history?: string

@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Container, Logo, Message, Wrapper } from "../../styles/global";
+import { Container, Logo, Message, Wrapper } from "../../../styles/global";
 import { Input, InputDiv } from "./styles";
-import { Button } from "../../styles/global";
-import { login } from "../../services/auth-services/auth-service";
-import Spinner from "../helper/global-helpers/Spinner";
+import { Button } from "../../../styles/global";
+import { login } from "../../../services/auth-services/auth-service";
+import Spinner from "../../helper/global-helpers/Spinner";
 
 interface LoginData {
   isAuthenticated?: boolean;
