@@ -8,19 +8,15 @@ import { DataValue } from '../styles';
 interface ShowCasesResponse {
     message?: string;
     error?: string;
-    fullErrors?: [];
     showcases: {
-        data: [{
-            attributes: {},
-            id: string,
-            type: string
-        }]
+        data: [EachShowCase]
     }
 }
 
 interface EachShowCase {
     id: string;
     type: string;
+    attributes: {};
 }
 
 const ShowCasesPage: React.FunctionComponent = (props) => {
@@ -81,7 +77,7 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
                 ) : null}
                 <br />
                 <br />
-                {showcasesData.showcases.data.map((show: ) => (
+                {showcasesData.showcases.data.map((show: any) => (
                     // <a key={show.id} href=''>{show.attributes.title}</a>
                     <DataValue key={show.id}>{show.attributes.title}</DataValue>
                 ))}
