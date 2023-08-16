@@ -2,8 +2,6 @@ import * as React from 'react';
 import { Container, LoadingSpinner, Message } from '../../../styles/global';
 import StaticContent from '../../helper/pages-helpers/homepage-helpers/StaticContent';
 import { getShowcases } from '../../../services/other-services/showcases-services';
-import { DataValue } from '../pages-styles';
-
 
 interface ShowCasesResponse {
     message?: string;
