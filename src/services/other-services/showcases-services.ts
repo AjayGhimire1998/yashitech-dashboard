@@ -1,4 +1,4 @@
-import { authHeader } from "../auth-services/auth-header";
+// import { authHeader } from "../auth-services/auth-header";
 import axios, { AxiosResponse } from "axios";
 
 export const getShowcases = async (): Promise<AxiosResponse> => {
