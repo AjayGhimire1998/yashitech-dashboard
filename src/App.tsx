@@ -8,6 +8,7 @@ import HomePage from "./components/pages/home-page";
 import Custom404Page from "./components/pages/custom-pages/404Page";
 import Custom401Page from "./components/pages/custom-pages/401Page";
 import ShowCasesPage from "./components/pages/showcases-page";
+import EachShowCase from "./components/pages/showcases-page/each-showcase-page";
 
 const App: React.FC = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -70,7 +71,7 @@ const App: React.FC = () => {
         <Route
           path="/showcases/:id"
           element={
-            isAuthenticated ? <ShowCasesPage /> : <Custom401Page />
+            isAuthenticated ? <EachShowCase /> : <Custom401Page />
           }
         />
         <Route path="*" Component={Custom404Page} />

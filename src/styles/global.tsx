@@ -22,9 +22,10 @@ export default createGlobalStyle`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
-  position: relative;
+  /* width: 1350px; */
+  /* position: relative; */
   @media (max-width: 600px) {
     padding-left: 32px;
     padding-right: 32px;
