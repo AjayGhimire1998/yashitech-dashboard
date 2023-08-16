@@ -2,14 +2,15 @@ import * as React from 'react';
 import { Logo } from '../../../styles/global';
 import { Pagination, PaginationWrapper } from '../../pages/styles';
 
-// interface Props {
-// }
+interface Props {
+    history?: string
+}
 
-const StaticContent: React.FC = () => {
+const StaticContent: React.FC<Props> = ({history}) => {
     return <>
-        <Logo />
+        <Logo goToHome={"/"}/>
         <PaginationWrapper>
-            <Pagination href="/"> {"<- Back"}</Pagination>
+            <Pagination href={`/${history}`}> {"<- Back"}</Pagination>
         </PaginationWrapper>
     </>
 

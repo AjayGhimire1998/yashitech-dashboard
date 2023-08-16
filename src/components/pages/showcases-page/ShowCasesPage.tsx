@@ -37,7 +37,7 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
 
     React.useEffect(() => {
         getShowCasesData();
-    }, [getShowCasesData]);
+    }, []);
 
     React.useEffect(() => {
         if (showcasesData) {
@@ -78,12 +78,12 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
                 <br />
                 <br />
                 {showcasesData.showcases.data.map((show: any) => (
-                    // <a key={show.id} href=''>{show.attributes.title}</a>
-                    <DataValue key={show.id}>{show.attributes.title}</DataValue>
+                    <a key={show.id} href={`/showcases/${show.id}`}>{show.attributes.title}</a>
+                    // <DataValue key={show.id}>{show.attributes.title}</DataValue>
                 ))}
             </>
 
-        ) : <p>Internal Server Error. Try Reloading</p>}
+        ) : <p>Internal Server Error. Try Reloading.</p>}
 
     </Container>
 };

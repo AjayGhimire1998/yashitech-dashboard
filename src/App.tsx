@@ -46,7 +46,7 @@ const App: React.FC = () => {
         <Route
           path="/"
           element={
-            isAuthenticated   ? (
+            isAuthenticated ? (
               <Dashboard />
             ) : (
               <Login setIsAuthenticated={setIsAuthenticated} />
@@ -56,14 +56,21 @@ const App: React.FC = () => {
         <Route
           path="/homepage"
           element={
-            isAuthenticated  ? <HomePage /> : <Custom401Page />
+            isAuthenticated ? <HomePage /> : <Custom401Page />
           }
         />
 
         <Route
           path="/showcases"
           element={
-            isAuthenticated  ? <ShowCasesPage /> : <Custom401Page />
+            isAuthenticated ? <ShowCasesPage /> : <Custom401Page />
+          }
+        />
+
+        <Route
+          path="/showcases/:id"
+          element={
+            isAuthenticated ? <ShowCasesPage /> : <Custom401Page />
           }
         />
         <Route path="*" Component={Custom404Page} />
