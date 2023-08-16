@@ -35,7 +35,7 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
 
     React.useEffect(() => {
         getShowCasesData();
-    }, []);
+    }, [getShowCasesData]);
 
     React.useEffect(() => {
         if (showcasesData) {
