@@ -39,7 +39,7 @@ const EachShowCase: React.FunctionComponent = () => {
       console.log(error);
       console.log(error.response.data.error);
     }
-  }, []);
+  }, [id]);
 
   React.useEffect(() => {
     getShowcaseData();
