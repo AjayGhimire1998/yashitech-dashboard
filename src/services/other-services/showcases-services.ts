@@ -3,10 +3,8 @@ import axios, { AxiosResponse } from "axios";
 import { authHeader } from "../auth-services/auth-header";
 
 export const getShowcases = async (): Promise<AxiosResponse> => {
-  // const headers = authHeader();
   const res = await axios.get(
     process.env.REACT_APP_BASE_API_URL + "api/v1/showcases"
-    // {headers}
   );
   return res;
 };
