@@ -25,7 +25,7 @@ const EachShowCase: React.FunctionComponent = () => {
   const [message, setMessage] = React.useState<string>();
   const { id } = useParams<ShowCaseParam>();
 
-  const getShowcaseData = async (id: string | undefined) => {
+  const getShowcaseData = React.useCallback(async (id: string | undefined) => {
     try {
       setIsLoading(true);
       const res = await viewShowcase(id);
@@ -39,11 +39,11 @@ const EachShowCase: React.FunctionComponent = () => {
       console.log(error);
       console.log(error.response.data.error);
     }
-  };
+  },[]);
 
   React.useEffect(() => {
     getShowcaseData(id);
-  }, [id]);
+  }, [id, getShowcaseData]);
 
   React.useEffect(() => {
     if (showcaseData) {
