@@ -7,7 +7,7 @@ import { viewShowcase } from "../../../../services/other-services/showcases-serv
 import { EachShowcase } from "..";
 
 type ShowCaseParam = {
-  id: string;
+  id: string | undefined;
 };
 
 interface EachShowCaseResponse {
@@ -25,7 +25,7 @@ const EachShowCase: React.FunctionComponent = () => {
   const [message, setMessage] = React.useState<string>();
   const { id } = useParams<ShowCaseParam>();
 
-  const getShowcaseData = React.useCallback(async () => {
+  const getShowcaseData = React.useCallback(async (id: string | undefined) => {
     try {
       setIsLoading(true);
       const res = await viewShowcase(id);
@@ -39,10 +39,10 @@ const EachShowCase: React.FunctionComponent = () => {
       console.log(error);
       console.log(error.response.data.error);
     }
-  }, [id]);
+  }, []);
 
   React.useEffect(() => {
-    getShowcaseData();
+    getShowcaseData(id);
   }, [getShowcaseData]);
 
   React.useEffect(() => {
