@@ -23,8 +23,9 @@ interface ShowCasesResponse {
 export interface EachShowcase {
   id: string;
   type: string;
-  attributes: {};
+  attributes: any;
 }
+
 
 const ShowCasesPage: React.FunctionComponent = (props) => {
   const [showcasesData, setShowcasesData] = React.useState<ShowCasesResponse>();

@@ -1,5 +1,5 @@
 // import { authHeader } from "../auth-services/auth-header";
-import axios, {  AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { authHeader } from "../auth-services/auth-header";
 
 export const getShowcases = async (): Promise<AxiosResponse> => {
@@ -11,9 +11,11 @@ export const getShowcases = async (): Promise<AxiosResponse> => {
   return res;
 };
 
-export const viewShowcase = async (id: string | undefined): Promise<AxiosResponse> => {
+export const viewShowcase = async (
+  id: string | undefined
+): Promise<AxiosResponse> => {
   const res = await axios.get(
-    process.env.REACT_APP_BASE_API_URL + `api/v1/showcase/${id}`
+    process.env.REACT_APP_BASE_API_URL + `api/v1/showcases/${id}`
   );
   return res;
 };
