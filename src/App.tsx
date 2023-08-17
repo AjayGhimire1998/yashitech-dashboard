@@ -25,7 +25,7 @@ const App: React.FC = () => {
     getUser();
   }, [getUser]);
 
-  //growable textarea
+  // growable textarea
   // const tx = document.getElementsByTagName("textarea");
   // for (let i = 0; i < tx.length; i++) {
   //   tx[i].setAttribute(
@@ -56,23 +56,17 @@ const App: React.FC = () => {
         />
         <Route
           path="/homepage"
-          element={
-            isAuthenticated ? <HomePage /> : <Custom401Page />
-          }
+          element={isAuthenticated ? <HomePage /> : <Custom401Page />}
         />
 
         <Route
           path="/showcases"
-          element={
-            isAuthenticated ? <ShowCasesPage /> : <Custom401Page />
-          }
+          element={isAuthenticated ? <ShowCasesPage /> : <Custom401Page />}
         />
 
         <Route
           path="/showcases/:id"
-          element={
-            isAuthenticated ? <EachShowCase /> : <Custom401Page />
-          }
+          element={isAuthenticated ? <EachShowCase /> : <Custom401Page />}
         />
         <Route path="*" Component={Custom404Page} />
       </Routes>

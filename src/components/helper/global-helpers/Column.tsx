@@ -9,6 +9,8 @@ interface IColumnsProps {
   value3: string;
   value4: string;
   id?: string;
+  href1?: string;
+  href2?: string;
   bgColor?: string;
   isDeleting?: boolean;
   onClick?: () => void;
@@ -21,6 +23,8 @@ const Column: React.FunctionComponent<IColumnsProps> = ({
   value3,
   value4,
   id,
+  href1,
+  href2,
   onClick,
   isDeleting,
 }) => {
@@ -32,8 +36,8 @@ const Column: React.FunctionComponent<IColumnsProps> = ({
       <div>{maxTenChars(value4)}</div>
       {id ? (
         <div>
-          <a href={`showcases/${id}`}>View</a>
-          <a href={`showcases/${id}/edit`}>Edit</a>
+          {href1 ? <a href={href1}>View</a> : null}
+          <a href={href2}>Edit</a>
           {isDeleting ? (
             <LoadingSpinner color="red" height="3" width="3" />
           ) : (

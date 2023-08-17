@@ -1,10 +1,16 @@
 import * as React from "react";
-import { ShowcaseWrapper } from "./styles";
+import { ShowcaseData, ShowcaseWrapper } from "./styles";
 import { Container, LoadingSpinner, Message } from "../../../../styles/global";
 import StaticContent from "../../../helper/pages-helpers/homepage-helpers/StaticContent";
 import { useParams } from "react-router-dom";
-import { viewShowcase } from "../../../../services/other-services/showcases-services";
+import {
+  arrayOFAttributes,
+  deleteShowcase,
+  viewShowcase,
+} from "../../../../services/other-services/showcases-services";
 import { EachShowcase } from "..";
+import { ShowcaseColumn } from "../styles";
+import { useNavigate } from "react-router-dom";
 
 type ShowCaseParam = {
   id: string | undefined;
@@ -19,9 +25,12 @@ interface EachShowCaseResponse {
 }
 
 const EachShowCase: React.FunctionComponent = () => {
+  const navigate = useNavigate();
+
   const [showcaseData, setShowcaseData] =
     React.useState<EachShowCaseResponse>();
   const [isLoading, setIsLoading] = React.useState<boolean>();
+  const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>();
   const [message, setMessage] = React.useState<string>();
   const { id } = useParams<ShowCaseParam>();
 
@@ -30,7 +39,6 @@ const EachShowCase: React.FunctionComponent = () => {
       setIsLoading(true);
       const res = await viewShowcase(id);
       setShowcaseData(res.data);
-  
     } catch (error: any) {
       setIsLoading(false);
       setMessage(
@@ -41,6 +49,24 @@ const EachShowCase: React.FunctionComponent = () => {
     }
   }, [id]);
 
+  const handleDelete = async () => {
+    try {
+      setIsDeleteLoading(true);
+      const res = await deleteShowcase(id);
+      if (res.status === 200) {
+        setMessage(res.data.message);
+        setInterval(() => {
+          setIsDeleteLoading(false);
+          navigate("/showcases");
+        }, 1000);
+      }
+    } catch (error: any) {
+      console.log(error);
+      setIsDeleteLoading(false);
+      setMessage(error.response.data.error);
+    }
+  };
+
   React.useEffect(() => {
     getShowcaseData();
   }, [getShowcaseData]);
@@ -50,8 +76,11 @@ const EachShowCase: React.FunctionComponent = () => {
       setMessage(showcaseData.message || showcaseData.error);
       setIsLoading(false);
       console.log(showcaseData);
+      console.log(arrayOFAttributes(showcaseData.showcase.data.attributes));
     }
   }, [showcaseData]);
+
+  
 
   return (
     <Container>
@@ -70,13 +99,33 @@ const EachShowCase: React.FunctionComponent = () => {
         </Message>
       ) : null}
       <br />
-      <br />
       {isLoading ? (
-        <LoadingSpinner color="black" height="50" width="50" />
+        <LoadingSpinner color="#440a70" height="50" width="50" />
       ) : showcaseData ? (
         <>
           <ShowcaseWrapper>
-            <p>{showcaseData.showcase.data.attributes.title}</p>
+            {arrayOFAttributes(showcaseData.showcase.data.attributes).map(
+              (attr, index) => {
+                return (
+                  <ShowcaseData
+                    key={index}
+                    attribute={attr}
+                    value={showcaseData.showcase.data.attributes[attr]}
+                  />
+                );
+              }
+            )}
+            <br />
+            <ShowcaseColumn
+              value2=""
+              value3=""
+              value4=""
+              id={id}
+              bgColor="white"
+              href2={`${id}/edit`}
+              isDeleting={isDeleteLoading}
+              onClick={handleDelete}
+            />
           </ShowcaseWrapper>
         </>
       ) : (

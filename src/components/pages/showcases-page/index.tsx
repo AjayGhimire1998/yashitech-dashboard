@@ -1,12 +1,9 @@
 import * as React from "react";
-import {
-  Container,
-  LoadingSpinner,
-  Message,
-} from "../../../styles/global";
+import { Container, LoadingSpinner, Message } from "../../../styles/global";
 import StaticContent from "../../helper/pages-helpers/homepage-helpers/StaticContent";
 import {
   checkIfEven,
+  createNewShowcase,
   deleteShowcase,
   getShowcases,
 } from "../../../services/other-services/showcases-services";
@@ -25,7 +22,6 @@ export interface EachShowcase {
   type: string;
   attributes: any;
 }
-
 
 const ShowCasesPage: React.FunctionComponent = (props) => {
   const [showcasesData, setShowcasesData] = React.useState<ShowCasesResponse>();
@@ -57,9 +53,11 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
         );
         await getShowCasesData();
       }
-    } catch (error) {
-      setMessage("Something went wrong. Try Reloading.");
+    } catch (error: any) {
+      setIsDeleteLoading("");
+      setDeleteMessage(error.response.data.error || "Something went wrong. Try again.");
       console.log(error);
+      console.log(error.response.data.error);
     }
   };
 
@@ -79,6 +77,23 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
     }, 5000);
     return () => clearInterval(loaderInterval);
   }, [showcasesData]);
+
+  const createNew = async () => {
+    try {
+      const payload: object = {
+        showcase: {
+          title: "Newest Project",
+          year: "2050",
+          client: "Meta Corp X hex",
+          ask: "suppp, u good? lorem fashjkgskgskafkasjgfsafjgsajgfsafgsafsagfasfjhfjhahsfjhdavgsajgfsjgfjhgasfjashjfgjhsaghjfgasjfghkjsagfjagsjh suppp, u good? lorem fashjkgskgskafkasjgfsafjgsajgfsafgsafsagfasfjhfjhahsfjhdavgsajgfsjgfjhgasfjashjfgjhsaghjfgasjfghkjsagfjagsjh suppp, u good? lorem fashjkgskgskafkasjgfsafjgsajgfsafgsafsagfasfjhfjhahsfjhdavgsajgfsjgfjhgasfjashjfgjhsaghjfgasjfghkjsagfjagsjh",
+        },
+      };
+      const res = await createNewShowcase(payload);
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Container>
@@ -118,7 +133,7 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
           <br />
 
           <ShowcasesWrapper>
-            {showcasesData.showcases.data.map((show: any) => (
+            {showcasesData.showcases.data.map((show: any, index: number) => (
               <ShowcaseColumn
                 key={show.id}
                 value1={show.id}
@@ -126,6 +141,8 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
                 value3={show.attributes.client}
                 value4={show.attributes.year}
                 id={show.id}
+                href1={`showcases/${show.id}`}
+                href2={`showcases/${show.id}/edit`}
                 isDeleting={isDeleteLoading === show.id}
                 bgColor={checkIfEven(parseInt(show.id)) ? "#e1dfdf" : "white"}
                 onClick={() => {
@@ -135,7 +152,7 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
             ))}
           </ShowcasesWrapper>
           <br />
-          <a href="showcases/new">Create New Showcase</a>
+          <a href="/showcases" onClick={createNew}>Create New Showcase</a>
         </>
       ) : (
         <p>Internal Server Error. Try Reloading.</p>

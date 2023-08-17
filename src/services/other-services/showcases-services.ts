@@ -18,7 +18,19 @@ export const viewShowcase = async (
   return res;
 };
 
-export const deleteShowcase = async (id: string): Promise<AxiosResponse> => {
+export const createNewShowcase = async (
+  payload: object
+): Promise<AxiosResponse> => {
+  const headers = authHeader();
+  const res = axios.post(
+    process.env.REACT_APP_BASE_API_URL + "api/v1/showcases",
+    payload,
+    { headers }
+  );
+  return res;
+};
+
+export const deleteShowcase = async (id: string | undefined): Promise<AxiosResponse> => {
   const headers = authHeader();
   const res = await axios.delete(
     process.env.REACT_APP_BASE_API_URL + `api/v1/showcases/${id}`,
@@ -56,4 +68,14 @@ export const maxTenChars = (text: string): string => {
     return text;
   }
   return text.slice(0, 13) + "...";
+};
+
+export const arrayOFAttributes = (attributes: object): string[] => {
+  return Object.keys(attributes);
+};
+
+export const titleize = (text: string): string => {
+  let result = "";
+  result = text.charAt(0).toUpperCase() + text.slice(1);
+  return result;
 };

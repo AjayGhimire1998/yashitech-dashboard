@@ -10,7 +10,7 @@ export const ShowcasesWrapper = styled(ColumnWrapper)`
 export const ShowcaseColumn = styled(Column)`
   display: flex;
   flex-direction: row;
-  border: 1px solid gray;
+  border: 0px solid gray;
   align-items: center;
   color: ${(props) => (props.id ? "black" : "white")};
   background-color: ${(props) => (props.bgColor ? props.bgColor : "#440a70")};
@@ -29,7 +29,6 @@ export const ShowcaseColumn = styled(Column)`
   }
   :nth-child(1) {
     width: 50px !important;
-   
   }
   :nth-child(2) {
     width: 250px !important;
@@ -49,6 +48,7 @@ export const ShowcaseColumn = styled(Column)`
       justify-content: space-evenly;
       color: white;
       background-color: red;
+      max-width: fit-content;
       &:hover {
         background-color: #e86666;
       }
