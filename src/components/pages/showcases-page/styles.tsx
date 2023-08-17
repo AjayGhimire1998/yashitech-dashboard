@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import Column from "../../helper/pages-helpers/showcasepage-helpers/Column";
+import Column from "../../helper/global-helpers/Column";
 import ColumnWrapper from "../../helper/pages-helpers/showcasepage-helpers/ColumnWrapper";
 
 export const ShowcasesWrapper = styled(ColumnWrapper)`
@@ -28,7 +28,7 @@ export const ShowcaseColumn = styled(Column)`
     }
   }
   :nth-child(1) {
-    width: 50px;
+    width: 50px !important;
    
   }
   :nth-child(2) {

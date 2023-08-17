@@ -2,9 +2,9 @@ import * as React from "react";
 import { Circles } from "react-loader-spinner";
 
 interface Props {
-    color?: string;
-    height?:string
-    width?:string
+    color: string;
+    height:string
+    width:string
 }
 
 const Spinner: React.FunctionComponent<Props> = ({color, width, height}) => {

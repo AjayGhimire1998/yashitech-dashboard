@@ -1,5 +1,9 @@
 import * as React from "react";
-import { Container, LoadingSpinner, Message } from "../../../styles/global";
+import {
+  Container,
+  LoadingSpinner,
+  Message,
+} from "../../../styles/global";
 import StaticContent from "../../helper/pages-helpers/homepage-helpers/StaticContent";
 import {
   checkIfEven,
@@ -12,11 +16,11 @@ interface ShowCasesResponse {
   message?: string;
   error?: string;
   showcases: {
-    data: [EachShowCase];
+    data: [EachShowcase];
   };
 }
 
-interface EachShowCase {
+export interface EachShowcase {
   id: string;
   type: string;
   attributes: {};
@@ -83,7 +87,7 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
       <br />
       <br />
       {isLoading ? (
-        <LoadingSpinner color="#440a70" height="50px" width="50px" />
+        <LoadingSpinner color="#440a70" height="50" width="50" />
       ) : showcasesData ? (
         <>
           {message ? (
@@ -129,6 +133,8 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
               />
             ))}
           </ShowcasesWrapper>
+          <br />
+          <a href="showcases/new">Create New Showcase</a>
         </>
       ) : (
         <p>Internal Server Error. Try Reloading.</p>

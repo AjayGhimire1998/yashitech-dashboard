@@ -1,6 +1,6 @@
 import * as React from "react";
-import { maxTenChars } from "../../../../services/other-services/showcases-services";
-import { LoadingSpinner } from "../../../../styles/global";
+import { maxTenChars } from "../../../services/other-services/showcases-services";
+import { LoadingSpinner } from "../../../styles/global";
 
 interface IColumnsProps {
   className?: string;
@@ -35,7 +35,7 @@ const Column: React.FunctionComponent<IColumnsProps> = ({
           <a href={`showcases/${id}`}>View</a>
           <a href={`showcases/${id}/edit`}>Edit</a>
           {isDeleting ? (
-            <LoadingSpinner color="red" height="5px" width="5px" />
+            <LoadingSpinner color="red" height="3" width="3" />
           ) : (
             <button onClick={onClick}>Delete</button>
           )}
