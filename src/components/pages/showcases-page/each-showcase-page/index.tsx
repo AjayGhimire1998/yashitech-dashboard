@@ -43,7 +43,7 @@ const EachShowCase: React.FunctionComponent = () => {
 
   React.useEffect(() => {
     getShowcaseData(id);
-  }, []);
+  }, [id]);
 
   React.useEffect(() => {
     if (showcaseData) {
