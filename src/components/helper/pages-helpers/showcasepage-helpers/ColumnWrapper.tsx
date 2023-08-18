@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ShowcaseColumn } from '../../../pages/showcases-page/styles';
+import { ShowcaseColumn } from '../../../pages/showcases-pages/styles';
 
 interface IColumnWrapperProps {
     children?: React.ReactNode;

@@ -11,9 +11,9 @@ import { getCurrentUser } from "./services/auth-services/auth-service";
 import HomePage from "./components/pages/home-page";
 import Custom404Page from "./components/pages/custom-pages/404Page";
 import Custom401Page from "./components/pages/custom-pages/401Page";
-import ShowCasesPage from "./components/pages/showcases-page";
-import EachShowCase from "./components/pages/showcases-page/each-showcase-page";
-import NewShowCasePage from "./components/pages/showcases-page/create-new-showcase-page";
+import ShowCasesPage from "./components/pages/showcases-pages";
+import EachShowCase from "./components/pages/showcases-pages/view-each-showcase-page";
+import NewShowCasePage from "./components/pages/showcases-pages/create-new-showcase-page";
 
 const App: React.FC = () => {
   const [currentUser, setCurrentUser] = useState(undefined);

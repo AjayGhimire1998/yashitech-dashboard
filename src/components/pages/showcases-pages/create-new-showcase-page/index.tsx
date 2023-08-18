@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Container, ShowcaseForm } from "../../../../styles/global";
 import StaticContent from "../../../helper/pages-helpers/homepage-helpers/StaticContent";
-import { ShowcaseWrapper } from "../each-showcase-page/styles";
+import { ShowcaseWrapper } from "../view-each-showcase-page/styles";
 
 interface INewShowCasePageProps {}
 

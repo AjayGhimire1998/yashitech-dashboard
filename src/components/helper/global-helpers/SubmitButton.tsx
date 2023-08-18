@@ -13,7 +13,7 @@ interface Props {
   onClick: () => void;
 }
 
-const SubmitButton: React.FC<Props> = ({ className, onClick, children }) => {
+const SubmitButton: React.FC<Props> = ({ className, onClick, children}) => {
   return (
     <button className={className} onClick={onClick} >
       {children}

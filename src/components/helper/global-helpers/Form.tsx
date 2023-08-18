@@ -30,7 +30,7 @@ const Form: React.FunctionComponent<IFormProps> = ({
       {children}
       <div>
         <Button onClick={() => console.log("Clickedx!!")
-        } bgColor="#440a70" txtColor="white">Create</Button>
+        } bgColor="#440a70" txtColor="white"  children="Create"/>
       </div>
     </div>
   );
