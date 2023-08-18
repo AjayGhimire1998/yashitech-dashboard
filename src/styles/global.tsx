@@ -16,7 +16,9 @@ export default createGlobalStyle`
    }
    #root{
        margin:0 auto;
+      
    }
+  
 
 `;
 
@@ -105,9 +107,9 @@ export const ShowcaseForm = styled(Form)`
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  @media (max-width: 600px) {
+  /* @media (max-width: 600px) {
     width: 100%;
-  }
+  } */
   div {
 
       display: flex;
@@ -120,5 +122,11 @@ export const ShowcaseForm = styled(Form)`
       textarea{
         font-size: 18px;
       }
+
+      img{
+        width: 150px;
+      }
+
+
   }
 `;
