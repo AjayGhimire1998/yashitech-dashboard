@@ -33,7 +33,10 @@ export const ShowcaseData = styled(ViewShowcase)`
     /* height: 80px; */
     /* inline-size: 150px; */
     p {
-    
+      
+    }
+    img{
+      width: 150px;
     }
   }
 `;

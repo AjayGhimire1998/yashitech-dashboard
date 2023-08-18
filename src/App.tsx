@@ -1,4 +1,8 @@
-import React, { useCallback, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import Login from "./components/pages/login";
 import Global from "./styles/global";
 import { Routes, Route } from "react-router-dom";
@@ -9,6 +13,7 @@ import Custom404Page from "./components/pages/custom-pages/404Page";
 import Custom401Page from "./components/pages/custom-pages/401Page";
 import ShowCasesPage from "./components/pages/showcases-page";
 import EachShowCase from "./components/pages/showcases-page/each-showcase-page";
+import NewShowCasePage from "./components/pages/showcases-page/create-new-showcase-page";
 
 const App: React.FC = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -26,19 +31,31 @@ const App: React.FC = () => {
   }, [getUser]);
 
   // growable textarea
-  // const tx = document.getElementsByTagName("textarea");
-  // for (let i = 0; i < tx.length; i++) {
-  //   tx[i].setAttribute(
-  //     "style",
-  //     "height:" + tx[i].scrollHeight + "px;overflow-y:hidden;"
-  //   );
-  //   tx[i].addEventListener("input", OnInput, false);
-  // }
 
-  // function OnInput() {
-  //   this.style.height = 0;
-  //   this.style.height = this.scrollHeight + "px";
-  // }
+  useEffect(() => {
+    setTimeout(() => {
+      const tx = document.getElementsByTagName("textarea");
+      const OnInput = function (this: HTMLTextAreaElement) {
+        this.style.height = "0";
+        this.style.height = this.scrollHeight + "px";
+      };
+  
+      for (let i = 0; i < tx.length; i++) {
+        tx[i].setAttribute(
+          "style",
+          "height:" + tx[i].scrollHeight + "px;overflow-y:hidden;"
+        );
+        tx[i].addEventListener("input", OnInput, false);
+      }
+  
+      // Clean up event listeners when component unmounts
+      return () => {
+        for (let i = 0; i < tx.length; i++) {
+          tx[i].removeEventListener("input", OnInput, false);
+        }
+      };
+    }, 0);
+  }, []);
 
   return (
     <>
@@ -68,6 +85,12 @@ const App: React.FC = () => {
           path="/showcases/:id"
           element={isAuthenticated ? <EachShowCase /> : <Custom401Page />}
         />
+
+        <Route
+          path="/showcases/new"
+          element={isAuthenticated ? <NewShowCasePage /> : <Custom401Page />}
+        />
+
         <Route path="*" Component={Custom404Page} />
       </Routes>
     </>

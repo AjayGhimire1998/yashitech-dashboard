@@ -110,7 +110,10 @@ const EachShowCase: React.FunctionComponent = () => {
                   <ShowcaseData
                     key={index}
                     attribute={attr}
-                    value={showcaseData.showcase.data.attributes[attr]}
+                    // isForm={true}
+                    // isEditing={true}
+                    // onChange={(e) => console.log(e.target.value)}
+                    value={showcaseData.showcase.data.attributes[attr] || "Null"}
                   />
                 );
               }

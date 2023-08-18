@@ -4,6 +4,7 @@ import SubmitButton from "../components/helper/global-helpers/SubmitButton";
 import Response from "../components/helper/global-helpers/Response";
 import CompanyLogo from "../components/helper/global-helpers/CompanyLogo";
 import Spinner from "../components/helper/global-helpers/Spinner";
+import Form from "../components/helper/global-helpers/Form";
 
 export default createGlobalStyle`
    *{
@@ -78,14 +79,15 @@ export const Message = styled(Response)`
   gap: 50px;
   font-size: 15px;
 
-  small{
+  small {
     border: 1px solid white;
     padding: 3px;
     background-color: ${(props) => (props.xBgColor ? props.xBgColor : "red")};
     cursor: pointer;
-    &:hover{
+    &:hover {
       border: 1px solid white;
-      background-color: ${(props) => (props.xBgColor ? props.xBgColor : "white")};
+      background-color: ${(props) =>
+        props.xBgColor ? props.xBgColor : "white"};
       color: red;
     }
   }
@@ -93,6 +95,30 @@ export const Message = styled(Response)`
 
 export const LoadingSpinner = styled(Spinner)`
   color: ${(props) => (props.color ? props.color : "#440a70")};
-  width:  ${(props) => (props.height ? props.height : "30px")};
-  height:  ${(props) => (props.width ? props.width : "30px")};
-`
+  width: ${(props) => (props.height ? props.height : "30px")};
+  height: ${(props) => (props.width ? props.width : "30px")};
+`;
+
+export const ShowcaseForm = styled(Form)`
+  width: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  @media (max-width: 600px) {
+    width: 100%;
+  }
+  div {
+
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+
+      label{
+        font-size: 20px;
+      }
+      textarea{
+        font-size: 18px;
+      }
+  }
+`;

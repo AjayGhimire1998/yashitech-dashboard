@@ -86,6 +86,7 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
           year: "2050",
           client: "Meta Corp X hex",
           ask: "suppp, u good? lorem fashjkgskgskafkasjgfsafjgsajgfsafgsafsagfasfjhfjhahsfjhdavgsajgfsjgfjhgasfjashjfgjhsaghjfgasjfghkjsagfjagsjh suppp, u good? lorem fashjkgskgskafkasjgfsafjgsajgfsafgsafsagfasfjhfjhahsfjhdavgsajgfsjgfjhgasfjashjfgjhsaghjfgasjfghkjsagfjagsjh suppp, u good? lorem fashjkgskgskafkasjgfsafjgsajgfsafgsafsagfasfjhfjhahsfjhdavgsajgfsjgfjhgasfjashjfgjhsaghjfgasjfghkjsagfjagsjh",
+          // thumbnail: "https://yashitech-website.s3.ap-southeast-2.amazonaws.com/qwmwq28l4uybczrzbftp6um3c5rk?response-content-disposition=inline%3B%20filename%3D%22PY%20Internship%20Acknowledgement%20%2528Provider%20Placed%2529_V1.3.pdf%22%3B%20filename%2A%3DUTF-8%27%27PY%2520Internship%2520Acknowledgement%2520%2528Provider%2520Placed%2529_V1.3.pdf&response-content-type=application%2Fpdf&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAWS2EFXTG3L3EJFX3%2F20230818%2Fap-southeast-2%2Fs3%2Faws4_request&X-Amz-Date=20230818T060923Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=51b6599fddba8a7e6d0bf775999b4f076559614e2d43c37b99f28345617dba5a"
         },
       };
       const res = await createNewShowcase(payload);
@@ -133,7 +134,7 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
           <br />
 
           <ShowcasesWrapper>
-            {showcasesData.showcases.data.map((show: any, index: number) => (
+            {showcasesData.showcases.data.map((show: any) => (
               <ShowcaseColumn
                 key={show.id}
                 value1={show.id}
@@ -152,7 +153,7 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
             ))}
           </ShowcasesWrapper>
           <br />
-          <a href="/showcases" onClick={createNew}>Create New Showcase</a>
+          <a href="/showcases/new" onClick={createNew}>Create New Showcase</a>
         </>
       ) : (
         <p>Internal Server Error. Try Reloading.</p>
