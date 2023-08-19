@@ -4,9 +4,10 @@ import StaticContent from "../../../helper/pages-helpers/homepage-helpers/Static
 import { ShowcaseWrapper } from "../view-each-showcase-page/styles";
 
 interface INewShowCasePageProps {}
+type attr = Array<string>;
 
 const NewShowCasePage: React.FunctionComponent<INewShowCasePageProps> = () => {
-  const attributes = [
+  const attributes: attr = [
     "title",
     "showcase_type",
     "year",
@@ -18,8 +19,10 @@ const NewShowCasePage: React.FunctionComponent<INewShowCasePageProps> = () => {
 
   const [thumbnail, setThumbnail] = React.useState<string>();
   const [ss, setSs] = React.useState<string>();
-  // const [selectedCategories, setSelectedCategories] =
-  //   React.useState<Array<string>>();
+  const [selectedCategory, setSelectedCategory] = React.useState<string>();
+  const [selectedCategories, setSelectedCategories] = React.useState<
+    Array<string>
+  >([]);
 
   //file input
   const handleFileInput = (
@@ -37,10 +40,21 @@ const NewShowCasePage: React.FunctionComponent<INewShowCasePageProps> = () => {
   };
 
   //handling radio input
-  // const handleRadioInput = (e: Event) => {
-  //   console.log(e.target?.value || "Nope");
-    
-  // }
+  const onRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedCategory(e.target.value);
+  };
+
+  React.useEffect(() => {
+    if (selectedCategory)
+      setSelectedCategories((prevSelectedCategories) => {
+        if (!prevSelectedCategories.includes(selectedCategory))
+          return [...prevSelectedCategories, selectedCategory];
+        return prevSelectedCategories;
+      });
+      console.log(selectedCategory);
+      console.log(selectedCategories);
+      
+  }, [selectedCategory, selectedCategories]);
 
   //resetting input
   const inputOneRef: any = React.useRef(null);
@@ -69,27 +83,52 @@ const NewShowCasePage: React.FunctionComponent<INewShowCasePageProps> = () => {
             </label>
             <div>
               <label style={{ fontSize: "15px" }}>
-                <input type="radio" value="All" checked={true} />
+                <input
+                  type="checkbox"
+                  value="All"
+                  // checked={selectedCategories.includes("All")}
+                  onChange={(e) => onRadioChange(e)}
+                />
                 All
               </label>
             </div>
             <div>
               <label style={{ fontSize: "15px" }}>
-                <input type="radio" value="UI/UX" />
+                <input
+                  type="checkbox"
+                  value="UI/UX"
+                  // checked={selectedCategories.includes("UI/UX")}
+                  onChange={(e) => onRadioChange(e)}
+                />
                 UI/UX
               </label>
             </div>
             <div>
               <label style={{ fontSize: "15px" }}>
-                <input type="radio" value="Website" />
+                <input
+                  type="checkbox"
+                  value="Website"
+                  // checked={selectedCategories.includes("Website")}
+                  onChange={(e) => onRadioChange(e)}
+                />
                 Website
               </label>
             </div>
             <div>
               <label style={{ fontSize: "15px" }}>
-                <input type="radio" value="Mobile App" />
+                <input
+                  type="checkbox"
+                  value="Mobile App"
+                  // checked={selectedCategories.includes("Mobile App")}
+                  onChange={(e) => onRadioChange(e)}
+                />
                 Mobile App
               </label>
+            </div>
+            <div>
+              <ul>
+                <li>selectd: {selectedCategories}</li>
+              </ul>
             </div>
           </div>
           <div>
