@@ -19,6 +19,7 @@ const NewShowCasePage: React.FunctionComponent<INewShowCasePageProps> = () => {
 
   const [thumbnail, setThumbnail] = React.useState<string>();
   const [ss, setSs] = React.useState<string>();
+  const [toggleCheck, setToggleCheck] = React.useState<boolean>();
   const [selectedCategory, setSelectedCategory] = React.useState<string>();
   const [selectedCategories, setSelectedCategories] = React.useState<
     Array<string>
@@ -45,16 +46,30 @@ const NewShowCasePage: React.FunctionComponent<INewShowCasePageProps> = () => {
   };
 
   React.useEffect(() => {
-    if (selectedCategory)
+    if (selectedCategory) {
       setSelectedCategories((prevSelectedCategories) => {
         if (!prevSelectedCategories.includes(selectedCategory))
           return [...prevSelectedCategories, selectedCategory];
         return prevSelectedCategories;
       });
-      console.log(selectedCategory);
-      console.log(selectedCategories);
-      
+    }
+
+    console.log(selectedCategory);
+    console.log(selectedCategories);
   }, [selectedCategory, selectedCategories]);
+
+  // React.useEffect(() => {
+  //   if (!toggleCheck && selectedCategory) {
+  //     if (selectedCategories.includes(selectedCategory))
+  //       setSelectedCategories(
+  //         selectedCategories.filter((cat) => cat !== selectedCategory)
+  //       );
+  //       console.log( "toogle:" + selectedCategories);
+
+  //   }
+  //   console.log("toogle check: " + toggleCheck);
+
+  // }, [toggleCheck]);
 
   //resetting input
   const inputOneRef: any = React.useRef(null);
@@ -86,7 +101,7 @@ const NewShowCasePage: React.FunctionComponent<INewShowCasePageProps> = () => {
                 <input
                   type="checkbox"
                   value="All"
-                  // checked={selectedCategories.includes("All")}
+                  // checked={selectedCategories.includes("All") || toggleCheck}
                   onChange={(e) => onRadioChange(e)}
                 />
                 All
