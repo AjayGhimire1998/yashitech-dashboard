@@ -3,7 +3,6 @@ import { Container, LoadingSpinner, Message } from "../../../styles/global";
 import StaticContent from "../../helper/pages-helpers/homepage-helpers/StaticContent";
 import {
   checkIfEven,
-  createNewShowcase,
   deleteShowcase,
   getShowcases,
 } from "../../../services/other-services/showcases-services";

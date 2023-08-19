@@ -5,21 +5,21 @@ import { ShowcaseWrapper } from "../view-each-showcase-page/styles";
 import { createNewShowcase } from "../../../../services/other-services/showcases-services";
 
 interface INewShowCasePageProps {}
-interface NewShowCasePayload{
-  showcase: {
-    title: string;
-    showcase_type: string;
-    site_link: string;
-    year: string;
-    client: string;
-    role: string;
-    ask: string;
-    solution: string;
-    showcase_categories: string[];
-    thumbnail: File;
-    ss: File
-  }
-}
+// interface NewShowCasePayload{
+//   showcase: {
+//     title: string;
+//     showcase_type: string;
+//     site_link: string;
+//     year: string;
+//     client: string;
+//     role: string;
+//     ask: string;
+//     solution: string;
+//     showcase_categories: string[];
+//     thumbnail: File;
+//     ss: File
+//   }
+// }
 
 const NewShowCasePage: React.FunctionComponent<INewShowCasePageProps> = () => {
   const attributes: Array<string> = [
@@ -40,7 +40,7 @@ const NewShowCasePage: React.FunctionComponent<INewShowCasePageProps> = () => {
   const [selectedCategories, setSelectedCategories] = React.useState<
     Array<string>
   >([]);
-  const [payload, setPayload] = React.useState<NewShowCasePayload>();
+  // const [payload, setPayload] = React.useState<NewShowCasePayload>();
 
   //file input
   const handleFileInput = (
