@@ -6,7 +6,19 @@ import { createNewShowcase } from "../../../../services/other-services/showcases
 
 interface INewShowCasePageProps {}
 interface NewShowCasePayload{
-
+  showcase: {
+    title: string;
+    showcase_type: string;
+    site_link: string;
+    year: string;
+    client: string;
+    role: string;
+    ask: string;
+    solution: string;
+    showcase_categories: string[];
+    thumbnail: File;
+    ss: File
+  }
 }
 
 const NewShowCasePage: React.FunctionComponent<INewShowCasePageProps> = () => {
@@ -79,7 +91,7 @@ const NewShowCasePage: React.FunctionComponent<INewShowCasePageProps> = () => {
   };
 
   //handleSubmit 
-  const handleSubmit = async() => {
+  const handleSubmit = async(payload: object) => {
     try {
       const payload: object = {
         showcase: {
@@ -103,7 +115,7 @@ const NewShowCasePage: React.FunctionComponent<INewShowCasePageProps> = () => {
     <Container>
       <StaticContent history="showcases" />
       <ShowcaseWrapper>
-        <ShowcaseForm attributes={attributes} btnText="Create" onClick={handleSubmit}>
+        <ShowcaseForm attributes={attributes} btnText="Create" onClick={() => handleSubmit({})}>
           <div>
             <label htmlFor="showcase_categories_input">
               Showcase_Categories:
