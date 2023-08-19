@@ -7,7 +7,8 @@ interface IFormProps {
   children?: React.ReactNode;
   attributes?: string[];
   value?: string;
-  btnText?:string;
+  btnText?: string;
+  onClick: () => void;
 }
 
 const Form: React.FunctionComponent<IFormProps> = ({
@@ -15,7 +16,8 @@ const Form: React.FunctionComponent<IFormProps> = ({
   children,
   attributes,
   value,
-  btnText
+  btnText,
+  onClick,
 }) => {
   return (
     <div className={className}>
@@ -29,8 +31,12 @@ const Form: React.FunctionComponent<IFormProps> = ({
       })}
       {children}
       <div>
-        <Button onClick={() => console.log("Clickedx!!")
-        } bgColor="#440a70" txtColor="white"  children={btnText}/>
+        <Button
+         onClick={onClick}
+          bgColor="#440a70"
+          txtColor="white"
+          children={btnText}
+        />
       </div>
     </div>
   );
