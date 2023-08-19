@@ -18,7 +18,10 @@ const NewShowCasePage: React.FunctionComponent<INewShowCasePageProps> = () => {
 
   const [thumbnail, setThumbnail] = React.useState<string>();
   const [ss, setSs] = React.useState<string>();
+  // const [selectedCategories, setSelectedCategories] =
+  //   React.useState<Array<string>>();
 
+  //file input
   const handleFileInput = (
     e: React.ChangeEvent<HTMLInputElement>,
     which: string
@@ -32,6 +35,12 @@ const NewShowCasePage: React.FunctionComponent<INewShowCasePageProps> = () => {
       e.target.files = null;
     }
   };
+
+  //handling radio input
+  // const handleRadioInput = (e: Event) => {
+  //   console.log(e.target?.value || "Nope");
+    
+  // }
 
   //resetting input
   const inputOneRef: any = React.useRef(null);
@@ -54,6 +63,35 @@ const NewShowCasePage: React.FunctionComponent<INewShowCasePageProps> = () => {
       <StaticContent history="showcases" />
       <ShowcaseWrapper>
         <ShowcaseForm attributes={attributes} btnText="Create">
+          <div>
+            <label htmlFor="showcase_categories_input">
+              Showcase_Categories:
+            </label>
+            <div>
+              <label style={{ fontSize: "15px" }}>
+                <input type="radio" value="All" checked={true} />
+                All
+              </label>
+            </div>
+            <div>
+              <label style={{ fontSize: "15px" }}>
+                <input type="radio" value="UI/UX" />
+                UI/UX
+              </label>
+            </div>
+            <div>
+              <label style={{ fontSize: "15px" }}>
+                <input type="radio" value="Website" />
+                Website
+              </label>
+            </div>
+            <div>
+              <label style={{ fontSize: "15px" }}>
+                <input type="radio" value="Mobile App" />
+                Mobile App
+              </label>
+            </div>
+          </div>
           <div>
             <label htmlFor="thumbnail_input">Thumbnail</label>
             <input

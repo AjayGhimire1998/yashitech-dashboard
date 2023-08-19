@@ -23,11 +23,17 @@ export const ShowcaseData = styled(ViewShowcase)`
   }
 
   :nth-child(1) {
-    min-width: 150px;
+    width: 150px;
+    /* display: flex; */
+    /* justify-content: flex-start; */
   }
   :nth-child(2) {
     width: 550px;
+    margin-left: 50px;
     overflow: hidden;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: flex-start; */
     white-space: normal;  /* Allow text to wrap */
     word-wrap: break-word; /* Break long words */ 
     /* height: 80px; */
