@@ -1,9 +1,10 @@
 import * as React from "react";
-import { Container, ShowcaseForm } from "../../../../styles/global";
+import { Container, Message, ShowcaseForm } from "../../../../styles/global";
 import StaticContent from "../../../helper/pages-helpers/homepage-helpers/StaticContent";
 import { ShowcaseWrapper } from "../view-each-showcase-page/styles";
 import { createNewShowcase } from "../../../../services/other-services/showcases-services";
-
+import { useNavigate } from "react-router-dom";
+import { log } from "console";
 
 type NewShowCasePayload = {
   showcase: {
@@ -21,6 +22,12 @@ type NewShowCasePayload = {
   };
 };
 
+type Message = {
+  message?: string;
+  error?: string;
+  errors?: [];
+};
+
 const NewShowCasePage: React.FunctionComponent = () => {
   const attributes: Array<string> = [
     "title",
@@ -32,14 +39,11 @@ const NewShowCasePage: React.FunctionComponent = () => {
     "ask",
     "solution",
   ];
-
   const checkboxValues: string[] = ["UI/UX", "Website", "Mobile App"];
-
+  const navigate = useNavigate();
+  //states
   const [thumbnail, setThumbnail] = React.useState<string>();
   const [ss, setSs] = React.useState<string>();
-  // const [selectedCategories, setSelectedCategories] = React.useState<
-  //   Array<string>
-  // >([]);
   const [payload, setPayload] = React.useState<NewShowCasePayload["showcase"]>({
     title: "",
     showcase_type: "",
@@ -53,6 +57,13 @@ const NewShowCasePage: React.FunctionComponent = () => {
     thumbnail: null,
     ss: null,
   });
+  const [message, setMessage] = React.useState<Message>({
+    error: "",
+    errors: [],
+    message: "",
+  });
+
+  const[newId, setNewId] = React.useState<string>();
 
   //handle text are input
   const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -62,7 +73,7 @@ const NewShowCasePage: React.FunctionComponent = () => {
       ...prevPayload,
       [name]: value,
     }));
-    console.log(payload);
+    // console.log(payload);
   };
 
   //file input
@@ -117,11 +128,6 @@ const NewShowCasePage: React.FunctionComponent = () => {
     });
   };
 
-  // React.useEffect(() => {
-  //   console.log(selectedCategories);
-  //   console.log(payload);
-  // }, [selectedCategories, payload, thumbnail, ss]);
-
   //resetting input
   const inputOneRef: any = React.useRef(null);
   const inputTwoRef: any = React.useRef(null);
@@ -150,34 +156,72 @@ const NewShowCasePage: React.FunctionComponent = () => {
   //handleSubmit
   const handleSubmit = async () => {
     const formDataToSend = new FormData();
-    formDataToSend.append('showcase[title]', payload.title);
-    formDataToSend.append('showcase[showcase_type]', payload.showcase_type);
-    formDataToSend.append('showcase[site_link]', payload.site_link);
-    formDataToSend.append('showcase[year]', payload.year);
-    formDataToSend.append('showcase[client]', payload.client);
-    formDataToSend.append('showcase[ask]', payload.ask);
-    formDataToSend.append('showcase[solution]', payload.solution)
-    payload.showcase_categories.forEach(category => {
-      formDataToSend.append('showcase[categories][]', category);
+    formDataToSend.append("showcase[title]", payload.title);
+    formDataToSend.append("showcase[showcase_type]", payload.showcase_type);
+    formDataToSend.append("showcase[site_link]", payload.site_link);
+    formDataToSend.append("showcase[year]", payload.year);
+    formDataToSend.append("showcase[client]", payload.client);
+    formDataToSend.append("showcase[ask]", payload.ask);
+    formDataToSend.append("showcase[solution]", payload.solution);
+    formDataToSend.append("showcase[role]", payload.role);
+    payload.showcase_categories.forEach((category) => {
+      formDataToSend.append("showcase[categories][]", category);
     });
     if (payload.thumbnail)
       formDataToSend.append("showcase[thumbnail]", payload.thumbnail);
     if (payload.ss) {
       formDataToSend.append("showcase[ss]", payload.ss);
     }
-    console.log(formDataToSend.get("showcase[categories]"));
-    
+
     try {
       const res = await createNewShowcase(formDataToSend);
+      setMessage((prevMessage) => ({
+        ...prevMessage,
+        message: res.data.message,
+      }));
+      setNewId(res.data.showcase.id)
       console.log(res.data);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      // let fullError: string;
+      // error.response.data.full_errors.forEach((err: string) => {
+      //   fullError += err + ". ";
+      // });
+      setMessage((prevMessage) => ({
+        ...prevMessage,
+        error: error.response.data.error,
+        errors: error.response.data.full_errors
+      }));
     }
   };
+
+  //sideEffects
+  React.useEffect(() => {
+    if (newId) {
+      setInterval(() => {
+         navigate(`showcase/${newId}`)
+      }, 2000);
+    }
+    console.log(newId)
+  }, [newId]);
 
   return (
     <Container>
       <StaticContent history="showcases" />
+      <br />
+      <br />
+      {message.message || message.error ? (
+        <Message
+          bgColor="#440a70"
+          txtColor="white"
+          onClick={() => {
+            setMessage({ message: "", error: "", errors: [] });
+          }}
+        >
+          {message.message || message.error && message.errors?.join(".\r\n")}
+        </Message>
+      ) : null}
+      <br />
       <ShowcaseWrapper>
         <ShowcaseForm
           attributes={attributes}
@@ -208,7 +252,6 @@ const NewShowCasePage: React.FunctionComponent = () => {
                 </div>
               );
             })}
-            <br />
             {/* <div>
               <p>Selected Categories: {selectedCategories + " "}</p>
             </div> */}
