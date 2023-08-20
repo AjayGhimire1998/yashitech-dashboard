@@ -3,7 +3,7 @@ import { Container, ShowcaseForm } from "../../../../styles/global";
 import StaticContent from "../../../helper/pages-helpers/homepage-helpers/StaticContent";
 import { ShowcaseWrapper } from "../view-each-showcase-page/styles";
 import { createNewShowcase } from "../../../../services/other-services/showcases-services";
-import { type } from "os";
+
 
 type NewShowCasePayload = {
   showcase: {
@@ -37,9 +37,9 @@ const NewShowCasePage: React.FunctionComponent = () => {
 
   const [thumbnail, setThumbnail] = React.useState<string>();
   const [ss, setSs] = React.useState<string>();
-  const [selectedCategories, setSelectedCategories] = React.useState<
-    Array<string>
-  >([]);
+  // const [selectedCategories, setSelectedCategories] = React.useState<
+  //   Array<string>
+  // >([]);
   const [payload, setPayload] = React.useState<NewShowCasePayload["showcase"]>({
     title: "",
     showcase_type: "",
@@ -117,10 +117,10 @@ const NewShowCasePage: React.FunctionComponent = () => {
     });
   };
 
-  React.useEffect(() => {
-    console.log(selectedCategories);
-    console.log(payload);
-  }, [selectedCategories, payload, thumbnail, ss]);
+  // React.useEffect(() => {
+  //   console.log(selectedCategories);
+  //   console.log(payload);
+  // }, [selectedCategories, payload, thumbnail, ss]);
 
   //resetting input
   const inputOneRef: any = React.useRef(null);
@@ -209,9 +209,9 @@ const NewShowCasePage: React.FunctionComponent = () => {
               );
             })}
             <br />
-            <div>
+            {/* <div>
               <p>Selected Categories: {selectedCategories + " "}</p>
-            </div>
+            </div> */}
           </div>
           <div>
             <label htmlFor="thumbnail_input">Thumbnail</label>
