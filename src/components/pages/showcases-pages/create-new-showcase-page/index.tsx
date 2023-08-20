@@ -157,7 +157,9 @@ const NewShowCasePage: React.FunctionComponent = () => {
     formDataToSend.append('showcase[client]', payload.client);
     formDataToSend.append('showcase[ask]', payload.ask);
     formDataToSend.append('showcase[solution]', payload.solution)
-    formDataToSend.append('showcase[categories]', JSON.stringify(payload.showcase_categories))
+    payload.showcase_categories.forEach(category => {
+      formDataToSend.append('showcase[categories][]', category);
+    });
     if (payload.thumbnail)
       formDataToSend.append("showcase[thumbnail]", payload.thumbnail);
     if (payload.ss) {
