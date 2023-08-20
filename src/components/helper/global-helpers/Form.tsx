@@ -9,6 +9,7 @@ interface IFormProps {
   value?: string;
   btnText?: string;
   onClick: () => void;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 const Form: React.FunctionComponent<IFormProps> = ({
@@ -18,6 +19,7 @@ const Form: React.FunctionComponent<IFormProps> = ({
   value,
   btnText,
   onClick,
+  onChange,
 }) => {
   return (
     <div className={className}>
@@ -25,7 +27,7 @@ const Form: React.FunctionComponent<IFormProps> = ({
         return (
           <div key={index}>
             <label>{titleize(attr)}: </label>
-            <textarea rows={2} cols={60} value={value}></textarea>
+            <textarea rows={2} cols={60} value={value} name={attr} onChange={onChange}></textarea>
           </div>
         );
       })}

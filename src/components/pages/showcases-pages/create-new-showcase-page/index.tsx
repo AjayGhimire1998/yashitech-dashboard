@@ -3,25 +3,25 @@ import { Container, ShowcaseForm } from "../../../../styles/global";
 import StaticContent from "../../../helper/pages-helpers/homepage-helpers/StaticContent";
 import { ShowcaseWrapper } from "../view-each-showcase-page/styles";
 import { createNewShowcase } from "../../../../services/other-services/showcases-services";
+import { type } from "os";
 
-interface INewShowCasePageProps {}
-// interface NewShowCasePayload{
-//   showcase: {
-//     title: string;
-//     showcase_type: string;
-//     site_link: string;
-//     year: string;
-//     client: string;
-//     role: string;
-//     ask: string;
-//     solution: string;
-//     showcase_categories: string[];
-//     thumbnail: File;
-//     ss: File
-//   }
-// }
+type NewShowCasePayload = {
+  showcase: {
+    title: string;
+    showcase_type: string;
+    site_link: string;
+    year: string;
+    client: string;
+    role: string;
+    ask: string;
+    solution: string;
+    showcase_categories: string[];
+    thumbnail: Blob | null;
+    ss: Blob | null;
+  };
+};
 
-const NewShowCasePage: React.FunctionComponent<INewShowCasePageProps> = () => {
+const NewShowCasePage: React.FunctionComponent = () => {
   const attributes: Array<string> = [
     "title",
     "showcase_type",
@@ -40,7 +40,30 @@ const NewShowCasePage: React.FunctionComponent<INewShowCasePageProps> = () => {
   const [selectedCategories, setSelectedCategories] = React.useState<
     Array<string>
   >([]);
-  // const [payload, setPayload] = React.useState<NewShowCasePayload>();
+  const [payload, setPayload] = React.useState<NewShowCasePayload["showcase"]>({
+    title: "",
+    showcase_type: "",
+    site_link: "",
+    year: "",
+    client: "",
+    role: "",
+    ask: "",
+    solution: "",
+    showcase_categories: [],
+    thumbnail: null,
+    ss: null,
+  });
+
+  //handle text are input
+  const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+
+    setPayload((prevPayload) => ({
+      ...prevPayload,
+      [name]: value,
+    }));
+    console.log(payload);
+  };
 
   //file input
   const handleFileInput = (
@@ -49,29 +72,55 @@ const NewShowCasePage: React.FunctionComponent<INewShowCasePageProps> = () => {
   ): void => {
     if (!e.target.files) return;
     if (which === "thumbnail") {
-      setThumbnail(URL.createObjectURL(e.target.files[0]));
+      const thumbnail_file = e.target.files[0];
+      setThumbnail(URL.createObjectURL(thumbnail_file));
+      if (thumbnail_file) {
+        setPayload((prevPayload) => ({
+          ...prevPayload,
+          thumbnail: thumbnail_file,
+        }));
+      }
     } else if (which === "ss") {
-      setSs(URL.createObjectURL(e.target.files[0]));
+      const ss_file = e.target.files[0];
+      setSs(URL.createObjectURL(ss_file));
+      if (ss_file) {
+        setPayload((prevPayload) => ({
+          ...prevPayload,
+          ss: ss_file,
+        }));
+      }
     } else if (which === "clear") {
       e.target.files = null;
     }
   };
 
   //handling radio input
-  const onCheckBoxClick = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const checkboxVal = e.target.value;
-    setSelectedCategories((prevSelectedCategories) => {
-      if (prevSelectedCategories.includes(checkboxVal)) {
-        return prevSelectedCategories.filter((cat) => cat !== checkboxVal);
-      } else {
-        return [...prevSelectedCategories, checkboxVal];
-      }
+  const onCheckBoxClick = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    category: string
+  ) => {
+    const isChecked = e.target.checked;
+
+    setPayload((prevPayload) => {
+      if (isChecked)
+        return {
+          ...prevPayload,
+          showcase_categories: [...prevPayload.showcase_categories, category],
+        };
+      else
+        return {
+          ...prevPayload,
+          showcase_categories: prevPayload.showcase_categories.filter(
+            (cat) => cat !== category
+          ),
+        };
     });
   };
 
   React.useEffect(() => {
     console.log(selectedCategories);
-  }, [selectedCategories]);
+    console.log(payload);
+  }, [selectedCategories, payload, thumbnail, ss]);
 
   //resetting input
   const inputOneRef: any = React.useRef(null);
@@ -82,40 +131,60 @@ const NewShowCasePage: React.FunctionComponent<INewShowCasePageProps> = () => {
         inputOneRef.current.value = null;
         setThumbnail("");
       }
+      setPayload((prevPayload) => ({
+        ...prevPayload,
+        thumbnail: null,
+      }));
     } else if ("ss") {
       if (inputTwoRef.current) {
         inputTwoRef.current.value = null;
         setSs("");
       }
+      setPayload((prevPayload) => ({
+        ...prevPayload,
+        ss: null,
+      }));
     }
   };
 
-  //handleSubmit 
-  const handleSubmit = async(payload: object) => {
+  //handleSubmit
+  const handleSubmit = async () => {
+    const formDataToSend = new FormData();
+    formDataToSend.append('showcase[title]', payload.title);
+    formDataToSend.append('showcase[showcase_type]', payload.showcase_type);
+    formDataToSend.append('showcase[site_link]', payload.site_link);
+    formDataToSend.append('showcase[year]', payload.year);
+    formDataToSend.append('showcase[client]', payload.client);
+    formDataToSend.append('showcase[ask]', payload.ask);
+    formDataToSend.append('showcase[solution]', payload.solution)
+    formDataToSend.append('showcase[categories]', JSON.stringify(payload.showcase_categories))
+    if (payload.thumbnail)
+      formDataToSend.append("showcase[thumbnail]", payload.thumbnail);
+    if (payload.ss) {
+      formDataToSend.append("showcase[ss]", payload.ss);
+    }
+    console.log(formDataToSend.get("showcase[categories]"));
+    
     try {
-      const payload: object = {
-        showcase: {
-          title: "Newest Project",
-          year: "2050",
-          client: "Meta Corp X hex",
-          ask: "suppp, u good? lorem fashjkgskgskafkasjgfsafjgsajgfsafgsafsagfasfjhfjhahsfjhdavgsajgfsjgfjhgasfjashjfgjhsaghjfgasjfghkjsagfjagsjh suppp, u good? lorem fashjkgskgskafkasjgfsafjgsajgfsafgsafsagfasfjhfjhahsfjhdavgsajgfsjgfjhgasfjashjfgjhsaghjfgasjfghkjsagfjagsjh suppp, u good? lorem fashjkgskgskafkasjgfsafjgsajgfsafgsafsagfasfjhfjhahsfjhdavgsajgfsjgfjhgasfjashjfgjhsaghjfgasjfghkjsagfjagsjh",
-          // thumbnail: "https://yashitech-website.s3.ap-southeast-2.amazonaws.com/qwmwq28l4uybczrzbftp6um3c5rk?response-content-disposition=inline%3B%20filename%3D%22PY%20Internship%20Acknowledgement%20%2528Provider%20Placed%2529_V1.3.pdf%22%3B%20filename%2A%3DUTF-8%27%27PY%2520Internship%2520Acknowledgement%2520%2528Provider%2520Placed%2529_V1.3.pdf&response-content-type=application%2Fpdf&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAWS2EFXTG3L3EJFX3%2F20230818%2Fap-southeast-2%2Fs3%2Faws4_request&X-Amz-Date=20230818T060923Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=51b6599fddba8a7e6d0bf775999b4f076559614e2d43c37b99f28345617dba5a"
-        },
-      };
-      const res = await createNewShowcase(payload);
+      const res = await createNewShowcase(formDataToSend);
       console.log(res.data);
     } catch (error) {
       console.log(error);
     }
   };
-  
-
 
   return (
     <Container>
       <StaticContent history="showcases" />
       <ShowcaseWrapper>
-        <ShowcaseForm attributes={attributes} btnText="Create" onClick={() => handleSubmit({})}>
+        <ShowcaseForm
+          attributes={attributes}
+          btnText="Create"
+          onChange={handleTextAreaChange}
+          onClick={() => {
+            handleSubmit();
+          }}
+        >
           <div>
             <label htmlFor="showcase_categories_input">
               Showcase_Categories:
@@ -127,16 +196,17 @@ const NewShowCasePage: React.FunctionComponent<INewShowCasePageProps> = () => {
                   <label style={{ fontSize: "15px" }}>
                     <input
                       type="checkbox"
-                      value={checkbox}
+                      // value={checkbox}
+                      name={checkbox}
                       // disabled={selectedCategories.includes("All") && index !== 0}
-                      onChange={(e) => onCheckBoxClick(e)}
+                      onChange={(e) => onCheckBoxClick(e, checkbox)}
                     />
                     {checkbox}
                   </label>
                 </div>
               );
             })}
-            <br/>
+            <br />
             <div>
               <p>Selected Categories: {selectedCategories + " "}</p>
             </div>
@@ -164,7 +234,7 @@ const NewShowCasePage: React.FunctionComponent<INewShowCasePageProps> = () => {
             )}
           </div>
           <div>
-            <label htmlFor="ss_input">Thumbnail</label>
+            <label htmlFor="ss_input">SS</label>
             <input
               type="file"
               className="ss_input"
