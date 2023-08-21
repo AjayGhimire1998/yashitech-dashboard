@@ -4,7 +4,6 @@ import StaticContent from "../../../helper/pages-helpers/homepage-helpers/Static
 import { ShowcaseWrapper } from "../view-each-showcase-page/styles";
 import { createNewShowcase } from "../../../../services/other-services/showcases-services";
 import { useNavigate } from "react-router-dom";
-import { log } from "console";
 
 type NewShowCasePayload = {
   showcase: {
@@ -22,7 +21,7 @@ type NewShowCasePayload = {
   };
 };
 
-type Message = {
+type MessageType = {
   message?: string;
   error?: string;
   errors?: [];
@@ -41,6 +40,7 @@ const NewShowCasePage: React.FunctionComponent = () => {
   ];
   const checkboxValues: string[] = ["UI/UX", "Website", "Mobile App"];
   const navigate = useNavigate();
+
   //states
   const [thumbnail, setThumbnail] = React.useState<string>();
   const [ss, setSs] = React.useState<string>();
@@ -57,13 +57,12 @@ const NewShowCasePage: React.FunctionComponent = () => {
     thumbnail: null,
     ss: null,
   });
-  const [message, setMessage] = React.useState<Message>({
+  const [message, setMessage] = React.useState<MessageType>({
     error: "",
     errors: [],
     message: "",
   });
-
-  const[newId, setNewId] = React.useState<string>();
+  const [newId, setNewId] = React.useState<string>();
 
   //handle text are input
   const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -73,7 +72,7 @@ const NewShowCasePage: React.FunctionComponent = () => {
       ...prevPayload,
       [name]: value,
     }));
-    // console.log(payload);
+    console.log(payload);
   };
 
   //file input
@@ -179,35 +178,45 @@ const NewShowCasePage: React.FunctionComponent = () => {
         ...prevMessage,
         message: res.data.message,
       }));
-      setNewId(res.data.showcase.id)
+      setNewId(res.data.showcase.data.id);
       console.log(res.data);
     } catch (error: any) {
       console.log(error);
-      // let fullError: string;
-      // error.response.data.full_errors.forEach((err: string) => {
-      //   fullError += err + ". ";
-      // });
+      let fullError: string = "";
+      error.response.data.full_errors.forEach((err: string) => {
+        fullError += `${err}.
+        `;
+      });
+      console.log(fullError);
+
       setMessage((prevMessage) => ({
         ...prevMessage,
-        error: error.response.data.error,
-        errors: error.response.data.full_errors
+        error: fullError,
+        errors: error.response.data.full_errors,
       }));
     }
   };
 
   //sideEffects
+
   React.useEffect(() => {
-    if (newId) {
-      setInterval(() => {
-         navigate(`showcase/${newId}`)
-      }, 2000);
-    }
-    console.log(newId)
+    const navInterval = setInterval(() => {
+      if (newId) {
+        navigate(`/showcases/${newId}`);
+      }
+    }, 2000);
+    return () => {
+      clearInterval(navInterval);
+    };
   }, [newId]);
 
   return (
     <Container>
       <StaticContent history="showcases" />
+      <br />
+      <div>
+        <h4>Create a New Showcase</h4>
+      </div>
       <br />
       <br />
       {message.message || message.error ? (
@@ -218,7 +227,7 @@ const NewShowCasePage: React.FunctionComponent = () => {
             setMessage({ message: "", error: "", errors: [] });
           }}
         >
-          {message.message || message.error && message.errors?.join(".\r\n")}
+          {message.message || message.error}
         </Message>
       ) : null}
       <br />
@@ -226,10 +235,9 @@ const NewShowCasePage: React.FunctionComponent = () => {
         <ShowcaseForm
           attributes={attributes}
           btnText="Create"
+          requiredParam="showcase"
           onChange={handleTextAreaChange}
-          onClick={() => {
-            handleSubmit();
-          }}
+          onClick={handleSubmit}
         >
           <div>
             <label htmlFor="showcase_categories_input">
@@ -242,9 +250,7 @@ const NewShowCasePage: React.FunctionComponent = () => {
                   <label style={{ fontSize: "15px" }}>
                     <input
                       type="checkbox"
-                      // value={checkbox}
                       name={checkbox}
-                      // disabled={selectedCategories.includes("All") && index !== 0}
                       onChange={(e) => onCheckBoxClick(e, checkbox)}
                     />
                     {checkbox}
@@ -252,9 +258,6 @@ const NewShowCasePage: React.FunctionComponent = () => {
                 </div>
               );
             })}
-            {/* <div>
-              <p>Selected Categories: {selectedCategories + " "}</p>
-            </div> */}
           </div>
           <div>
             <label htmlFor="thumbnail_input">Thumbnail</label>

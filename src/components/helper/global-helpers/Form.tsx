@@ -6,7 +6,7 @@ interface IFormProps {
   className?: string;
   children?: React.ReactNode;
   attributes?: string[];
-  value?: string;
+  requiredParam: string;
   btnText?: string;
   onClick: () => void;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
@@ -16,18 +16,18 @@ const Form: React.FunctionComponent<IFormProps> = ({
   className,
   children,
   attributes,
-  value,
+  requiredParam,
   btnText,
   onClick,
   onChange,
 }) => {
   return (
     <div className={className}>
-      {attributes?.map((attr, index) => {
+      {attributes?.map((attr: any, index: number) => {
         return (
           <div key={index}>
             <label>{titleize(attr)}: </label>
-            <textarea rows={2} cols={60} value={value} name={attr} onChange={onChange}></textarea>
+            <textarea rows={2} cols={60} value={requiredParam[attr]} name={attr} onChange={onChange}></textarea>
           </div>
         );
       })}

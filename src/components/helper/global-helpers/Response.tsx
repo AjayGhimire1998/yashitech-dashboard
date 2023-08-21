@@ -4,7 +4,7 @@ interface Props {
   children?: React.ReactNode;
   className?: string;
   bgColor?: string;
-  xBgColor? :string;
+  xBgColor?: string;
   txtColor?: string;
   onClick: () => void;
 }

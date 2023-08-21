@@ -1,8 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Login from "./components/pages/login";
 import Global from "./styles/global";
 import { Routes, Route } from "react-router-dom";
@@ -14,6 +10,7 @@ import Custom401Page from "./components/pages/custom-pages/401Page";
 import ShowCasesPage from "./components/pages/showcases-pages";
 import EachShowCase from "./components/pages/showcases-pages/view-each-showcase-page";
 import NewShowCasePage from "./components/pages/showcases-pages/create-new-showcase-page";
+import EditShowCase from "./components/pages/showcases-pages/edit-showcase-page";
 
 const App: React.FC = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -39,7 +36,7 @@ const App: React.FC = () => {
         this.style.height = "0";
         this.style.height = this.scrollHeight + "px";
       };
-  
+
       for (let i = 0; i < tx.length; i++) {
         tx[i].setAttribute(
           "style",
@@ -47,7 +44,7 @@ const App: React.FC = () => {
         );
         tx[i].addEventListener("input", OnInput, false);
       }
-  
+
       // Clean up event listeners when component unmounts
       return () => {
         for (let i = 0; i < tx.length; i++) {
@@ -88,7 +85,23 @@ const App: React.FC = () => {
 
         <Route
           path="/showcases/new"
-          element={isAuthenticated ? <NewShowCasePage /> : <Custom401Page />}
+          element={
+            isAuthenticated ? (
+              <NewShowCasePage  />
+            ) : (
+              <Custom401Page />
+            )
+          }
+        />
+        <Route
+          path="/showcases/:id/edit"
+          element={
+            isAuthenticated ? (
+              <EditShowCase />
+            ) : (
+              <Custom401Page />
+            )
+          }
         />
 
         <Route path="*" Component={Custom404Page} />
