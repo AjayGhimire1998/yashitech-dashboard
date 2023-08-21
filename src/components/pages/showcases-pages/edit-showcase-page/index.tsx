@@ -93,9 +93,9 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
   //side effects
   React.useEffect(() => {
     if (id) getShowCaseData(id);
-    if (payload) {
-      console.log(payload);
-    }
+    // if (payload) {
+    //   console.log(payload);
+    // }
   }, [id]);
 
   return (
