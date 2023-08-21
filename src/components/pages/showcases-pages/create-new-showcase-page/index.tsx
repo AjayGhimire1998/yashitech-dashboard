@@ -208,7 +208,7 @@ const NewShowCasePage: React.FunctionComponent = () => {
     return () => {
       clearInterval(navInterval);
     };
-  }, [newId]);
+  }, [newId, navigate]);
 
   return (
     <Container>

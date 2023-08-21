@@ -86,9 +86,9 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
     throw new Error("Function not implemented.");
   }
 
-  function cancelFileInput(arg0: string): void {
-    throw new Error("Function not implemented.");
-  }
+  // function cancelFileInput(arg0: string): void {
+  //   throw new Error("Function not implemented.");
+  // }
 
   //side effects
   React.useEffect(() => {
