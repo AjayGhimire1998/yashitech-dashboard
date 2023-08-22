@@ -218,6 +218,10 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
     formDataToSend.append("showcase[ask]", payload.ask);
     formDataToSend.append("showcase[solution]", payload.solution);
     formDataToSend.append("showcase[role]", payload.role);
+
+    if (payload.categories.length === 0) {
+      return setMessage("Please Select atleast one Category");
+    }
     payload?.categories.forEach((category) => {
       formDataToSend.append("showcase[categories][]", category);
     });
@@ -226,9 +230,6 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
     if (payload.ss) {
       formDataToSend.append("showcase[ss]", payload.ss);
     }
-
-    console.log("formData: " + formDataToSend);
-
     try {
       setIsLoading(true);
       const res = await updateShowcase(formDataToSend, id);
@@ -240,12 +241,16 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
     } catch (error: any) {
       console.log(error);
       let fullError: string = "";
-      error.response.data.full_errors.forEach((err: string) => {
-        fullError += `${err}.
+      if (error.response.data.full_errors) {
+        error.response.data.full_errors.forEach((err: string) => {
+          fullError += `${err}.
         `;
-      });
+        });
+        setMessage(error.response.data.error + " " + fullError);
+      } else {
+        setMessage("Something went wrong. Try again later.");
+      }
       setIsLoading(false);
-      setMessage(error.response.data + ", " + fullError);
     }
   }
 

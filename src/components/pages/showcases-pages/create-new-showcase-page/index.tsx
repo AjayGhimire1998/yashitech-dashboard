@@ -7,7 +7,10 @@ import {
 } from "../../../../styles/global";
 import StaticContent from "../../../helper/pages-helpers/global-pages-helpers/StaticContent";
 import { ShowcaseWrapper } from "../view-each-showcase-page/styles";
-import { createNewShowcase, validateCategoryPresent } from "../../../../services/other-services/showcases-services";
+import {
+  createNewShowcase,
+  validateCategoryPresent,
+} from "../../../../services/other-services/showcases-services";
 import { useNavigate } from "react-router-dom";
 import { CatWrapper, PicInputWrapper } from "./styles";
 import { FooterContent } from "../../pages-styles";
@@ -31,7 +34,6 @@ type NewShowCasePayload = {
 type MessageType = {
   message?: string;
   error?: string;
-  errors?: [];
 };
 
 const NewShowCasePage: React.FunctionComponent = () => {
@@ -66,7 +68,6 @@ const NewShowCasePage: React.FunctionComponent = () => {
   });
   const [message, setMessage] = React.useState<MessageType>({
     error: "",
-    errors: [],
     message: "",
   });
   const [newId, setNewId] = React.useState<string>();
@@ -190,17 +191,24 @@ const NewShowCasePage: React.FunctionComponent = () => {
     } catch (error: any) {
       console.log(error);
       let fullError: string = "";
-      error?.response.data.full_errors.forEach((err: string) => {
-        fullError += `${err}.
+      if (error.response.data.full_errors) {
+        error.response.data.full_errors.forEach((err: string) => {
+          fullError += `${err}.
         `;
-      });
+        });
+        setMessage((prevMessage) => ({
+          ...prevMessage,
+          error: error.response.data.error + fullError ,
+        }));
+      } else {
+        setMessage((prev) => ({
+          ...prev,
+          error: "Something went wrong. Please try again later.",
+        }));
+      }
       console.log(fullError);
 
-      setMessage((prevMessage) => ({
-        ...prevMessage,
-        error: fullError,
-        errors: error.response.data.full_errors,
-      }));
+   
     }
   };
 
@@ -231,7 +239,7 @@ const NewShowCasePage: React.FunctionComponent = () => {
           bgColor="#440a70"
           txtColor="white"
           onClick={() => {
-            setMessage({ message: "", error: "", errors: [] });
+            setMessage({ message: "", error: "" });
           }}
         >
           {message.message || message.error}
@@ -270,9 +278,9 @@ const NewShowCasePage: React.FunctionComponent = () => {
               </div>
             );
           })}
-           {!validateCategoryPresent(payload.showcase_categories) ? (
-                <p style={{ color: "red" }}>Must Select One </p>
-              ) : null}
+          {!validateCategoryPresent(payload.showcase_categories) ? (
+            <p style={{ color: "red" }}>Must Select One </p>
+          ) : null}
         </CatWrapper>
         <br />
         <PicInputWrapper>
