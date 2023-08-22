@@ -41,7 +41,7 @@ interface EditShowCasePayload {
   role: string;
   ask: string;
   solution: string;
-  categories: string[];
+  showcase_categories: string[];
   thumbnail: Blob | null;
   ss: Blob | null;
 }
@@ -79,7 +79,7 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
     role: "",
     ask: "",
     solution: "",
-    categories: [],
+    showcase_categories: [],
     thumbnail: null,
     ss: null,
   });
@@ -219,11 +219,11 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
     formDataToSend.append("showcase[solution]", payload.solution);
     formDataToSend.append("showcase[role]", payload.role);
 
-    if (payload.categories.length === 0) {
+    if (payload.showcase_categories.length === 0) {
       return setMessage("Please Select atleast one Category");
     }
-    payload?.categories.forEach((category) => {
-      formDataToSend.append("showcase[categories][]", category);
+    payload?.showcase_categories.forEach((category) => {
+      formDataToSend.append("showcase[showcase_categories][]", category);
     });
     if (payload.thumbnail)
       formDataToSend.append("showcase[thumbnail]", payload.thumbnail);
@@ -324,12 +324,12 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
                     if (isChecked) {
                       return {
                         ...prev,
-                        categories: [...prev.categories, checkbox],
+                        categories: [...prev.showcase_categories, checkbox],
                       };
                     } else {
                       return {
                         ...prev,
-                        categories: prev.categories.filter(
+                        categories: prev.showcase_categories.filter(
                           (cat) => cat !== checkbox
                         ),
                       };
@@ -344,7 +344,7 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
                         type="checkbox"
                         checked={
                           payload
-                            ? payload?.categories.includes(checkbox)
+                            ? payload?.showcase_categories.includes(checkbox)
                             : false
                         }
                         name={checkbox}
@@ -356,7 +356,7 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
                   </div>
                 );
               })}
-              {!validateCategoryPresent(payload.categories) ? (
+              {!validateCategoryPresent(payload.showcase_categories) ? (
                 <p style={{ color: "red" }}>Must Select One </p>
               ) : null}
             </CatWrapper>
