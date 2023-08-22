@@ -190,7 +190,7 @@ const NewShowCasePage: React.FunctionComponent = () => {
     } catch (error: any) {
       console.log(error);
       let fullError: string = "";
-      error.response.data.full_errors.forEach((err: string) => {
+      error?.response.data.full_errors.forEach((err: string) => {
         fullError += `${err}.
         `;
       });
