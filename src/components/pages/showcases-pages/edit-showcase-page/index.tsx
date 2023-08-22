@@ -207,7 +207,7 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
     }));
     // console.log(payload);
   }, [payload]);
-  console.log(thumbnail);
+  
 
   async function handleSubmit() {
     const formDataToSend = new FormData();
