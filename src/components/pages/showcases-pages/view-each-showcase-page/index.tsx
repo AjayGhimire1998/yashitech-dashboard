@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ShowcaseData, ShowcaseWrapper } from "./styles";
 import { Container, LoadingSpinner, Message } from "../../../../styles/global";
-import StaticContent from "../../../helper/pages-helpers/homepage-helpers/StaticContent";
+import StaticContent from "../../../helper/pages-helpers/global-pages-helpers/StaticContent";
 import { useParams } from "react-router-dom";
 import {
   arrayOFAttributes,
@@ -11,6 +11,7 @@ import {
 import { EachShowcase } from "..";
 import { ShowcaseColumn } from "../styles";
 import { useNavigate } from "react-router-dom";
+import { FooterContent } from "../../pages-styles";
 
 type ShowCaseParam = {
   id: string | undefined;
@@ -131,6 +132,9 @@ const EachShowCase: React.FunctionComponent = () => {
       ) : (
         <p></p>
       )}
+      <br/>
+      <br/>
+      <FooterContent />
     </Container>
   );
 };

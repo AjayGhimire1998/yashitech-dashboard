@@ -3,6 +3,7 @@ import ContentWrapper from "../helper/pages-helpers/homepage-helpers/ContentWrap
 import Attribute from "../helper/pages-helpers/homepage-helpers/Attribute";
 import Data from "../helper/pages-helpers/homepage-helpers/Data";
 import TextArea from "../helper/pages-helpers/homepage-helpers/TextArea";
+import Footer from "../helper/pages-helpers/global-pages-helpers/Footer";
 
 export const ContentWrap = styled(ContentWrapper)`
   display: flex;
@@ -18,7 +19,6 @@ export const PaginationWrapper = styled.div`
   align-self: flex-start;
   padding-left: 32px;
   padding-right: 32px;
-  
 `;
 export const Pagination = styled.a`
   text-decoration: none;
@@ -45,4 +45,10 @@ export const FormTextArea = styled(TextArea)`
   box-shadow: none;
   resize: none;
   font-size: 23px;
+`;
+
+export const FooterContent = styled(Footer)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;

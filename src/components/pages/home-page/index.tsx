@@ -4,13 +4,14 @@ import {
   AttributeKey,
   ContentWrap,
   DataValue,
+  FooterContent,
   FormTextArea,
 } from "../pages-styles";
 import {
   getHomePages,
   updateHomePages,
 } from "../../../services/other-services/homepage-services";
-import StaticContent from "../../helper/pages-helpers/homepage-helpers/StaticContent";
+import StaticContent from "../../helper/pages-helpers/global-pages-helpers/StaticContent";
 
 interface HomePageGetResponse {
   message?: string;
@@ -190,6 +191,9 @@ const HomePage: React.FunctionComponent = () => {
           </ContentWrap>
         </>
       )}
+      <br/>
+      <br/>
+      <FooterContent />
     </Container>
   );
 };

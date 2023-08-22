@@ -4,34 +4,41 @@ import { Button } from "../../../styles/global";
 
 interface IFormProps {
   className?: string;
-  children?: React.ReactNode;
-  attributes?: string[];
-  requiredParam: string;
-  btnText?: string;
-  onClick: () => void;
+  // children?: React.ReactNode;
+  attribute: string;
+  // requiredParam: string;
+  value: string | undefined;
+  // btnText?: string;
+  // onClick: () => void;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 const Form: React.FunctionComponent<IFormProps> = ({
   className,
-  children,
-  attributes,
-  requiredParam,
-  btnText,
-  onClick,
+  attribute,
+  // requiredParam,
+  value,
+  // btnText,
+  // onClick,
   onChange,
 }) => {
   return (
     <div className={className}>
-      {attributes?.map((attr: any, index: number) => {
-        return (
-          <div key={index}>
-            <label>{titleize(attr)}: </label>
-            <textarea rows={2} cols={60} value={requiredParam[attr]} name={attr} onChange={onChange}></textarea>
-          </div>
-        );
-      })}
-      {children}
+      {/* {attributes?.map((attr: any, index: number) => { */}
+      {/* return ( */}
+      <div>
+        <label>{titleize(attribute)}: </label>
+        <textarea
+          rows={2}
+          cols={60}
+          value={value}
+          name={attribute}
+          onChange={onChange}
+        ></textarea>
+      </div>
+      {/* );
+      })} */}
+      {/* {children}
       <div>
         <Button
           onClick={onClick}
@@ -39,7 +46,7 @@ const Form: React.FunctionComponent<IFormProps> = ({
           txtColor="white"
           children={btnText}
         />
-      </div>
+      </div> */}
     </div>
   );
 };

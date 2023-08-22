@@ -1,12 +1,13 @@
 import * as React from "react";
 import { Container, LoadingSpinner, Message } from "../../../styles/global";
-import StaticContent from "../../helper/pages-helpers/homepage-helpers/StaticContent";
+import StaticContent from "../../helper/pages-helpers/global-pages-helpers/StaticContent";
 import {
   checkIfEven,
   deleteShowcase,
   getShowcases,
 } from "../../../services/other-services/showcases-services";
 import { ShowcaseColumn, ShowcasesWrapper } from "./styles";
+import { FooterContent } from "../pages-styles";
 
 interface ShowCasesResponse {
   message?: string;
@@ -141,6 +142,9 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
       ) : (
         <p>Internal Server Error. Try Reloading.</p>
       )}
+      <br/>
+      <br/>
+      <FooterContent />
     </Container>
   );
 };

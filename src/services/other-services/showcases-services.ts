@@ -1,5 +1,5 @@
 // import { authHeader } from "../auth-services/auth-header";
-import axios, { AxiosResponse } from "axios";
+import axios, { Axios, AxiosResponse } from "axios";
 import { authHeader } from "../auth-services/auth-header";
 
 export const getShowcases = async (): Promise<AxiosResponse> => {
@@ -30,7 +30,22 @@ export const createNewShowcase = async (
   return res;
 };
 
-export const deleteShowcase = async (id: string | undefined): Promise<AxiosResponse> => {
+export const updateShowcase = async (
+  payload: object,
+  id: string | undefined
+): Promise<AxiosResponse> => {
+  const headers = authHeader();
+  const res = axios.put(
+    process.env.REACT_APP_BASE_API_URL + `api/v1/showcases/${id}`,
+    payload,
+    { headers }
+  );
+  return res;
+};
+
+export const deleteShowcase = async (
+  id: string | undefined
+): Promise<AxiosResponse> => {
   const headers = authHeader();
   const res = await axios.delete(
     process.env.REACT_APP_BASE_API_URL + `api/v1/showcases/${id}`,

@@ -1,10 +1,11 @@
 import * as React from "react";
-import { Button, Container, Logo } from "../../../styles/global";
+import {  Container, Logo } from "../../../styles/global";
 import { Link, LinkWrapper } from "./styles";
 import {
   getUserDetails,
-  logOut,
 } from "../../../services/auth-services/auth-service";
+
+import { FooterContent } from "../pages-styles";
 
 const Dashboard: React.FunctionComponent = () => {
   return (
@@ -17,21 +18,9 @@ const Dashboard: React.FunctionComponent = () => {
         <Link linkTo="/homepage">Home Page Data</Link>
         <Link linkTo="/showcases">Showcase Data</Link>
       </LinkWrapper>
-      <br />
-      <br />
-      <p>logged in as: {getUserDetails().attributes.email}</p>
-      <br />
-      <br />
-      <Button
-        bgColor="#440a70"
-        txtColor="white"
-        hoverBg="red"
-        className="edit-button"
-        children="LogOut"
-        onClick={() => logOut()}
-      />
-      <br />
-      <br />
+      <br/>
+      <br/>
+      <FooterContent />
     </Container>
   );
 };

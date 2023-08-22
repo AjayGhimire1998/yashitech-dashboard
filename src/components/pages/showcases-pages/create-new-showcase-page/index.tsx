@@ -1,9 +1,16 @@
 import * as React from "react";
-import { Container, Message, ShowcaseForm } from "../../../../styles/global";
-import StaticContent from "../../../helper/pages-helpers/homepage-helpers/StaticContent";
+import {
+  Button,
+  Container,
+  FormAttribute,
+  Message,
+} from "../../../../styles/global";
+import StaticContent from "../../../helper/pages-helpers/global-pages-helpers/StaticContent";
 import { ShowcaseWrapper } from "../view-each-showcase-page/styles";
 import { createNewShowcase } from "../../../../services/other-services/showcases-services";
 import { useNavigate } from "react-router-dom";
+import { CatWrapper, PicInputWrapper } from "./styles";
+import { FooterContent } from "../../pages-styles";
 
 type NewShowCasePayload = {
   showcase: {
@@ -232,35 +239,42 @@ const NewShowCasePage: React.FunctionComponent = () => {
       ) : null}
       <br />
       <ShowcaseWrapper>
-        <ShowcaseForm
-          attributes={attributes}
-          btnText="Create"
-          requiredParam="showcase"
-          onChange={handleTextAreaChange}
-          onClick={handleSubmit}
-        >
-          <div>
-            <label htmlFor="showcase_categories_input">
-              Showcase_Categories:
-            </label>
+        {attributes.map((attr: string, index: number) => {
+          return (
+            <FormAttribute
+              key={index}
+              attribute={attr}
+              onChange={(e) => handleTextAreaChange(e)}
+              // onClick={handleSubmit}
+              value={undefined}
+            />
+          );
+        })}
+        <br />
+        <CatWrapper>
+          <label htmlFor="showcase_categories_input">
+            Showcase_Categories:
+          </label>
 
-            {checkboxValues.map((checkbox, index) => {
-              return (
-                <div key={index}>
-                  <label style={{ fontSize: "15px" }}>
-                    <input
-                      type="checkbox"
-                      name={checkbox}
-                      onChange={(e) => onCheckBoxClick(e, checkbox)}
-                    />
-                    {checkbox}
-                  </label>
-                </div>
-              );
-            })}
-          </div>
+          {checkboxValues.map((checkbox, index) => {
+            return (
+              <div key={index}>
+                <label style={{ fontSize: "15px" }}>
+                  <input
+                    type="checkbox"
+                    name={checkbox}
+                    onChange={(e) => onCheckBoxClick(e, checkbox)}
+                  />
+                  {checkbox}
+                </label>
+              </div>
+            );
+          })}
+        </CatWrapper>
+        <br />
+        <PicInputWrapper>
           <div>
-            <label htmlFor="thumbnail_input">Thumbnail</label>
+            <label htmlFor="thumbnail_input">Thumbnail: </label>
             <input
               type="file"
               className="thumbnail_input"
@@ -282,7 +296,7 @@ const NewShowCasePage: React.FunctionComponent = () => {
             )}
           </div>
           <div>
-            <label htmlFor="ss_input">SS</label>
+            <label htmlFor="ss_input">SS: </label>
             <input
               type="file"
               className="ss_input"
@@ -303,8 +317,20 @@ const NewShowCasePage: React.FunctionComponent = () => {
               </p>
             )}
           </div>
-        </ShowcaseForm>
+        </PicInputWrapper>
       </ShowcaseWrapper>
+      <br />
+      <div>
+        <Button
+          onClick={handleSubmit}
+          bgColor="#440a70"
+          txtColor="white"
+          children="Submit"
+        />
+      </div>
+      <br />
+      <br />
+      <FooterContent />
     </Container>
   );
 };

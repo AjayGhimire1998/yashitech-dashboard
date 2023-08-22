@@ -101,7 +101,7 @@ export const LoadingSpinner = styled(Spinner)`
   height: ${(props) => (props.width ? props.width : "30px")};
 `;
 
-export const ShowcaseForm = styled(Form)`
+export const FormAttribute = styled(Form)`
   width: 700px;
   display: flex;
   flex-direction: column;
@@ -124,9 +124,7 @@ export const ShowcaseForm = styled(Form)`
         font-size: 18px;
       }
 
-      img{
-        width: 150px;
-      }
+   
 
 
   }
