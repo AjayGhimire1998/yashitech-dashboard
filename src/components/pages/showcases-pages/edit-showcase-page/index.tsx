@@ -100,7 +100,7 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
         role,
         ask,
         solution,
-        categories,
+        showcase_categories,
         thumbnail_url,
         ss_url,
       } = res.data.showcase.data.attributes;
@@ -114,7 +114,7 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
         role: role,
         ask: ask,
         solution: solution,
-        categories: categories,
+        showcase_categories: showcase_categories,
       }));
       setThumbnailUrl(thumbnail_url.url);
       setSsUrl(ss_url.url);
@@ -222,7 +222,7 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
     if (payload.showcase_categories.length === 0) {
       return setMessage("Please Select atleast one Category");
     }
-    payload?.showcase_categories.forEach((category) => {
+    payload.showcase_categories.forEach((category) => {
       formDataToSend.append("showcase[showcase_categories][]", category);
     });
     if (payload.thumbnail)
@@ -324,7 +324,7 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
                     if (isChecked) {
                       return {
                         ...prev,
-                        categories: [...prev.showcase_categories, checkbox],
+                        showcase_categories: [...prev.showcase_categories, checkbox],
                       };
                     } else {
                       return {
