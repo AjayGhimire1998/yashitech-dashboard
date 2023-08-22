@@ -7,7 +7,7 @@ import {
 } from "../../../../styles/global";
 import StaticContent from "../../../helper/pages-helpers/global-pages-helpers/StaticContent";
 import { ShowcaseWrapper } from "../view-each-showcase-page/styles";
-import { createNewShowcase } from "../../../../services/other-services/showcases-services";
+import { createNewShowcase, validateCategoryPresent } from "../../../../services/other-services/showcases-services";
 import { useNavigate } from "react-router-dom";
 import { CatWrapper, PicInputWrapper } from "./styles";
 import { FooterContent } from "../../pages-styles";
@@ -270,6 +270,9 @@ const NewShowCasePage: React.FunctionComponent = () => {
               </div>
             );
           })}
+           {!validateCategoryPresent(payload.showcase_categories) ? (
+                <p style={{ color: "red" }}>Must Select One </p>
+              ) : null}
         </CatWrapper>
         <br />
         <PicInputWrapper>

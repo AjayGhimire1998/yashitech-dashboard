@@ -94,3 +94,10 @@ export const titleize = (text: string): string => {
   result = text.charAt(0).toUpperCase() + text.slice(1);
   return result;
 };
+
+export const validateCategoryPresent = (categories: string[]): boolean => {
+  if(categories.length === 0){
+    return false;
+  } 
+  return true;
+}
