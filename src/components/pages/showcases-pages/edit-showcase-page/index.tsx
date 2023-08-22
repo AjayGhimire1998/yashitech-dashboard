@@ -205,9 +205,8 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
       ask: payload.ask,
       solution: payload.solution,
     }));
-    // console.log(payload);
+    console.log(payload);
   }, [payload]);
-  
 
   async function handleSubmit() {
     const formDataToSend = new FormData();
@@ -219,7 +218,7 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
     formDataToSend.append("showcase[ask]", payload.ask);
     formDataToSend.append("showcase[solution]", payload.solution);
     formDataToSend.append("showcase[role]", payload.role);
-    payload.categories.forEach((category) => {
+    payload?.categories.forEach((category) => {
       formDataToSend.append("showcase[categories][]", category);
     });
     if (payload.thumbnail)
@@ -261,7 +260,7 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
     return () => {
       clearInterval(navInterval);
     };
-  }, [isUpdated]);
+  }, [isUpdated, id, navigate]);
 
   return (
     <Container>
