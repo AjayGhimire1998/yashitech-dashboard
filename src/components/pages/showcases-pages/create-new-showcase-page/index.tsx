@@ -3,6 +3,7 @@ import {
   Button,
   Container,
   FormAttribute,
+  LoadingSpinner,
   Message,
 } from "../../../../styles/global";
 import StaticContent from "../../../helper/pages-helpers/global-pages-helpers/StaticContent";
@@ -66,6 +67,7 @@ const NewShowCasePage: React.FunctionComponent = () => {
     thumbnail: null,
     ss: null,
   });
+  const [isLoading, setIsLoading] = React.useState<boolean>();
   const [message, setMessage] = React.useState<MessageType>({
     error: "",
     message: "",
@@ -181,6 +183,7 @@ const NewShowCasePage: React.FunctionComponent = () => {
     }
 
     try {
+      setIsLoading(true);
       const res = await createNewShowcase(formDataToSend);
       setMessage((prevMessage) => ({
         ...prevMessage,
@@ -188,6 +191,7 @@ const NewShowCasePage: React.FunctionComponent = () => {
       }));
       setNewId(res.data.showcase.data.id);
       console.log(res.data);
+      setIsLoading(false);
     } catch (error: any) {
       console.log(error);
       let fullError: string = "";
@@ -198,7 +202,7 @@ const NewShowCasePage: React.FunctionComponent = () => {
         });
         setMessage((prevMessage) => ({
           ...prevMessage,
-          error: error.response.data.error + fullError ,
+          error: error.response.data.error + fullError,
         }));
       } else {
         setMessage((prev) => ({
@@ -206,9 +210,8 @@ const NewShowCasePage: React.FunctionComponent = () => {
           error: "Something went wrong. Please try again later.",
         }));
       }
+      setIsLoading(false);
       console.log(fullError);
-
-   
     }
   };
 
@@ -246,102 +249,108 @@ const NewShowCasePage: React.FunctionComponent = () => {
         </Message>
       ) : null}
       <br />
-      <ShowcaseWrapper>
-        {attributes.map((attr: string, index: number) => {
-          return (
-            <FormAttribute
-              key={index}
-              attribute={attr}
-              onChange={(e) => handleTextAreaChange(e)}
-              // onClick={handleSubmit}
-              value={undefined}
-            />
-          );
-        })}
-        <br />
-        <CatWrapper>
-          <label htmlFor="showcase_categories_input">
-            Showcase_Categories:
-          </label>
+      {isLoading ? (
+        <LoadingSpinner color="#440a70" height="50" width="50" />
+      ) : (
+        <>
+          <ShowcaseWrapper>
+            {attributes.map((attr: string, index: number) => {
+              return (
+                <FormAttribute
+                  key={index}
+                  attribute={attr}
+                  onChange={(e) => handleTextAreaChange(e)}
+                  // onClick={handleSubmit}
+                  value={undefined}
+                />
+              );
+            })}
+            <br />
+            <CatWrapper>
+              <label htmlFor="showcase_categories_input">
+                Showcase_Categories:
+              </label>
 
-          {checkboxValues.map((checkbox, index) => {
-            return (
-              <div key={index}>
-                <label style={{ fontSize: "15px" }}>
-                  <input
-                    type="checkbox"
-                    name={checkbox}
-                    onChange={(e) => onCheckBoxClick(e, checkbox)}
-                  />
-                  {checkbox}
-                </label>
+              {checkboxValues.map((checkbox, index) => {
+                return (
+                  <div key={index}>
+                    <label style={{ fontSize: "15px" }}>
+                      <input
+                        type="checkbox"
+                        name={checkbox}
+                        onChange={(e) => onCheckBoxClick(e, checkbox)}
+                      />
+                      {checkbox}
+                    </label>
+                  </div>
+                );
+              })}
+              {!validateCategoryPresent(payload.showcase_categories) ? (
+                <p style={{ color: "red" }}>Must Select One </p>
+              ) : null}
+            </CatWrapper>
+            <br />
+            <PicInputWrapper>
+              <div>
+                <label htmlFor="thumbnail_input">Thumbnail: </label>
+                <input
+                  type="file"
+                  className="thumbnail_input"
+                  onChange={(e) => handleFileInput(e, "thumbnail")}
+                  ref={inputOneRef}
+                ></input>
+                {thumbnail && <img src={thumbnail} alt="thumbnail" />}
+                {thumbnail && (
+                  <p
+                    style={{
+                      color: "red",
+                      cursor: "pointer",
+                      textDecoration: "underline",
+                    }}
+                    onClick={() => cancelFileInput("thumbnail")}
+                  >
+                    Clear
+                  </p>
+                )}
               </div>
-            );
-          })}
-          {!validateCategoryPresent(payload.showcase_categories) ? (
-            <p style={{ color: "red" }}>Must Select One </p>
-          ) : null}
-        </CatWrapper>
-        <br />
-        <PicInputWrapper>
+              <div>
+                <label htmlFor="ss_input">SS: </label>
+                <input
+                  type="file"
+                  className="ss_input"
+                  onChange={(e) => handleFileInput(e, "ss")}
+                  ref={inputTwoRef}
+                ></input>
+                {ss && <img src={ss} alt="ss" />}
+                {ss && (
+                  <p
+                    style={{
+                      color: "red",
+                      cursor: "pointer",
+                      textDecoration: "underline",
+                    }}
+                    onClick={() => cancelFileInput("ss")}
+                  >
+                    Clear
+                  </p>
+                )}
+              </div>
+            </PicInputWrapper>
+          </ShowcaseWrapper>
+          <br />
           <div>
-            <label htmlFor="thumbnail_input">Thumbnail: </label>
-            <input
-              type="file"
-              className="thumbnail_input"
-              onChange={(e) => handleFileInput(e, "thumbnail")}
-              ref={inputOneRef}
-            ></input>
-            {thumbnail && <img src={thumbnail} alt="thumbnail" />}
-            {thumbnail && (
-              <p
-                style={{
-                  color: "red",
-                  cursor: "pointer",
-                  textDecoration: "underline",
-                }}
-                onClick={() => cancelFileInput("thumbnail")}
-              >
-                Clear
-              </p>
-            )}
+            <Button
+              onClick={handleSubmit}
+              bgColor="#440a70"
+              txtColor="white"
+              children="Submit"
+            />
           </div>
-          <div>
-            <label htmlFor="ss_input">SS: </label>
-            <input
-              type="file"
-              className="ss_input"
-              onChange={(e) => handleFileInput(e, "ss")}
-              ref={inputTwoRef}
-            ></input>
-            {ss && <img src={ss} alt="ss" />}
-            {ss && (
-              <p
-                style={{
-                  color: "red",
-                  cursor: "pointer",
-                  textDecoration: "underline",
-                }}
-                onClick={() => cancelFileInput("ss")}
-              >
-                Clear
-              </p>
-            )}
-          </div>
-        </PicInputWrapper>
-      </ShowcaseWrapper>
-      <br />
-      <div>
-        <Button
-          onClick={handleSubmit}
-          bgColor="#440a70"
-          txtColor="white"
-          children="Submit"
-        />
-      </div>
-      <br />
-      <br />
-      <FooterContent />
+          <br />
+          <br />
+          <FooterContent />
+        </>
+      )}
     </Container>
   );
 };
