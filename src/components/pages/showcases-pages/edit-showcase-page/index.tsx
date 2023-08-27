@@ -41,6 +41,7 @@ interface EditShowCasePayload {
   role: string;
   ask: string;
   solution: string;
+  color_palette: string[],
   showcase_categories: string[];
   thumbnail: Blob | null;
   ss: Blob | null;
@@ -80,6 +81,7 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
     ask: "",
     solution: "",
     showcase_categories: [],
+    color_palette: [],
     thumbnail: null,
     ss: null,
   });

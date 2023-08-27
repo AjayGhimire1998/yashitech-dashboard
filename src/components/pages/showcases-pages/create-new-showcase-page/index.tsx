@@ -26,6 +26,7 @@ type NewShowCasePayload = {
     role: string;
     ask: string;
     solution: string;
+    color_palette: string[];
     showcase_categories: string[];
     thumbnail: Blob | null;
     ss: Blob | null;
@@ -63,6 +64,7 @@ const NewShowCasePage: React.FunctionComponent = () => {
     role: "",
     ask: "",
     solution: "",
+    color_palette: [],
     showcase_categories: [],
     thumbnail: null,
     ss: null,
@@ -112,6 +114,15 @@ const NewShowCasePage: React.FunctionComponent = () => {
     } else if (which === "clear") {
       e.target.files = null;
     }
+  };
+  //handling color_palette_inputs
+
+  const onColorPaletteChange = (val: string) => {
+    setPayload((prev) => ({
+      ...prev,
+      color_palette: [...prev.color_palette, val],
+    }));
+    console.log(payload);
   };
 
   //handling radio input
@@ -265,6 +276,30 @@ const NewShowCasePage: React.FunctionComponent = () => {
                 />
               );
             })}
+            <br />
+            <div>
+              <label htmlFor="color_palette_inputs">Color_Palette:</label>
+              <input
+                type="text"
+                value={undefined}
+                onChange={(e) => onColorPaletteChange(e.target.value)}
+              ></input><button>Done</button>
+              <input
+                type="text"
+                value={undefined}
+                onChange={(e) => onColorPaletteChange(e.target.value)}
+              />
+              <input
+                type="text"
+                value={undefined}
+                onChange={(e) => onColorPaletteChange(e.target.value)}
+              />
+              <input
+                type="text"
+                value={undefined}
+                onChange={(e) => onColorPaletteChange(e.target.value)}
+              />
+            </div>
             <br />
             <CatWrapper>
               <label htmlFor="showcase_categories_input">
