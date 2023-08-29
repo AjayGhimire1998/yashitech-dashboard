@@ -70,12 +70,12 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
       setMessage(showcasesData.message || showcasesData.error);
       setIsLoading(false);
     }
-    const loaderInterval = setInterval(() => {
-      if (!showcasesData) {
-        setIsLoading(false);
-      }
-    }, 5000);
-    return () => clearInterval(loaderInterval);
+    // const loaderInterval = setInterval(() => {
+    //   if (!showcasesData) {
+    //     setIsLoading(false);
+    //   }
+    // }, 5000);
+    // return () => clearInterval(loaderInterval);
   }, [showcasesData]);
 
 

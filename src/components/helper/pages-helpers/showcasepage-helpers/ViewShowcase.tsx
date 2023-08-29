@@ -19,15 +19,14 @@ const ViewShowcase: React.FunctionComponent<IViewShowcaseProps> = ({
         <h4>{titleize(attribute)}</h4>
       </div>
       <div>
-        {
-        value?.url ? (
+        {value?.url ? (
           <>
             <a href={value.url}>{value.url}</a>
             <br />
             <img src={value.url} alt="thumbnail_or_ss_image" />
           </>
         ) : (
-          <p>{value}</p>
+          <p>{Array.isArray(value) ? value.map((val) => val + ", ") : value}</p>
         )}
       </div>
     </div>

@@ -256,6 +256,30 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
     }
   }
 
+  //checkbox
+  function onCheckBoxClick(
+    e: React.ChangeEvent<HTMLInputElement>,
+    checkbox: string
+  ): void {
+    const isChecked = e.target.checked;
+
+    setPayload((prev) => {
+      if (isChecked) {
+        return {
+          ...prev,
+          showcase_categories: [...prev.showcase_categories, checkbox],
+        };
+      } else {
+        return {
+          ...prev,
+          categories: prev.showcase_categories.filter(
+            (cat) => cat !== checkbox
+          ),
+        };
+      }
+    });
+  }
+
   //update func side effect
   React.useEffect(() => {
     if (isUpdated) {
@@ -316,39 +340,18 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
               </label>
 
               {checkboxValues.map((checkbox, index) => {
-                function onCheckBoxClick(
-                  e: React.ChangeEvent<HTMLInputElement>,
-                  checkbox: string
-                ): void {
-                  const isChecked = e.target.checked;
-
-                  setPayload((prev) => {
-                    if (isChecked) {
-                      return {
-                        ...prev,
-                        showcase_categories: [...prev.showcase_categories, checkbox],
-                      };
-                    } else {
-                      return {
-                        ...prev,
-                        categories: prev.showcase_categories.filter(
-                          (cat) => cat !== checkbox
-                        ),
-                      };
-                    }
-                  });
-                }
+               
 
                 return (
                   <div key={index}>
                     <label style={{ fontSize: "15px" }}>
                       <input
                         type="checkbox"
-                        checked={
-                          payload
-                            ? payload?.showcase_categories.includes(checkbox)
-                            : false
-                        }
+                        // checked={
+                        //   payload
+                        //     ? payload?.showcase_categories.includes(checkbox)
+                        //     : false
+                        // }
                         name={checkbox}
                         onChange={(e) => onCheckBoxClick(e, checkbox)}
                       />

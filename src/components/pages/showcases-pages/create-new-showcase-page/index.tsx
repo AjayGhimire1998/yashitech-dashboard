@@ -59,9 +59,6 @@ const NewShowCasePage: React.FunctionComponent = () => {
   const [color2, setColor2] = React.useState<string>("");
   const [color3, setColor3] = React.useState<string>("");
   const [color4, setColor4] = React.useState<string>("");
-  const [colors, setColors] = React.useState<
-    NewShowCasePayload["showcase"]["color_palette"]
-  >([]);
   const [payload, setPayload] = React.useState<NewShowCasePayload["showcase"]>({
     title: "",
     showcase_type: "",
@@ -141,22 +138,24 @@ const NewShowCasePage: React.FunctionComponent = () => {
   };
 
   React.useEffect(() => {
-    setColors((prev) => [...prev, color1, color2, color3, color4]);
-    if (colors)
-      setPayload((prev) => ({
-        ...prev,
-        color_palette: colors,
-      }));
-
-    console.log(colors);
+    setPayload((prev) => ({
+      ...prev,
+      color_palette: [color1, color2, color3, color4],
+    }));
     console.log(payload);
   }, [color1, color2, color3, color4]);
 
   const handleConfirm = () => {
-    // if (colors) {
-    // }
-    console.log(colors);
-    console.log(payload);
+    // const colors: NewShowCasePayload["showcase"]["color_palette"] = [
+    //   color1,
+    //   color2,
+    //   color3,
+    //   color4,
+    // ];
+
+    
+    // console.log(colors);
+   
     // return new Error("Colors not selected");
   };
 
@@ -221,6 +220,9 @@ const NewShowCasePage: React.FunctionComponent = () => {
     formDataToSend.append("showcase[role]", payload.role);
     payload.showcase_categories.forEach((category) => {
       formDataToSend.append("showcase[showcase_categories][]", category);
+    });
+    payload.color_palette.forEach((color) => {
+      formDataToSend.append("showcase[color_palette][]", color);
     });
     if (payload.thumbnail)
       formDataToSend.append("showcase[thumbnail]", payload.thumbnail);
