@@ -55,6 +55,13 @@ const NewShowCasePage: React.FunctionComponent = () => {
   //states
   const [thumbnail, setThumbnail] = React.useState<string>();
   const [ss, setSs] = React.useState<string>();
+  const [color1, setColor1] = React.useState<string>("");
+  const [color2, setColor2] = React.useState<string>("");
+  const [color3, setColor3] = React.useState<string>("");
+  const [color4, setColor4] = React.useState<string>("");
+  const [colors, setColors] = React.useState<
+    NewShowCasePayload["showcase"]["color_palette"]
+  >([]);
   const [payload, setPayload] = React.useState<NewShowCasePayload["showcase"]>({
     title: "",
     showcase_type: "",
@@ -117,12 +124,40 @@ const NewShowCasePage: React.FunctionComponent = () => {
   };
   //handling color_palette_inputs
 
-  const onColorPaletteChange = (val: string) => {
-    setPayload((prev) => ({
-      ...prev,
-      color_palette: [...prev.color_palette, val],
-    }));
+  const onColorPaletteChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    inputName: string
+  ) => {
+    const { value } = e.target;
+    if (inputName === "color1") {
+      setColor1(value);
+    } else if (inputName === "color2") {
+      setColor2(value);
+    } else if (inputName === "color3") {
+      setColor3(value);
+    } else if (inputName === "color4") {
+      setColor4(value);
+    }
+  };
+
+  React.useEffect(() => {
+    setColors((prev) => [...prev, color1, color2, color3, color4]);
+    if (colors)
+      setPayload((prev) => ({
+        ...prev,
+        color_palette: colors,
+      }));
+
+    console.log(colors);
     console.log(payload);
+  }, [color1, color2, color3, color4]);
+
+  const handleConfirm = () => {
+    // if (colors) {
+    // }
+    console.log(colors);
+    console.log(payload);
+    // return new Error("Colors not selected");
   };
 
   //handling radio input
@@ -277,30 +312,44 @@ const NewShowCasePage: React.FunctionComponent = () => {
               );
             })}
             <br />
-            <div>
-              <label htmlFor="color_palette_inputs">Color_Palette:</label>
-              <input
-                type="text"
-                value={undefined}
-                onChange={(e) => onColorPaletteChange(e.target.value)}
-              ></input><button>Done</button>
-              <input
-                type="text"
-                value={undefined}
-                onChange={(e) => onColorPaletteChange(e.target.value)}
-              />
-              <input
-                type="text"
-                value={undefined}
-                onChange={(e) => onColorPaletteChange(e.target.value)}
-              />
-              <input
-                type="text"
-                value={undefined}
-                onChange={(e) => onColorPaletteChange(e.target.value)}
-              />
-            </div>
-            <br />
+            <CatWrapper>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  width: "400px",
+                }}
+              >
+                <label htmlFor="color_palette_inputs">Color_Palette:</label>
+                <input
+                  type="text"
+                  value={undefined}
+                  placeholder="color1"
+                  onChange={(e) => onColorPaletteChange(e, "color1")}
+                ></input>
+                <input
+                  type="text"
+                  value={undefined}
+                  placeholder="color2"
+                  onChange={(e) => onColorPaletteChange(e, "color2")}
+                />
+                <input
+                  type="text"
+                  value={undefined}
+                  placeholder="color3"
+                  onChange={(e) => onColorPaletteChange(e, "color3")}
+                />
+                <input
+                  type="text"
+                  value={undefined}
+                  placeholder="color4"
+                  onChange={(e) => onColorPaletteChange(e, "color4")}
+                />
+                <button onClick={handleConfirm}>Confirm</button>
+              </div>
+              <br />
+            </CatWrapper>
             <CatWrapper>
               <label htmlFor="showcase_categories_input">
                 Showcase_Categories:
