@@ -145,19 +145,6 @@ const NewShowCasePage: React.FunctionComponent = () => {
     console.log(payload);
   }, [color1, color2, color3, color4]);
 
-  const handleConfirm = () => {
-    // const colors: NewShowCasePayload["showcase"]["color_palette"] = [
-    //   color1,
-    //   color2,
-    //   color3,
-    //   color4,
-    // ];
-
-    
-    // console.log(colors);
-   
-    // return new Error("Colors not selected");
-  };
 
   //handling radio input
   const onCheckBoxClick = (
@@ -348,7 +335,6 @@ const NewShowCasePage: React.FunctionComponent = () => {
                   placeholder="color4"
                   onChange={(e) => onColorPaletteChange(e, "color4")}
                 />
-                <button onClick={handleConfirm}>Confirm</button>
               </div>
               <br />
             </CatWrapper>

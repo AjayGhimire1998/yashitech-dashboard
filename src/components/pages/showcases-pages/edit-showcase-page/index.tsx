@@ -41,7 +41,7 @@ interface EditShowCasePayload {
   role: string;
   ask: string;
   solution: string;
-  color_palette: string[],
+  color_palette: string[];
   showcase_categories: string[];
   thumbnail: Blob | null;
   ss: Blob | null;
@@ -85,6 +85,12 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
     thumbnail: null,
     ss: null,
   });
+  const [oldCategories, setOldCategories] = React.useState<
+    EditShowCasePayload["showcase_categories"]
+  >([]);
+  const [newCategories, setNewCategories] = React.useState<
+    EditShowCasePayload["showcase_categories"]
+  >([]);
   const [limitedAttr, setLimitedAttr] = React.useState<LimitedAttributes>();
   const [isLoading, setIsLoading] = React.useState<boolean>();
   const [message, setMessage] = React.useState<string>();
@@ -102,6 +108,7 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
         role,
         ask,
         solution,
+        color_palette,
         showcase_categories,
         thumbnail_url,
         ss_url,
@@ -116,8 +123,9 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
         role: role,
         ask: ask,
         solution: solution,
-        showcase_categories: showcase_categories,
+        color_palette: color_palette,
       }));
+      setOldCategories(showcase_categories);
       setThumbnailUrl(thumbnail_url.url);
       setSsUrl(ss_url.url);
     } catch (error) {
@@ -207,8 +215,51 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
       ask: payload.ask,
       solution: payload.solution,
     }));
-    console.log(payload);
+    // console.log(payload);
   }, [payload]);
+
+  React.useEffect(() => {
+    console.log(newCategories);
+    setPayload((prev) => ({
+      ...prev,
+      showcase_categories: newCategories,
+    }));
+  }, [newCategories]);
+
+  //checkbox
+  function onCheckBoxClick(
+    e: React.ChangeEvent<HTMLInputElement>,
+    checkbox: string
+  ): void {
+    const isChecked = e.target.checked;
+
+    if (isChecked) {
+      setNewCategories((prev) => [...prev, checkbox]);
+    } else {
+      setNewCategories((prev) => prev.filter((pr) => pr !== checkbox));
+    }
+    // console.log(categories);
+
+    console.log(payload);
+
+    // let isChecked = e.target.checked;
+    // isChecked = !isChecked;
+    // setPayload((prev) => {
+    //   if (isChecked) {
+    //     return {
+    //       ...prev,
+    //       showcase_categories: [...prev.showcase_categories, checkbox],
+    //     };
+    //   } else {
+    //     return {
+    //       ...prev,
+    //       categories: prev.showcase_categories.filter(
+    //         (cat) => cat !== checkbox
+    //       ),
+    //     };
+    //   }
+    // });
+  }
 
   async function handleSubmit() {
     const formDataToSend = new FormData();
@@ -254,30 +305,6 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
       }
       setIsLoading(false);
     }
-  }
-
-  //checkbox
-  function onCheckBoxClick(
-    e: React.ChangeEvent<HTMLInputElement>,
-    checkbox: string
-  ): void {
-    const isChecked = e.target.checked;
-
-    setPayload((prev) => {
-      if (isChecked) {
-        return {
-          ...prev,
-          showcase_categories: [...prev.showcase_categories, checkbox],
-        };
-      } else {
-        return {
-          ...prev,
-          categories: prev.showcase_categories.filter(
-            (cat) => cat !== checkbox
-          ),
-        };
-      }
-    });
   }
 
   //update func side effect
@@ -338,10 +365,11 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
               <label htmlFor="showcase_categories_input">
                 Showcase_Categories:
               </label>
-
+              <small>
+                Currently Present:
+                {oldCategories.map((cat) => cat + ", ")}{" "}
+              </small>
               {checkboxValues.map((checkbox, index) => {
-               
-
                 return (
                   <div key={index}>
                     <label style={{ fontSize: "15px" }}>
@@ -364,6 +392,10 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
               {!validateCategoryPresent(payload.showcase_categories) ? (
                 <p style={{ color: "red" }}>Must Select One </p>
               ) : null}
+              <small>
+                Changing to:
+                {newCategories.map((cat) => cat + ", ")}{" "}
+              </small>
             </CatWrapper>
             <br />
             <PicInputWrapper>
