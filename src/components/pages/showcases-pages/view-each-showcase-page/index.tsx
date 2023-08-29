@@ -76,8 +76,6 @@ const EachShowCase: React.FunctionComponent = () => {
     if (showcaseData) {
       setMessage(showcaseData.message || showcaseData.error);
       setIsLoading(false);
-      console.log(showcaseData);
-      console.log(arrayOFAttributes(showcaseData.showcase.data.attributes));
     }
   }, [showcaseData]);
 

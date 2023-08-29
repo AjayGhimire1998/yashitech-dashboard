@@ -140,10 +140,9 @@ const NewShowCasePage: React.FunctionComponent = () => {
   React.useEffect(() => {
     setPayload((prev) => ({
       ...prev,
-      color_palette: [color1, color2, color3, color4],
+      color_palette: [color1, color2, color3, color4].filter((n) => n),
     }));
   }, [color1, color2, color3, color4]);
-
 
   //handling radio input
   const onCheckBoxClick = (
@@ -204,6 +203,18 @@ const NewShowCasePage: React.FunctionComponent = () => {
     formDataToSend.append("showcase[ask]", payload.ask);
     formDataToSend.append("showcase[solution]", payload.solution);
     formDataToSend.append("showcase[role]", payload.role);
+    if (payload.showcase_categories.length === 0) {
+      return setMessage((prev) => ({
+        ...prev,
+        error: "Please Select atleast one Category",
+      }));
+    }
+    if (payload.color_palette.length === 0) {
+      return setMessage((prev) => ({
+        ...prev,
+        error: "Please input atleast one color",
+      }));
+    }
     payload.showcase_categories.forEach((category) => {
       formDataToSend.append("showcase[showcase_categories][]", category);
     });

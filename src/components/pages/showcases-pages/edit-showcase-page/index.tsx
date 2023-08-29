@@ -67,10 +67,14 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
   const navigate = useNavigate();
 
   //states
-  const [thumbnailUrl, setThumbnailUrl] = React.useState<string>();
-  const [ssUrl, setSsUrl] = React.useState<string>();
+  const [thumbnailUrl, setThumbnailUrl] = React.useState<string>("");
+  const [ssUrl, setSsUrl] = React.useState<string>("");
   const [thumbnail, setThumbnail] = React.useState<string>();
   const [ss, setSs] = React.useState<string>();
+  const [color1, setColor1] = React.useState<string>("");
+  const [color2, setColor2] = React.useState<string>("");
+  const [color3, setColor3] = React.useState<string>("");
+  const [color4, setColor4] = React.useState<string>("");
   const [payload, setPayload] = React.useState<EditShowCasePayload>({
     title: "",
     showcase_type: "",
@@ -113,6 +117,7 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
         thumbnail_url,
         ss_url,
       } = res.data.showcase.data.attributes;
+
       setPayload((prev) => ({
         ...prev,
         title: title,
@@ -126,8 +131,12 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
         color_palette: color_palette,
       }));
       setOldCategories(showcase_categories);
-      setThumbnailUrl(thumbnail_url.url);
-      setSsUrl(ss_url.url);
+      thumbnail_url && setThumbnailUrl(thumbnail_url.url || "");
+      ss_url && setSsUrl(ss_url.url || "");
+      color_palette && setColor1(color_palette[0] || "");
+      color_palette && setColor2(color_palette[1] || "");
+      color_palette && setColor3(color_palette[2] || "");
+      color_palette && setColor4(color_palette[3] || "");
     } catch (error) {
       console.log(error);
     }
@@ -143,6 +152,30 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
     }));
   }
 
+  //color inputs
+  const onColorPaletteChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    inputName: string
+  ) => {
+    const { value } = e.target;
+    if (inputName === "color1") {
+      setColor1(value);
+    } else if (inputName === "color2") {
+      setColor2(value);
+    } else if (inputName === "color3") {
+      setColor3(value);
+    } else if (inputName === "color4") {
+      setColor4(value);
+    }
+  };
+  React.useEffect(() => {
+    setPayload((prev) => ({
+      ...prev,
+      color_palette: [color1, color2, color3, color4],
+    }));
+  }, [color1, color2, color3, color4]);
+
+  //file inputs
   function handleFileInput(
     e: React.ChangeEvent<HTMLInputElement>,
     which: string
@@ -215,11 +248,9 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
       ask: payload.ask,
       solution: payload.solution,
     }));
-    // console.log(payload);
   }, [payload]);
 
   React.useEffect(() => {
-    console.log(newCategories);
     setPayload((prev) => ({
       ...prev,
       showcase_categories: newCategories,
@@ -238,27 +269,6 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
     } else {
       setNewCategories((prev) => prev.filter((pr) => pr !== checkbox));
     }
-    // console.log(categories);
-
-    console.log(payload);
-
-    // let isChecked = e.target.checked;
-    // isChecked = !isChecked;
-    // setPayload((prev) => {
-    //   if (isChecked) {
-    //     return {
-    //       ...prev,
-    //       showcase_categories: [...prev.showcase_categories, checkbox],
-    //     };
-    //   } else {
-    //     return {
-    //       ...prev,
-    //       categories: prev.showcase_categories.filter(
-    //         (cat) => cat !== checkbox
-    //       ),
-    //     };
-    //   }
-    // });
   }
 
   async function handleSubmit() {
@@ -275,6 +285,15 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
     if (payload.showcase_categories.length === 0) {
       return setMessage("Please Select atleast one Category");
     }
+
+    if (payload.color_palette.length === 0) {
+      return setMessage("Please input atleast one color");
+    }
+    payload.color_palette
+      .filter((n) => n)
+      .forEach((color) => {
+        formDataToSend.append("showcase[color_palette][]", color);
+      });
     payload.showcase_categories.forEach((category) => {
       formDataToSend.append("showcase[showcase_categories][]", category);
     });
@@ -286,8 +305,6 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
     try {
       setIsLoading(true);
       const res = await updateShowcase(formDataToSend, id);
-      console.log(res.data);
-
       setMessage(res.data.message);
       setIsUpdated(true);
       setIsLoading(false);
@@ -362,12 +379,48 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
             })}
             <br />
             <CatWrapper>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  width: "400px",
+                }}
+              >
+                <label htmlFor="color_palette_inputs">Color_Palette:</label>
+                <input
+                  type="text"
+                  value={color1}
+                  placeholder="color1"
+                  onChange={(e) => onColorPaletteChange(e, "color1")}
+                ></input>
+                <input
+                  type="text"
+                  value={color2}
+                  placeholder="color2"
+                  onChange={(e) => onColorPaletteChange(e, "color2")}
+                />
+                <input
+                  type="text"
+                  value={color3}
+                  placeholder="color3"
+                  onChange={(e) => onColorPaletteChange(e, "color3")}
+                />
+                <input
+                  type="text"
+                  value={color4}
+                  placeholder="color4"
+                  onChange={(e) => onColorPaletteChange(e, "color4")}
+                />
+              </div>
+              <br />
+            </CatWrapper>
+            <CatWrapper>
               <label htmlFor="showcase_categories_input">
                 Showcase_Categories:
               </label>
               <small>
-                Currently Present:
-                {oldCategories.map((cat) => cat + ", ")}{" "}
+                Currently Present: {oldCategories.map((cat) => cat + ", ")}{" "}
               </small>
               {checkboxValues.map((checkbox, index) => {
                 return (
