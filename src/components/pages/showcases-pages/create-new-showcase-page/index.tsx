@@ -142,7 +142,6 @@ const NewShowCasePage: React.FunctionComponent = () => {
       ...prev,
       color_palette: [color1, color2, color3, color4],
     }));
-    console.log(payload);
   }, [color1, color2, color3, color4]);
 
 
