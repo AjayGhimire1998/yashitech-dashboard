@@ -117,7 +117,7 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
           <br />
           <br />
 
-          <ShowcasesWrapper>
+          <ShowcasesWrapper value1="Id" value2="Title" value3="Client" value4="Year">
             {showcasesData.showcases.data.map((show: any) => (
               <ShowcaseColumn
                 key={show.id}
