@@ -16,7 +16,8 @@ const Dashboard: React.FunctionComponent = () => {
       <br />
       <LinkWrapper>
         <Link linkTo="/homepage">Home Page Data</Link>
-        <Link linkTo="/showcases">Showcase Data</Link>
+        <Link linkTo="/showcases">Showcases Data</Link>
+        <Link linkTo="/contacts">Contacts Data</Link>
       </LinkWrapper>
       <br/>
       <br/>

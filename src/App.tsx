@@ -11,6 +11,7 @@ import ShowCasesPage from "./components/pages/showcases-pages";
 import EachShowCase from "./components/pages/showcases-pages/view-each-showcase-page";
 import NewShowCasePage from "./components/pages/showcases-pages/create-new-showcase-page";
 import EditShowCase from "./components/pages/showcases-pages/edit-showcase-page";
+import ContactsPage from "./components/pages/contacts-pages";
 
 const App: React.FC = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -85,23 +86,16 @@ const App: React.FC = () => {
 
         <Route
           path="/showcases/new"
-          element={
-            isAuthenticated ? (
-              <NewShowCasePage  />
-            ) : (
-              <Custom401Page />
-            )
-          }
+          element={isAuthenticated ? <NewShowCasePage /> : <Custom401Page />}
         />
         <Route
           path="/showcases/:id/edit"
-          element={
-            isAuthenticated ? (
-              <EditShowCase />
-            ) : (
-              <Custom401Page />
-            )
-          }
+          element={isAuthenticated ? <EditShowCase /> : <Custom401Page />}
+        />
+
+        <Route
+          path="/contacts"
+          element={isAuthenticated ? <ContactsPage /> : <Custom401Page />}
         />
 
         <Route path="*" Component={Custom404Page} />
