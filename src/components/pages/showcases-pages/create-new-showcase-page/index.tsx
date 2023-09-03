@@ -33,6 +33,17 @@ type NewShowCasePayload = {
   };
 };
 
+type AttributeKeys = {
+  title: string;
+  showcase_type: string;
+  site_link: string;
+  year: string;
+  client: string;
+  role: string;
+  ask: string;
+  solution: string;
+};
+
 type MessageType = {
   message?: string;
   error?: string;
@@ -194,6 +205,7 @@ const NewShowCasePage: React.FunctionComponent = () => {
 
   //handleSubmit
   const handleSubmit = async () => {
+    // localStorage.setItem("create", JSON.stringify(payload));
     const formDataToSend = new FormData();
     formDataToSend.append("showcase[title]", payload.title);
     formDataToSend.append("showcase[showcase_type]", payload.showcase_type);
@@ -238,7 +250,7 @@ const NewShowCasePage: React.FunctionComponent = () => {
       console.log(res.data);
       setIsLoading(false);
     } catch (error: any) {
-      console.log(error);
+      // console.log(error);
       let fullError: string = "";
       if (error.response.data.full_errors) {
         error.response.data.full_errors.forEach((err: string) => {
@@ -256,7 +268,7 @@ const NewShowCasePage: React.FunctionComponent = () => {
         }));
       }
       setIsLoading(false);
-      console.log(fullError);
+      // console.log(fullError);
     }
   };
 
@@ -306,7 +318,8 @@ const NewShowCasePage: React.FunctionComponent = () => {
                   attribute={attr}
                   onChange={(e) => handleTextAreaChange(e)}
                   // onClick={handleSubmit}
-                  value={undefined}
+                  // value={payload.attr}
+                  value={payload[attr as keyof AttributeKeys]}
                 />
               );
             })}

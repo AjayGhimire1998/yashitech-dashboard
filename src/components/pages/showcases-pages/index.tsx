@@ -23,7 +23,7 @@ export interface EachShowcase {
   attributes: any;
 }
 
-const ShowCasesPage: React.FunctionComponent = (props) => {
+const ShowCasesPage: React.FunctionComponent = () => {
   const [showcasesData, setShowcasesData] = React.useState<ShowCasesResponse>();
   const [isLoading, setIsLoading] = React.useState<boolean>();
   const [message, setMessage] = React.useState<string>();
@@ -35,16 +35,19 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
       setIsLoading(true);
       const getShowcasesResponse = await getShowcases();
       setShowcasesData(getShowcasesResponse.data);
-    } catch (err) {
+    } catch (err: any) {
       setIsLoading(false);
-      setMessage("Something went wrong. Try Reloading.");
-      console.log(err);
+      setMessage(
+        err.response.data.error || "Something went wrong. Try Reloading."
+      );
+      // console.log(err);
     }
   }, []);
 
   const deleteShowCase = async (id: string) => {
     try {
       setIsDeleteLoading(id);
+      alert(`Do you really want to delete showcase ${id}`)
       const deleteShowcaseResponse = await deleteShowcase(id);
       if (deleteShowcaseResponse.status === 200) {
         setDeleteMessage(
@@ -55,7 +58,9 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
       }
     } catch (error: any) {
       setIsDeleteLoading("");
-      setDeleteMessage(error.response.data.error || "Something went wrong. Try again.");
+      setDeleteMessage(
+        error.response.data.error || "Something went wrong. Try again."
+      );
       console.log(error);
       console.log(error.response.data.error);
     }
@@ -78,8 +83,6 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
     // return () => clearInterval(loaderInterval);
   }, [showcasesData]);
 
-
-
   return (
     <Container>
       <StaticContent history="" />
@@ -89,20 +92,21 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
       <br />
       {isLoading ? (
         <LoadingSpinner color="#440a70" height="50" width="50" />
-      ) : showcasesData ? (
+      ) : null}
+      {message ? (
+        <Message
+          bgColor="#440a70"
+          txtColor="white"
+          onClick={() => {
+            setMessage("");
+          }}
+        >
+          {message}
+        </Message>
+      ) : null}
+      <br />
+      {showcasesData ? (
         <>
-          {message ? (
-            <Message
-              bgColor="#440a70"
-              txtColor="white"
-              onClick={() => {
-                setMessage("");
-              }}
-            >
-              {message}
-            </Message>
-          ) : null}
-          <br />
           {deleteMessage ? (
             <Message
               bgColor="#440a70"
@@ -117,8 +121,13 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
           <br />
           <br />
 
-          <ShowcasesWrapper value1="Id" value2="Title" value3="Client" value4="Year">
-            {showcasesData.showcases.data.map((show: any) => (
+          <ShowcasesWrapper
+            value1="Id"
+            value2="Title"
+            value3="Client"
+            value4="Year"
+          >
+            {showcasesData.showcases.data.map((show: EachShowcase, index: number) => (
               <ShowcaseColumn
                 key={show.id}
                 value1={show.id}
@@ -129,7 +138,7 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
                 href1={`showcases/${show.id}`}
                 href2={`showcases/${show.id}/edit`}
                 isDeleting={isDeleteLoading === show.id}
-                bgColor={checkIfEven(parseInt(show.id)) ? "#e1dfdf" : "white"}
+                bgColor={checkIfEven(index + 1) ? "#e1dfdf" : "white"}
                 onClick={() => {
                   deleteShowCase(show.id);
                 }}
@@ -142,8 +151,8 @@ const ShowCasesPage: React.FunctionComponent = (props) => {
       ) : (
         <p>Internal Server Error. Try Reloading.</p>
       )}
-      <br/>
-      <br/>
+      <br />
+      <br />
       <FooterContent />
     </Container>
   );

@@ -39,7 +39,7 @@ const Column: React.FunctionComponent<IColumnsProps> = ({
           {href1 ? <a href={href1}>View</a> : null}
           <a href={href2}>Edit</a>
           {isDeleting ? (
-            <LoadingSpinner color="red" height="3" width="3" />
+            <LoadingSpinner color="red" height="3px" width="3px" />
           ) : (
             <button onClick={onClick}>Delete</button>
           )}
