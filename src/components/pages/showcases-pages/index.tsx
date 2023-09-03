@@ -47,7 +47,7 @@ const ShowCasesPage: React.FunctionComponent = () => {
   const deleteShowCase = async (id: string) => {
     try {
       setIsDeleteLoading(id);
-      alert(`Do you really want to delete showcase ${id}`)
+      alert(`Do you really want to delete showcase ${id}`);
       const deleteShowcaseResponse = await deleteShowcase(id);
       if (deleteShowcaseResponse.status === 200) {
         setDeleteMessage(
@@ -90,9 +90,7 @@ const ShowCasesPage: React.FunctionComponent = () => {
       <h2>Show Cases Data</h2>
       <br />
       <br />
-      {isLoading ? (
-        <LoadingSpinner color="#440a70" height="50" width="50" />
-      ) : null}
+
       {message ? (
         <Message
           bgColor="#440a70"
@@ -105,7 +103,9 @@ const ShowCasesPage: React.FunctionComponent = () => {
         </Message>
       ) : null}
       <br />
-      {showcasesData ? (
+      {isLoading ? (
+        <LoadingSpinner color="#440a70" height="50" width="50" />
+      ) : showcasesData ? (
         <>
           {deleteMessage ? (
             <Message
@@ -127,23 +127,25 @@ const ShowCasesPage: React.FunctionComponent = () => {
             value3="Client"
             value4="Year"
           >
-            {showcasesData.showcases.data.map((show: EachShowcase, index: number) => (
-              <ShowcaseColumn
-                key={show.id}
-                value1={show.id}
-                value2={show.attributes.title}
-                value3={show.attributes.client}
-                value4={show.attributes.year}
-                id={show.id}
-                href1={`showcases/${show.id}`}
-                href2={`showcases/${show.id}/edit`}
-                isDeleting={isDeleteLoading === show.id}
-                bgColor={checkIfEven(index + 1) ? "#e1dfdf" : "white"}
-                onClick={() => {
-                  deleteShowCase(show.id);
-                }}
-              />
-            ))}
+            {showcasesData.showcases.data.map(
+              (show: EachShowcase, index: number) => (
+                <ShowcaseColumn
+                  key={show.id}
+                  value1={show.id}
+                  value2={show.attributes.title}
+                  value3={show.attributes.client}
+                  value4={show.attributes.year}
+                  id={show.id}
+                  href1={`showcases/${show.id}`}
+                  href2={`showcases/${show.id}/edit`}
+                  isDeleting={isDeleteLoading === show.id}
+                  bgColor={checkIfEven(index + 1) ? "#e1dfdf" : "white"}
+                  onClick={() => {
+                    deleteShowCase(show.id);
+                  }}
+                />
+              )
+            )}
           </ShowcasesWrapper>
           <br />
           <a href="/showcases/new">Create New Showcase</a>
