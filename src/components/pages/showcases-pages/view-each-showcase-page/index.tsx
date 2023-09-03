@@ -128,7 +128,7 @@ const EachShowCase: React.FunctionComponent = () => {
           </ShowcaseWrapper>
         </>
       ) : (
-        <p></p>
+        <p>Something went wrong. Try Again.</p>
       )}
       <br/>
       <br/>
