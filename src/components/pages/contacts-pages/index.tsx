@@ -43,7 +43,7 @@ const ContactsPage: React.FunctionComponent = () => {
       setMessage(res.data.message);
       setIsLoading(false);
 
-      console.log(contacts);
+      // console.log(contacts);
     } catch (error: any) {
       setMessage(
         error.response.data.error || "Something went wrong. Try again."

@@ -92,6 +92,7 @@ const ViewContact: React.FunctionComponent = () => {
                       }
                     />
                   );
+                return null;
               }
             )}
             <ShowcaseData
