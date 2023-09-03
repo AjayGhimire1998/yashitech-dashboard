@@ -16,7 +16,7 @@ interface ContactsResponse {
   };
 }
 
-interface ContactAttributes {
+export interface ContactAttributes {
   id: string;
   type: string;
   attributes: {
