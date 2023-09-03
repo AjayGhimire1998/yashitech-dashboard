@@ -81,9 +81,6 @@ const ContactsPage: React.FunctionComponent = () => {
       <h2>Contacts Data</h2>
       <br />
       <br />
-      {isLoading ? (
-        <LoadingSpinner color="#440a70" height="50" width="50" />
-      ) : null}
       {message ? (
         <Message
           bgColor="#440a70"
@@ -96,7 +93,9 @@ const ContactsPage: React.FunctionComponent = () => {
         </Message>
       ) : null}
       <br />
-      {contacts ? (
+      {isLoading ? (
+        <LoadingSpinner color="#440a70" height="50" width="50" />
+      ) : contacts ? (
         <>
           {deleteMessage ? (
             <Message
@@ -116,27 +115,27 @@ const ContactsPage: React.FunctionComponent = () => {
             value3="Email"
             value4="Budget"
           >
-            {contacts.contacts.data.map((dt: ContactAttributes, index: number) => {
-              return (
-                <ShowcaseColumn
-                  key={dt.id}
-                  value1={dt.id}
-                  value2={dt.attributes.name}
-                  value3={dt.attributes.email}
-                  value4={dt.attributes.budget}
-                  id={dt.id}
-                  href1={`contacts/${dt.id}`}
-                  href2={`contacts/${dt.id}/edit`}
-                  isDeleting={isDeleteLoading === dt.id}
-                  bgColor={
-                    checkIfEven(index + 1) ? "#e1dfdf" : "white"
-                  }
-                  onClick={() => {
-                    deleteShowCase(dt.id);
-                  }}
-                />
-              );
-            })}
+            {contacts.contacts.data.map(
+              (dt: ContactAttributes, index: number) => {
+                return (
+                  <ShowcaseColumn
+                    key={dt.id}
+                    value1={dt.id}
+                    value2={dt.attributes.name}
+                    value3={dt.attributes.email}
+                    value4={dt.attributes.budget}
+                    id={dt.id}
+                    href1={`contacts/${dt.id}`}
+                    href2={`contacts/${dt.id}/edit`}
+                    isDeleting={isDeleteLoading === dt.id}
+                    bgColor={checkIfEven(index + 1) ? "#e1dfdf" : "white"}
+                    onClick={() => {
+                      deleteShowCase(dt.id);
+                    }}
+                  />
+                );
+              }
+            )}
           </ShowcasesWrapper>
         </>
       ) : (
