@@ -218,13 +218,13 @@ const NewShowCasePage: React.FunctionComponent = () => {
     if (payload.showcase_categories.length === 0) {
       return setMessage((prev) => ({
         ...prev,
-        error: "Please Select atleast one Category",
+        error: "Please select atleast one category.",
       }));
     }
     if (payload.color_palette.length === 0) {
       return setMessage((prev) => ({
         ...prev,
-        error: "Please input atleast one color",
+        error: "Please input atleast one color.",
       }));
     }
     payload.showcase_categories.forEach((category) => {

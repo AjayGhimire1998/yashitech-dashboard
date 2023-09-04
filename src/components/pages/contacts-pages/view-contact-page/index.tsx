@@ -127,19 +127,25 @@ const ViewContact: React.FunctionComponent = () => {
                 (service: any) => service.name
               )}
             />
-            {contactData.contact.data.attributes.file_urls
-              ? contactData.contact.data.attributes.file_urls.map(
-                  (file: any, index: number) => {
-                    return (
-                      <ShowcaseData
-                        key={index}
-                        attribute={`files[${index}]`}
-                        value={file}
-                      />
-                    );
-                  }
-                )
-              : null}
+            {contactData.contact.data.attributes.file_urls ? (
+              contactData.contact.data.attributes.file_urls.map(
+                (file: any, index: number) => {
+                  return (
+                    <ShowcaseData
+                      key={index}
+                      attribute={`files[${index}]`}
+                      value={file}
+                    />
+                  );
+                }
+              )
+            ) : (
+              <ShowcaseData
+                key={2}
+                attribute={`files`}
+                value="No files present for this contact."
+              />
+            )}
 
             <br />
             <ShowcaseColumn
