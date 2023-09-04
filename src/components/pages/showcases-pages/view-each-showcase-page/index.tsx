@@ -27,7 +27,6 @@ interface EachShowCaseResponse {
 
 const EachShowCase: React.FunctionComponent = () => {
   const navigate = useNavigate();
-
   const [showcaseData, setShowcaseData] =
     React.useState<EachShowCaseResponse>();
   const [isLoading, setIsLoading] = React.useState<boolean>();

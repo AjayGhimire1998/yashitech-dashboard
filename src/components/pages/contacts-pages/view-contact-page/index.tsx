@@ -2,13 +2,17 @@ import * as React from "react";
 import { ContactAttributes } from "..";
 import { Container, LoadingSpinner, Message } from "../../../../styles/global";
 import StaticContent from "../../../helper/pages-helpers/global-pages-helpers/StaticContent";
-import { showContactData } from "../../../../services/other-services/contact-services";
-import { useParams } from "react-router-dom";
+import {
+  deleteContact,
+  showContactData,
+} from "../../../../services/other-services/contact-services";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   ShowcaseData,
   ShowcaseWrapper,
 } from "../../showcases-pages/view-each-showcase-page/styles";
 import { arrayOFAttributes } from "../../../../services/other-services/showcases-services";
+import { ShowcaseColumn } from "../../showcases-pages/styles";
 
 interface ContactData {
   message: string;
@@ -29,9 +33,11 @@ type ContactParam = {
 };
 
 const ViewContact: React.FunctionComponent = () => {
+  const navigate = useNavigate();
   const [contactData, setContactData] = React.useState<ContactData>();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState<string>("");
+  const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>();
   const { id } = useParams<ContactParam>();
   const stringAttributes = ["name", "email", "budget"];
 
@@ -51,6 +57,22 @@ const ViewContact: React.FunctionComponent = () => {
       setIsLoading(false);
     }
   }, []);
+
+  const handleDelete = async () => {
+    try {
+      setIsDeleteLoading(true);
+      const res = await deleteContact(id);
+      if (res.status === 200) {
+        setMessage(res.data.message);
+        setInterval(() => {
+          setIsDeleteLoading(false);
+          navigate("/showcases");
+        }, 1000);
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
 
   React.useEffect(() => {
     getContact(id);
@@ -109,6 +131,17 @@ const ViewContact: React.FunctionComponent = () => {
                 (service: any) => service.name
               )}
             /> */}
+            <br />
+            <ShowcaseColumn
+              value2=""
+              value3=""
+              value4=""
+              id={id}
+              bgColor="white"
+              href2={`${id}/edit`}
+              isDeleting={isDeleteLoading}
+              onClick={handleDelete}
+            />
           </ShowcaseWrapper>
         </>
       ) : (

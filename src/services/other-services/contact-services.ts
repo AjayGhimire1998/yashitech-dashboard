@@ -20,7 +20,7 @@ export const showContactData = async (id: string | undefined): Promise<AxiosResp
   return res;
 };
 
-export const deleteContact = async (id: string): Promise<AxiosResponse> => {
+export const deleteContact = async (id: string | undefined): Promise<AxiosResponse> => {
   const res = await axios.delete(
     process.env.REACT_APP_BASE_API_URL + `api/v1/contacts/${id}`,
     { headers }
