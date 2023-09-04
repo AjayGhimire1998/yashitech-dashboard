@@ -66,11 +66,12 @@ const ViewContact: React.FunctionComponent = () => {
         setMessage(res.data.message);
         setInterval(() => {
           setIsDeleteLoading(false);
-          navigate("/showcases");
+          navigate("/contacts");
         }, 1000);
       }
     } catch (error: any) {
-      console.log(error);
+      setIsDeleteLoading(false);
+      setMessage(error.response.data.error || "Something went wrong. Try again.");
     }
   };
 

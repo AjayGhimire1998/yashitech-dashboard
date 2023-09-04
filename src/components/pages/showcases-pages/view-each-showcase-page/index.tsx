@@ -61,7 +61,7 @@ const EachShowCase: React.FunctionComponent = () => {
         }, 1000);
       }
     } catch (error: any) {
-      console.log(error);
+      // console.log(error);
       setIsDeleteLoading(false);
       setMessage(error.response.data.error);
     }
