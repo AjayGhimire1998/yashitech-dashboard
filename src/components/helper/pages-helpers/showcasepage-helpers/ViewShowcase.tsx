@@ -23,7 +23,8 @@ const ViewShowcase: React.FunctionComponent<IViewShowcaseProps> = ({
           <>
             <a href={value.url}>{value.url}</a>
             <br />
-            <img src={value.url} alt="thumbnail_or_ss_image" />
+            <img src={value.url} alt="files" />
+            {/* <embed src={value.url} width="200px" height="200px" /> */}
           </>
         ) : (
           <p>{Array.isArray(value) ? value.map((val) => val + ", ") : value}</p>

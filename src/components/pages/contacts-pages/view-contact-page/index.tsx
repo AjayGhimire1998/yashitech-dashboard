@@ -71,7 +71,9 @@ const ViewContact: React.FunctionComponent = () => {
       }
     } catch (error: any) {
       setIsDeleteLoading(false);
-      setMessage(error.response.data.error || "Something went wrong. Try again.");
+      setMessage(
+        error.response.data.error || "Something went wrong. Try again."
+      );
     }
   };
 
@@ -125,13 +127,20 @@ const ViewContact: React.FunctionComponent = () => {
                 (service: any) => service.name
               )}
             />
-            {/* <ShowcaseData
-              key={1}
-              attribute="files"
-              value={contactData.contact.data.attributes.services.map(
-                (service: any) => service.name
-              )}
-            /> */}
+            {contactData.contact.data.attributes.file_urls
+              ? contactData.contact.data.attributes.file_urls.map(
+                  (file: any, index: number) => {
+                    return (
+                      <ShowcaseData
+                        key={index}
+                        attribute={`files[${index}]`}
+                        value={file}
+                      />
+                    );
+                  }
+                )
+              : null}
+
             <br />
             <ShowcaseColumn
               value2=""
