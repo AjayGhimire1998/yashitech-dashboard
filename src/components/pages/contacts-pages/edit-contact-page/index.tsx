@@ -13,6 +13,7 @@ import {
   showContactData,
 } from "../../../../services/other-services/contact-services";
 import { ShowcaseWrapper } from "../../showcases-pages/view-each-showcase-page/styles";
+import { CatWrapper } from "../../showcases-pages/create-new-showcase-page/styles";
 
 interface EditContactPayload {
   name: string | undefined;
@@ -32,9 +33,14 @@ type LimitedAttributes = {
 type Services = {
   id: string;
   attributes: {
-    name: string
-  }
-}
+    name: string;
+  };
+};
+
+type SavedServices = {
+  id: string;
+  name: string;
+};
 
 const EditContact: React.FunctionComponent = () => {
   const attributes: Array<string> = ["name", "email", "budget"];
@@ -51,6 +57,7 @@ const EditContact: React.FunctionComponent = () => {
       files: [],
       services: [],
     });
+  const [savedServices, setSavedServices] = React.useState<SavedServices[]>();
 
   const getContactData = React.useCallback(async (id: string | undefined) => {
     try {
@@ -68,6 +75,7 @@ const EditContact: React.FunctionComponent = () => {
         files: files_url,
         request_count: request_count,
       }));
+      setSavedServices(services);
       setMessage(res.data.message);
       setIsLoading(false);
     } catch (error: any) {
@@ -115,13 +123,22 @@ const EditContact: React.FunctionComponent = () => {
         budget: value,
       }));
     }
-    console.log(e.target.value);
+  };
+
+  //request_count input
+  const handleRequestCountChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    setContactPayload((prev) => ({
+      ...prev,
+      request_count: parseInt(e.target.value),
+    }));
   };
 
   React.useEffect(() => {
     console.log(contactPayload);
-    // console.log(services);
-  }, [contactPayload]);
+    console.log(services);
+  }, [contactPayload, services]);
   return (
     <Container>
       <StaticContent history="contacts" />
@@ -158,6 +175,46 @@ const EditContact: React.FunctionComponent = () => {
               );
             })}
             <br />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <label htmlFor="request_count">
+                Request Count (between 1 and 5):&nbsp;&nbsp;
+              </label>
+
+              <input
+                type="number"
+                id="request_count"
+                name="quantity"
+                min="1"
+                max="5"
+                style={{ width: "40px" }}
+                onChange={(e) => handleRequestCountChange(e)}
+              />
+              {contactPayload.request_count ? (
+                contactPayload.request_count < 0 ||
+                contactPayload.request_count > 5 ? (
+                  <small style={{ color: "red" }}>
+                    Must be Between 1 and 5
+                  </small>
+                ) : null
+              ) : null}
+            </div>
+            <br />
+            <CatWrapper>
+              <label htmlFor="services_input">Services:</label>
+              <small>
+                Currently Present:{" "}
+                {savedServices
+                  ? savedServices.map((service) => service.name + ", ")
+                  : null}{" "}
+              </small>
+            </CatWrapper>
           </ShowcaseWrapper>
         </>
       ) : (

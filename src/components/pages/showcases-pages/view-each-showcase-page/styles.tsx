@@ -4,6 +4,10 @@ import ViewShowcase from "../../../helper/pages-helpers/showcasepage-helpers/Vie
 export const ShowcaseWrapper = styled.div`
   width: 700px;
   padding: 10px;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
   @media (max-width: 800px) {
     width: 100%;
   }
@@ -34,14 +38,13 @@ export const ShowcaseData = styled(ViewShowcase)`
     /* display: flex;
     flex-direction: column;
     justify-content: flex-start; */
-    white-space: normal;  /* Allow text to wrap */
-    word-wrap: break-word; /* Break long words */ 
+    white-space: normal; /* Allow text to wrap */
+    word-wrap: break-word; /* Break long words */
     /* height: 80px; */
     /* inline-size: 150px; */
     p {
-      
     }
-    img{
+    img {
       width: 150px;
     }
   }
