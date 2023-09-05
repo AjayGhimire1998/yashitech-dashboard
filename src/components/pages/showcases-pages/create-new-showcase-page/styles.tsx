@@ -16,4 +16,5 @@ export const PicInputWrapper = styled.div`
     display: flex;
     align-items: center;
   }
+  
 `;

@@ -4,7 +4,6 @@ import {
   AttributeKey,
   ContentWrap,
   DataValue,
-  FooterContent,
   FormTextArea,
 } from "../pages-styles";
 import {
@@ -191,9 +190,6 @@ const HomePage: React.FunctionComponent = () => {
           </ContentWrap>
         </>
       )}
-      <br/>
-      <br/>
-      <FooterContent />
     </Container>
   );
 };

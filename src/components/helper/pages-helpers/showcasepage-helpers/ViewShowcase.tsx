@@ -21,10 +21,15 @@ const ViewShowcase: React.FunctionComponent<IViewShowcaseProps> = ({
       <div>
         {value?.url ? (
           <>
-            <a href={value.url}>{value.url}</a>
+            <a href={value.url}>{value.filename}</a>
             <br />
             <img src={value.url} alt="files" />
             {/* <embed src={value.url} width="200px" height="200px" /> */}
+          </>
+        ) : value.view_url && value.download_url ? (
+          <>
+            <a href={value.view_url} target="_blank">{value.filename}</a>&emsp;
+            <a href={value.download_url}>Download</a>
           </>
         ) : (
           <p>{Array.isArray(value) ? value.map((val) => val + ", ") : value}</p>
