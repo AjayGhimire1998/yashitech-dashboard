@@ -84,7 +84,10 @@ const EachShowCase: React.FunctionComponent = () => {
     <Container>
       <StaticContent history={"showcases"} />
       <br />
-      <br />
+      <br /> <div>
+        <h4>Viewing Showcase with id {id}</h4>
+      </div>
+      <br/>
       {message ? (
         <Message
           bgColor="#440a70"

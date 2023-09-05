@@ -102,6 +102,7 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
 
   async function getShowCaseData(id: string | undefined) {
     try {
+      setIsLoading(true);
       const res = await viewShowcase(id);
       const {
         title,
@@ -137,8 +138,12 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
       color_palette && setColor2(color_palette[1] || "");
       color_palette && setColor3(color_palette[2] || "");
       color_palette && setColor4(color_palette[3] || "");
-    } catch (error) {
-      console.log(error);
+      setIsLoading(false);
+    } catch (error: any) {
+      setIsLoading(false);
+      setMessage(
+        error.response.data.error || "Something went wrong. Try again."
+      );
     }
   }
 

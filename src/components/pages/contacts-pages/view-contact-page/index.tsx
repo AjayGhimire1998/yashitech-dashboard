@@ -86,7 +86,10 @@ const ViewContact: React.FunctionComponent = () => {
       <StaticContent history={"contacts"} />
       <br />
       <br />
-
+      <div>
+        <h4>Viewing Contact with id {id}</h4>
+      </div>
+      <br/>
       {message ? (
         <Message
           bgColor="#440a70"
