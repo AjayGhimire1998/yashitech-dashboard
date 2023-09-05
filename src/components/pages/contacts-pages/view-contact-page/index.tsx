@@ -39,7 +39,7 @@ const ViewContact: React.FunctionComponent = () => {
   const [message, setMessage] = React.useState<string>("");
   const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>();
   const { id } = useParams<ContactParam>();
-  const stringAttributes = ["name", "email", "budget"];
+  const stringAttributes = ["name", "email", "budget", "request_count"];
 
   const getContact = React.useCallback(async (id: string | undefined) => {
     try {

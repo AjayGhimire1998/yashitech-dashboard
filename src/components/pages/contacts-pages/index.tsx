@@ -25,6 +25,7 @@ export interface ContactAttributes {
     budget: string;
     file_urls: any;
     services: string[];
+    request_count: number;
   };
 }
 
