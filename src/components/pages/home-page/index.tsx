@@ -188,6 +188,9 @@ const HomePage: React.FunctionComponent = () => {
               />
             )}
           </ContentWrap>
+          <br/>
+          <br/>
+          <br/>
         </>
       )}
     </Container>

@@ -7,7 +7,6 @@ import {
   getShowcases,
 } from "../../../services/other-services/showcases-services";
 import { ShowcaseColumn, ShowcasesWrapper } from "./styles";
-import { FooterContent } from "../pages-styles";
 
 interface ShowCasesResponse {
   message?: string;
@@ -153,9 +152,6 @@ const ShowCasesPage: React.FunctionComponent = () => {
       ) : (
         <p>Internal Server Error. Try Reloading.</p>
       )}
-      <br />
-      <br />
-      <FooterContent />
     </Container>
   );
 };

@@ -192,9 +192,7 @@ const EditContact: React.FunctionComponent = () => {
     }
   };
 
-  const handleSubmit = () => {
-
-  }
+  const handleSubmit = () => {};
 
   React.useEffect(() => {
     console.log(contactPayload);
@@ -320,17 +318,21 @@ const EditContact: React.FunctionComponent = () => {
                 </label>
                 <small>
                   Currently present:
-                  {returnedFiles?.map((file) => {
-                    return (
-                      <div key={file.id}>
-                        <a href={file.view_url} target="_blank">
-                          {file.filename}
-                        </a>
-                        &emsp;&emsp;
-                        <a href={file.download_url}>Download</a>
-                      </div>
-                    );
-                  })}
+                  {returnedFiles ? (
+                    returnedFiles.map((file) => {
+                      return (
+                        <div key={file.id}>
+                          <a href={file.view_url} target="_blank">
+                            {file.filename}
+                          </a>
+                          &emsp;&emsp;
+                          <a href={file.download_url}>Download</a>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <small>&emsp;No Files Present</small>
+                  )}
                 </small>
                 <br />
                 <input
@@ -346,7 +348,11 @@ const EditContact: React.FunctionComponent = () => {
                       <p key={index}>
                         {index + 1}: &nbsp; {file.name || "file"}&emsp;&emsp;
                         <span
-                          style={{ textDecoration: "underline", color: "blue" }}
+                          style={{
+                            textDecoration: "underline",
+                            color: "blue",
+                            cursor: "pointer",
+                          }}
                           id={file.name}
                           onClick={(e) => handleCancel(e)}
                         >
@@ -368,6 +374,9 @@ const EditContact: React.FunctionComponent = () => {
               children="Submit"
             />
           </div>
+          <br />
+          <br />
+          <br />
         </>
       ) : (
         <p>Internal Server Error. Try Reloading.</p>

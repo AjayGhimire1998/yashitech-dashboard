@@ -162,6 +162,9 @@ const ViewContact: React.FunctionComponent = () => {
               onClick={handleDelete}
             />
           </ShowcaseWrapper>
+          <br/>
+          <br/>
+          <br/>
         </>
       ) : (
         <p>Something went wrong. Try Again.</p>

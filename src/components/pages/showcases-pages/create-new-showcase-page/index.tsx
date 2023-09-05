@@ -14,7 +14,6 @@ import {
 } from "../../../../services/other-services/showcases-services";
 import { useNavigate } from "react-router-dom";
 import { CatWrapper, PicInputWrapper } from "./styles";
-import { FooterContent } from "../../pages-styles";
 
 type NewShowCasePayload = {
   showcase: {
@@ -441,9 +440,9 @@ const NewShowCasePage: React.FunctionComponent = () => {
               children="Submit"
             />
           </div>
-          <br />
-          <br />
-          <FooterContent />
+          <br/>
+          <br/>
+          <br/>
         </>
       )}
     </Container>

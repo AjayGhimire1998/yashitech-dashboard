@@ -7,7 +7,6 @@ import {
   deleteContact,
   getContactsData,
 } from "../../../services/other-services/contact-services";
-import { FooterContent } from "../pages-styles";
 
 interface ContactsResponse {
   message: string;
@@ -138,13 +137,13 @@ const ContactsPage: React.FunctionComponent = () => {
               }
             )}
           </ShowcasesWrapper>
+          <br/>
+          <br/>
+          <br/>
         </>
       ) : (
         <p>Internal Server Error. Try Reloading.</p>
       )}
-      <br />
-      <br />
-      <FooterContent />
     </Container>
   );
 };

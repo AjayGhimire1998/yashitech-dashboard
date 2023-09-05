@@ -11,7 +11,6 @@ import {
 import { EachShowcase } from "..";
 import { ShowcaseColumn } from "../styles";
 import { useNavigate } from "react-router-dom";
-import { FooterContent } from "../../pages-styles";
 
 type ShowCaseParam = {
   id: string | undefined;
@@ -128,13 +127,13 @@ const EachShowCase: React.FunctionComponent = () => {
               onClick={handleDelete}
             />
           </ShowcaseWrapper>
+          <br/>
+          <br/>
+          <br/>
         </>
       ) : (
         <p>Something went wrong. Try Again.</p>
       )}
-      <br/>
-      <br/>
-      <FooterContent />
     </Container>
   );
 };

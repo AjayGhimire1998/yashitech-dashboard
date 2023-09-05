@@ -28,7 +28,7 @@ const ViewShowcase: React.FunctionComponent<IViewShowcaseProps> = ({
           </>
         ) : value.view_url && value.download_url ? (
           <>
-            <a href={value.view_url} target="_blank">{value.filename}</a>&emsp;
+            <a href={value.view_url} target="_blank" rel="noreferrer">{value.filename}</a>&emsp;
             <a href={value.download_url}>Download</a>
           </>
         ) : (

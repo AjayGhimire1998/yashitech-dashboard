@@ -14,7 +14,6 @@ import {
   validateCategoryPresent,
   viewShowcase,
 } from "../../../../services/other-services/showcases-services";
-import { FooterContent } from "../../pages-styles";
 import {
   CatWrapper,
   PicInputWrapper,
@@ -549,11 +548,11 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
               children="Submit"
             />
           </div>
+          <br/>
+          <br/>
+          <br/>
         </>
       )}
-      <br />
-      <br />
-      <FooterContent />
     </Container>
   );
 };
