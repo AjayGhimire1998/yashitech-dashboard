@@ -392,7 +392,7 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
                   width: "400px",
                 }}
               >
-                <label htmlFor="color_palette_inputs">Color_Palette:</label>
+                <label htmlFor="color_palette_inputs" style={{fontSize: "20px"}}>Color_Palette:</label>
                 <input
                   type="text"
                   value={color1}
@@ -421,7 +421,7 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
               <br />
             </CatWrapper>
             <CatWrapper>
-              <label htmlFor="showcase_categories_input">
+              <label htmlFor="showcase_categories_input" style={{fontSize: "20px"}}>
                 Showcase_Categories:
               </label>
               <small>
@@ -458,7 +458,7 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
             <br />
             <PicInputWrapper>
               <div>
-                <label htmlFor="thumbnail_input">Thumbnail: </label>
+                <label htmlFor="thumbnail_input" style={{fontSize: "20px"}}>Thumbnail: </label>
                 <input
                   type="file"
                   className="thumbnail_input"
@@ -500,7 +500,7 @@ const EditShowCase: React.FunctionComponent<IEditShowCaseProps> = (props) => {
               </div>
               <br />
               <div>
-                <label htmlFor="ss_input">SS: </label>
+                <label htmlFor="ss_input" style={{fontSize: "20px"}}>SS: </label>
                 <input
                   type="file"
                   className="ss_input"

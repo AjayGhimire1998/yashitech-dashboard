@@ -161,7 +161,7 @@ const EditContact: React.FunctionComponent = () => {
       ) : null}
       {isLoading ? (
         <LoadingSpinner color="#440a70" height="50" width="50" />
-      ) : contactPayload ? (
+      ) : contactPayload && services ? (
         <>
           <ShowcaseWrapper>
             {attributes.map((attr: string, index: number) => {
@@ -183,7 +183,7 @@ const EditContact: React.FunctionComponent = () => {
                 alignItems: "center",
               }}
             >
-              <label htmlFor="request_count">
+              <label htmlFor="request_count" style={{ fontSize: "20px" }}>
                 Request Count (between 1 and 5):&nbsp;&nbsp;
               </label>
 
@@ -194,6 +194,9 @@ const EditContact: React.FunctionComponent = () => {
                 min="1"
                 max="5"
                 style={{ width: "40px" }}
+                onKeyDown={(e) => {
+                  e.preventDefault();
+                }}
                 onChange={(e) => handleRequestCountChange(e)}
               />
               {contactPayload.request_count ? (
@@ -207,13 +210,24 @@ const EditContact: React.FunctionComponent = () => {
             </div>
             <br />
             <CatWrapper>
-              <label htmlFor="services_input">Services:</label>
+              <label htmlFor="services_input" style={{ fontSize: "20px" }}>
+                Services:
+              </label>
               <small>
                 Currently Present:{" "}
                 {savedServices
                   ? savedServices.map((service) => service.name + ", ")
                   : null}{" "}
               </small>
+              <br />
+              {services.map((service: Services, index: number) => {
+                return (
+                  <label key={index}>
+                    <input type="checkbox" />
+                    {service.attributes.name}
+                  </label>
+                );
+              })}
             </CatWrapper>
           </ShowcaseWrapper>
         </>
