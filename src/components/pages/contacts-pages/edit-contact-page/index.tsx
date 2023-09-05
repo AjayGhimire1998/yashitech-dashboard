@@ -24,14 +24,10 @@ type LimitedAttributes = {
   name: string | undefined;
   email: string | undefined;
   budget: string | undefined;
-}
+};
 
 const EditContact: React.FunctionComponent = () => {
-  const attributes: Array<string> = [
-    "name",
-    "email",
-    "budget",
-  ];
+  const attributes: Array<string> = ["name", "email", "budget"];
   const { id } = useParams<ContactParam>();
   const [message, setMessage] = React.useState<string>("");
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -54,9 +50,9 @@ const EditContact: React.FunctionComponent = () => {
         res.data.contact.data.attributes;
       setContactPayload((prev) => ({
         ...prev,
-        name: name,
-        email: email,
-        budget: budget,
+        name: name !== null ? name : "",
+        email: email !== null ? email : "",
+        budget: budget !== null ? budget : "",
         services: services,
         files: files_url,
         request_count: request_count,
@@ -76,7 +72,9 @@ const EditContact: React.FunctionComponent = () => {
   }, [getContactData, id]);
 
   //inputchange
-  const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
+  const handleTextAreaChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ): void => {
     console.log(e.target.value);
   };
   return (
@@ -110,7 +108,7 @@ const EditContact: React.FunctionComponent = () => {
                   onChange={(e) => handleTextAreaChange(e)}
                   key={index}
                   attribute={attr}
-                  value={contactPayload[attr as keyof LimitedAttributes] }
+                  value={contactPayload[attr as keyof LimitedAttributes]}
                 />
               );
             })}
