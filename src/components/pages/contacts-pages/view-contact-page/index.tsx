@@ -28,7 +28,7 @@ type ContactStringAttributes = {
   budget: string;
 };
 
-type ContactParam = {
+export type ContactParam = {
   id: string | undefined;
 };
 
