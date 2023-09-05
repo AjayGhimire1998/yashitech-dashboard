@@ -8,7 +8,10 @@ import {
 import StaticContent from "../../../helper/pages-helpers/global-pages-helpers/StaticContent";
 import { useParams } from "react-router-dom";
 import { ContactParam } from "../view-contact-page";
-import { showContactData } from "../../../../services/other-services/contact-services";
+import {
+  getServices,
+  showContactData,
+} from "../../../../services/other-services/contact-services";
 import { ShowcaseWrapper } from "../../showcases-pages/view-each-showcase-page/styles";
 
 interface EditContactPayload {
@@ -26,9 +29,17 @@ type LimitedAttributes = {
   budget: string | undefined;
 };
 
+type Services = {
+  id: string;
+  attributes: {
+    name: string
+  }
+}
+
 const EditContact: React.FunctionComponent = () => {
   const attributes: Array<string> = ["name", "email", "budget"];
   const { id } = useParams<ContactParam>();
+  const [services, setServices] = React.useState<Services[]>();
   const [message, setMessage] = React.useState<string>("");
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [contactPayload, setContactPayload] =
@@ -67,16 +78,50 @@ const EditContact: React.FunctionComponent = () => {
       setIsLoading(false);
     }
   }, []);
+
+  const getServicesData = async () => {
+    try {
+      const res = await getServices();
+      setServices(res.data.services.data);
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   React.useEffect(() => {
     getContactData(id);
+    getServicesData();
   }, [getContactData, id]);
 
   //inputchange
   const handleTextAreaChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+    which: string
   ): void => {
+    const { value } = e.target;
+    if (which === "name") {
+      setContactPayload((prev) => ({
+        ...prev,
+        name: value,
+      }));
+    } else if (which === "email") {
+      setContactPayload((prev) => ({
+        ...prev,
+        email: value,
+      }));
+    } else if (which === "budget") {
+      setContactPayload((prev) => ({
+        ...prev,
+        budget: value,
+      }));
+    }
     console.log(e.target.value);
   };
+
+  React.useEffect(() => {
+    console.log(contactPayload);
+    // console.log(services);
+  }, [contactPayload]);
   return (
     <Container>
       <StaticContent history="contacts" />
@@ -105,7 +150,7 @@ const EditContact: React.FunctionComponent = () => {
             {attributes.map((attr: string, index: number) => {
               return (
                 <FormAttribute
-                  onChange={(e) => handleTextAreaChange(e)}
+                  onChange={(e) => handleTextAreaChange(e, attr)}
                   key={index}
                   attribute={attr}
                   value={contactPayload[attr as keyof LimitedAttributes]}
