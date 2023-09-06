@@ -368,7 +368,7 @@ const EditContact: React.FunctionComponent = () => {
                     returnedFiles.map((file) => {
                       return (
                         <div key={file.id}>
-                          <a href={file.view_url} target="_blank">
+                          <a href={file.view_url} target="_blank" rel="noreferrer">
                             {file.filename}
                           </a>
                           &emsp;&emsp;
