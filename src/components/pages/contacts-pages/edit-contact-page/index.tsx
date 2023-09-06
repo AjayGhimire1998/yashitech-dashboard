@@ -7,7 +7,7 @@ import {
   Message,
 } from "../../../../styles/global";
 import StaticContent from "../../../helper/pages-helpers/global-pages-helpers/StaticContent";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ContactParam } from "../view-contact-page";
 import {
   getServices,
@@ -56,6 +56,7 @@ type ReturnedFiles = {
 };
 
 const EditContact: React.FunctionComponent = () => {
+  const navigate = useNavigate();
   const attributes: Array<string> = ["name", "email", "budget"];
   const { id } = useParams<ContactParam>();
   const [services, setServices] = React.useState<Services[]>();
@@ -72,6 +73,7 @@ const EditContact: React.FunctionComponent = () => {
     });
   const [savedServices, setSavedServices] = React.useState<SavedServices[]>();
   const [returnedFiles, setReturnedFiles] = React.useState<ReturnedFiles[]>();
+  const [isUpdated, setIsUpdated] = React.useState<boolean>();
 
   const getContactData = React.useCallback(async (id: string | undefined) => {
     try {
@@ -216,14 +218,26 @@ const EditContact: React.FunctionComponent = () => {
     try {
       setIsLoading(true);
       const res = await updateContactData(id, formDataToSend);
+      const { services, file_urls } =
+        res.data.contact.data.attributes;
       console.log(res.data);
+      setSavedServices(services);
+      setReturnedFiles(file_urls);
       setMessage(res.data.message);
       setIsLoading(false);
-      setReturnedFiles([]);
-      setSavedServices([]);
-      getContactData(id);
+      setIsUpdated(true);
     } catch (error: any) {
-      console.log(error);
+      let fullError: string = "";
+      if (error.response.data.full_errors) {
+        error.response.data.full_errors.forEach((err: string) => {
+          fullError += `${err}.
+        `;
+        });
+        setMessage(error.response.data.error + " " + fullError);
+      } else {
+        setMessage("Something went wrong. Try again later.");
+      }
+      setIsLoading(false);
     }
   };
 
@@ -232,6 +246,18 @@ const EditContact: React.FunctionComponent = () => {
     console.log(services);
     console.log(returnedFiles);
   }, [contactPayload, services, returnedFiles]);
+
+  React.useEffect(() => {
+    if (isUpdated) {
+      var navInterval = setInterval(() => {
+        navigate(`/contacts/${id}`);
+      }, 2000);
+    }
+
+    return () => {
+      clearInterval(navInterval);
+    };
+  }, [isUpdated, id, navigate]);
 
   return (
     <Container>
