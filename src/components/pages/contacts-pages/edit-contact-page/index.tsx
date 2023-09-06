@@ -12,6 +12,7 @@ import { ContactParam } from "../view-contact-page";
 import {
   getServices,
   showContactData,
+  updateContactData,
 } from "../../../../services/other-services/contact-services";
 import { ShowcaseWrapper } from "../../showcases-pages/view-each-showcase-page/styles";
 import {
@@ -20,12 +21,12 @@ import {
 } from "../../showcases-pages/create-new-showcase-page/styles";
 
 interface EditContactPayload {
-  name: string | undefined;
-  email: string | undefined;
-  budget: string | undefined;
+  name: string;
+  email: string;
+  budget: string;
   files: (File | FileList)[];
   service_ids: string[];
-  request_count: number | undefined;
+  request_count: number;
 }
 
 type LimitedAttributes = {
@@ -192,7 +193,39 @@ const EditContact: React.FunctionComponent = () => {
     }
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    const formDataToSend = new FormData();
+    formDataToSend.append("contact[name]", contactPayload.name);
+    formDataToSend.append("contact[email]", contactPayload.email);
+    formDataToSend.append(
+      "contact[request_count]",
+      contactPayload.request_count.toString()
+    );
+    formDataToSend.append("contact[budget]", contactPayload.budget);
+    if (contactPayload.service_ids.length === 0) {
+      return setMessage("Please select atleast one service");
+    }
+    contactPayload.service_ids.forEach((service) => {
+      formDataToSend.append("contact[service_ids][]", service);
+    });
+
+    contactPayload.files.forEach((file: any) => {
+      formDataToSend.append("contact[files][]", file);
+    });
+
+    try {
+      setIsLoading(true);
+      const res = await updateContactData(id, formDataToSend);
+      console.log(res.data);
+      setMessage(res.data.message);
+      setIsLoading(false);
+      setReturnedFiles([]);
+      setSavedServices([]);
+      getContactData(id);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
 
   React.useEffect(() => {
     console.log(contactPayload);
@@ -277,9 +310,7 @@ const EditContact: React.FunctionComponent = () => {
               </label>
               <small>
                 Currently Present:{" "}
-                {savedServices
-                  ? savedServices.map((service) => service.name + ", ")
-                  : null}{" "}
+                {savedServices?.map((service) => service.name + ", ")}{" "}
               </small>
               <br />
               {services.map((service: Services, index: number) => {
@@ -299,18 +330,7 @@ const EditContact: React.FunctionComponent = () => {
                   Please select at least one service
                 </small>
               ) : null}
-              <br />
-              <small>
-                Changing to:{" "}
-                {contactPayload.service_ids
-                  ? services.map((service) => {
-                      if (contactPayload.service_ids.includes(service.id)) {
-                        return service.attributes.name + ", ";
-                      }
-                    })
-                  : null}{" "}
-              </small>
-              <br />
+              
               <br />
               <PicInputWrapper>
                 <label htmlFor="input_input" style={{ fontSize: "20px" }}>

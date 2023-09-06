@@ -22,6 +22,18 @@ export const showContactData = async (
   return res;
 };
 
+export const updateContactData = async (
+  id: string | undefined,
+  payload: object
+): Promise<AxiosResponse> => {
+  const res = await axios.put(
+    process.env.REACT_APP_BASE_API_URL + `api/v1/contacts/${id}`,
+    payload,
+    { headers }
+  );
+  return res;
+};
+
 export const deleteContact = async (
   id: string | undefined
 ): Promise<AxiosResponse> => {
